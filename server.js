@@ -8,7 +8,7 @@ const app = next({ dev });
 const handle = app.getRequestHandler();
 
 //connect to MongoDB
-mongoose.connect("mongodb+srv://danbuis88:DbuisAndromeda@cluster0-lncyj.mongodb.net/test?retryWrites=true&w=majority", function(err){
+mongoose.connect("mongodb+srv://danbuis88:VGXSydm9KdVDvvG@cluster0-ptart.mongodb.net/test?retryWrites=true&w=majority", function(err){
     if (err){
         console.log('NOT CONNECTED TO MONGOOSE')
         console.log(err)
