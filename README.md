@@ -1,7 +1,8 @@
 # RebellionInTheRim
 A manager for running an instance of the Rebellion in the Rim Campaign.
 
-To install on your machine:
+To run on your machine:
+
 -Make sure node and yarn are installed
 
 -Open a terminal/command prompt and navigate to this respository's directory
