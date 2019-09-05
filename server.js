@@ -44,6 +44,13 @@ app.prepare().then(() => {
     server.use(passport.initialize());
     server.use(passport.session());
 
+    app.use(function(req, res, next) {
+        res.locals.currentUser = req.user;
+        res.locals.errors = req.flash("error");
+        res.locals.infos = req.flash("info");
+        next();
+      });
+
     server.post("/login", passport.authenticate("login", {
         successRedirect: "/profile",
         failureRedirect: "/",
