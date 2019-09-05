@@ -1,4 +1,5 @@
 import Header from '../reactComponents/Header'
+import SignInBlock from '../reactComponents/signInBlock'
 
 export default () => 
 <div>
@@ -12,5 +13,6 @@ export default () =>
             natoque penatibus et magnis dis parturient montes, 
             nascetur ridiculus mus.
         </p>
+        <SignInBlock />
     </div>
 </div>
