@@ -14,6 +14,7 @@ const app = next({ dev });
 const handle = app.getRequestHandler();
 
 var User = require ('./models/user')
+var Campaign = require ('./models/campaign')
 
 //connect to MongoDB
 mongoose.connect("mongodb+srv://danbuis88:VGXSydm9KdVDvvG@cluster0-ptart.mongodb.net/test?retryWrites=true&w=majority", function(err){
@@ -44,7 +45,7 @@ app.prepare().then(() => {
     server.use(passport.initialize());
     server.use(passport.session());
 
-    app.use(function(req, res, next) {
+    server.use(function(req, res, next) {
         res.locals.currentUser = req.user;
         res.locals.errors = req.flash("error");
         res.locals.infos = req.flash("info");
@@ -82,6 +83,33 @@ app.prepare().then(() => {
         failureFlash: true,
         successFlash: 'Welcome'
       }));
+
+    server.post("/initCampaign", function(req, res, next){
+   
+        var campaignName = req.body.name;
+        var playerCount = req.body.players;
+        var faction = req.body.faction;
+
+        var newCampaign = new Campaign({
+            name: campaignName,
+            numberPlayers: playerCount
+        })
+        newCampaign.save(next)
+
+        return res.redirect("campaign/"+campaignName)
+    })
+
+    server.get("/campaign/:name", function(req,res,next){
+        const campaignName = req.params.name
+        Campaign.findOne({name:campaignName}, function (err, campaign){
+            if(campaign){
+                return app.render(req, res, '/campaign', {campaign: campaign})
+            }
+            if(err){
+                console.log ("no campaign found with that name")
+            }
+        })
+    })
 
     server.get('*', (req, res) => handle(req, res));
 

@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 class Header extends React.Component {
     render() {
-
+        
         
         return <div>
             <Link href="/" ><a>HOME</a></Link>
