@@ -6,7 +6,7 @@ const passport = require ('passport');
 const flash = require("connect-flash");
 const session = require("express-session");
 const cookieParser = require("cookie-parser");
-
+const morgan = require("morgan");
 const setUpPassport = require("./setuppassport");
 
 const port = parseInt(process.env.PORT, 10) || 3000;
@@ -32,8 +32,7 @@ app.prepare().then(() => {
 //start express
  const server = express();
 
-    server.use(bodyParser.json());
-    server.use(bodyParser.urlencoded({extended: false}));
+    //server.use(morgan('short'))
     server.use(cookieParser());
 
     server.use(session({
@@ -41,7 +40,8 @@ app.prepare().then(() => {
         resave: true,
         saveUninitialized: true
       }));
-
+      server.use(bodyParser.json());
+      server.use(bodyParser.urlencoded({extended: false}));
     server.use(flash());
 
     server.use(passport.initialize());
@@ -49,7 +49,6 @@ app.prepare().then(() => {
 
     server.use(function(req, res, next) {
         console.log("********************NEW REQUEST******************")
-        console.log(req.user)
         res.locals.currentUser = req.user;
         res.locals.errors = req.flash("error");
         res.locals.infos = req.flash("info");
@@ -58,9 +57,10 @@ app.prepare().then(() => {
 
     server.post("/login", passport.authenticate("login"), 
       function(req,res){
-          console.log("logging in")
-          console.log(req.user)
-        res.redirect("/profile/"+req.user.username);
+         // console.log("logging in")
+         // console.log(req.user)
+         res.redirect("/profile/"+req.user.username);
+        //res.redirect("/commander");
       });
    
 
@@ -122,6 +122,7 @@ app.prepare().then(() => {
 
     server.get("/profile/:name", function(req, res, next){
       const username = req.params.name
+      console.log (req)
       User.findOne({username: username}, function(err, user){
         if(user){
           return app.render(req, res, '/profile', {user:user})

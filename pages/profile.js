@@ -23,7 +23,7 @@ export default class extends React.Component{
     render(){
         return(
         <div>
-        <Header />
+        <Header user={this.props.user}/>
         <div>
         <Welcome username={this.props.user.username}/>
         </div>

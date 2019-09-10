@@ -2,14 +2,21 @@ import React from 'react';
 import Link from 'next/link';
 
 class Header extends React.Component {
+    loggedInStatus = () => {
+        console.log("testing logged status")
+        if(!this.props.user){
+            return <p>Future login link"</p>
+        }else {
+            return <p>Welcome {this.props.user.username}</p>
+        }
+    }
+
     render() {
         
         
         return <div>
             <Link href="/" ><a>HOME</a></Link>
-            <Link href="/campaign"><a>Campaign</a></Link>
-            <Link href="/commander"><a>Commander</a></Link>
-            <Link href="/profile"><a>Profile</a></Link>
+            {this.loggedInStatus}
         </div>;
     
     }

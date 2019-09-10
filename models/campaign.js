@@ -20,6 +20,13 @@ campaignSchema.methods.addPlayer = function(userID, faction) {
   }else{
     this.imperials.push(userID)
   }
+
+  //add the campaign to the players list
+  User.findById(id, function(err, user) {
+    if(user){
+      user.addCampaign(this._id)
+    }
+  });
 };
 
 var Campaign = mongoose.model("Campaign", campaignSchema);
