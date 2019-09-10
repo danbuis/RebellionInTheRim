@@ -14,7 +14,8 @@ var campaignSchema = mongoose.Schema({
 });
 
 campaignSchema.methods.addPlayer = function(userID, faction) {
-  if(faction==="rebels"){
+  console.log(faction)
+  if(faction =="rebel"){
     this.rebels.push(userID)
   }else{
     this.imperials.push(userID)

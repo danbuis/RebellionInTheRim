@@ -28,7 +28,7 @@ class NewCampaign extends React.Component{
                             <option value="rebel">Rebel</option>
                             <option value="empire">Empire</option>
                         </select>
-                        <input type="hidden" name="user" value={this.props.user}/>
+                        <input type="hidden" name="user" value={this.props.user._id}/>
         
                         <input type="submit" value="Submit" />
                     </form>

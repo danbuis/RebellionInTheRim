@@ -84,7 +84,6 @@ app.prepare().then(() => {
       );
 
     server.post("/initCampaign", function(req, res, next){
-        console.log(req)
         var campaignName = req.body.name;
         var playerCount = req.body.players;
         var faction = req.body.faction;
@@ -94,7 +93,8 @@ app.prepare().then(() => {
             numberPlayers: playerCount
         })
 
-        userID = req.body.user._ID
+        userID = req.body.user
+        console.log(faction)
         newCampaign.addPlayer(userID, faction)
 
         newCampaign.save(next)
