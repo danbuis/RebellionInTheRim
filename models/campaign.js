@@ -13,6 +13,14 @@ var campaignSchema = mongoose.Schema({
   battles: [Object]
 });
 
+campaignSchema.methods.addPlayer = function(userID, faction) {
+  if(faction==="rebels"){
+    this.rebels.push(userID)
+  }else{
+    this.imperials.push(userID)
+  }
+};
+
 var Campaign = mongoose.model("Campaign", campaignSchema);
 
 module.exports = Campaign;

@@ -52,11 +52,11 @@ app.prepare().then(() => {
         next();
       });
 
-    server.post("/login", passport.authenticate("login", {
-        successRedirect: "/profile",
-        failureRedirect: "/",
-        failureFlash: true
-    }));
+    server.post("/login", passport.authenticate("login"), 
+      function(req,res){
+        res.redirect("/profile/"+req.user.username);
+      });
+   
 
     server.post("/signup", function(req, res, next){
         var username = req.body.username;
@@ -77,15 +77,14 @@ app.prepare().then(() => {
           newUser.save(next);
       
         });
-      }, passport.authenticate("login", {
-        successRedirect: "/profile",
-        failureRedirect: "/signup",
-        failureFlash: true,
-        successFlash: 'Welcome'
-      }));
+      }, passport.authenticate("login"), 
+        function(req,res){
+          res.redirect("/profile/"+req.user.username);
+        }
+      );
 
     server.post("/initCampaign", function(req, res, next){
-   
+        console.log(req)
         var campaignName = req.body.name;
         var playerCount = req.body.players;
         var faction = req.body.faction;
@@ -94,6 +93,10 @@ app.prepare().then(() => {
             name: campaignName,
             numberPlayers: playerCount
         })
+
+        userID = req.body.user._ID
+        newCampaign.addPlayer(userID, faction)
+
         newCampaign.save(next)
 
         return res.redirect("campaign/"+campaignName)
@@ -109,6 +112,18 @@ app.prepare().then(() => {
                 console.log ("no campaign found with that name")
             }
         })
+    })
+
+    server.get("/profile/:name", function(req, res, next){
+      const username = req.params.name
+      User.findOne({username: username}, function(err, user){
+        if(user){
+          return app.render(req, res, '/profile', {user:user})
+        }
+        if(err){
+          console.log("no user found by that name")
+        }
+      })
     })
 
     server.get('*', (req, res) => handle(req, res));

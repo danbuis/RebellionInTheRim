@@ -3,7 +3,7 @@ class Welcome extends React.Component {
         
         return <div>
             
-            <h1><center><font color="#FFE81F">Welcome Admiral [User]</font></center></h1>
+            <h1><center><font color="#FFE81F">Welcome Admiral {this.props.username}</font></center></h1>
             
 
         </div>;
