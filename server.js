@@ -5,6 +5,7 @@ const bodyParser = require ('body-parser');
 const passport = require ('passport');
 const flash = require("connect-flash");
 const session = require("express-session");
+const cookieParser = require("cookie-parser");
 
 const setUpPassport = require("./setuppassport");
 
@@ -33,6 +34,7 @@ app.prepare().then(() => {
 
     server.use(bodyParser.json());
     server.use(bodyParser.urlencoded({extended: false}));
+    server.use(cookieParser());
 
     server.use(session({
         secret: "GH^&fg,.ig*76gHlg",
@@ -46,6 +48,8 @@ app.prepare().then(() => {
     server.use(passport.session());
 
     server.use(function(req, res, next) {
+        console.log("********************NEW REQUEST******************")
+        console.log(req.user)
         res.locals.currentUser = req.user;
         res.locals.errors = req.flash("error");
         res.locals.infos = req.flash("info");
@@ -54,6 +58,8 @@ app.prepare().then(() => {
 
     server.post("/login", passport.authenticate("login"), 
       function(req,res){
+          console.log("logging in")
+          console.log(req.user)
         res.redirect("/profile/"+req.user.username);
       });
    
@@ -77,7 +83,7 @@ app.prepare().then(() => {
           newUser.save(next);
       
         });
-      }, passport.authenticate("login"), 
+      }, passport.authenticate("login", {session: true}), 
         function(req,res){
           res.redirect("/profile/"+req.user.username);
         }
