@@ -16,6 +16,8 @@ module.exports = function() {
   });
 
   passport.use("login", new LocalStrategy(function(username, password, done) {
+    console.log("username "+username);
+    console.log("password "+password);
     User.findOne({ username: username }, function(err, user) {
       if (err) { return done(err); }
       if (!user) {
@@ -25,8 +27,6 @@ module.exports = function() {
       user.checkPassword(password, function(err, isMatch) {
         if (err) { return done(err); }
         if (isMatch) {
-          console.log("deserialized user")
-          console.log(user)
           return done(null, user);
         } else {
           console.log("wrong password")

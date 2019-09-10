@@ -5,8 +5,12 @@ const bodyParser = require ('body-parser');
 const passport = require ('passport');
 const flash = require("connect-flash");
 const session = require("express-session");
+<<<<<<< HEAD
 const cookieParser = require("cookie-parser");
 const morgan = require("morgan");
+=======
+
+>>>>>>> parent of 9dcdac5... attempting to have persistant logins
 const setUpPassport = require("./setuppassport");
 
 const port = parseInt(process.env.PORT, 10) || 3000;
@@ -32,8 +36,13 @@ app.prepare().then(() => {
 //start express
  const server = express();
 
+<<<<<<< HEAD
     //server.use(morgan('short'))
     server.use(cookieParser());
+=======
+    server.use(bodyParser.json());
+    server.use(bodyParser.urlencoded({extended: false}));
+>>>>>>> parent of 9dcdac5... attempting to have persistant logins
 
     server.use(session({
         secret: "GH^&fg,.ig*76gHlg",
@@ -48,7 +57,10 @@ app.prepare().then(() => {
     server.use(passport.session());
 
     server.use(function(req, res, next) {
+<<<<<<< HEAD
         console.log("********************NEW REQUEST******************")
+=======
+>>>>>>> parent of 9dcdac5... attempting to have persistant logins
         res.locals.currentUser = req.user;
         res.locals.errors = req.flash("error");
         res.locals.infos = req.flash("info");
@@ -57,10 +69,14 @@ app.prepare().then(() => {
 
     server.post("/login", passport.authenticate("login"), 
       function(req,res){
+<<<<<<< HEAD
          // console.log("logging in")
          // console.log(req.user)
          res.redirect("/profile/"+req.user.username);
         //res.redirect("/commander");
+=======
+        res.redirect("/profile/"+req.user.username);
+>>>>>>> parent of 9dcdac5... attempting to have persistant logins
       });
    
 
@@ -83,7 +99,7 @@ app.prepare().then(() => {
           newUser.save(next);
       
         });
-      }, passport.authenticate("login", {session: true}), 
+      }, passport.authenticate("login"), 
         function(req,res){
           res.redirect("/profile/"+req.user.username);
         }
