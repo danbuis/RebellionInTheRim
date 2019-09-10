@@ -16,7 +16,7 @@ class Header extends React.Component {
         
         return <div>
             <Link href="/" ><a>HOME</a></Link>
-            {this.loggedInStatus}
+
         </div>;
     
     }

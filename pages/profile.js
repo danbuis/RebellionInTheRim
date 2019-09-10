@@ -21,7 +21,7 @@ export default class extends React.Component{
     }
 
     render(){
-        console.log(this.props.user)
+        //console.log(this.props.user)
         return(
         <div>
         <Header user={this.props.user}/>

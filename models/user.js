@@ -36,10 +36,6 @@ userSchema.methods.checkPassword = function(guess, done) {
   });
 };
 
-userSchema.methods.name = function() {
-  return this.displayName || this.username;
-};
-
 var User = mongoose.model("User", userSchema);
 
 module.exports = User;
