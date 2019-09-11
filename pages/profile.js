@@ -4,11 +4,15 @@ import CurrentCampaigns from '../reactComponents/CurrentCampaigns'
 import NewCampaign from '../reactComponents/NewCampaign'
 import Link from 'next/link';
 import React, {Component} from 'react';
-
+import axios from 'axios';
 
 export default class extends React.Component{
-    static async getInitialProps(user){
-        return user.query;
+    static async getInitialProps(userData){
+        const user = userData.query.user;
+        const campaignData = await axios.get("http://localhost:3000/participatingCampaigns/"+user._id);
+        const campaigns = await campaignData.data;
+      
+        return {user, campaigns};
     }
 
     constructor(props){
@@ -28,7 +32,7 @@ export default class extends React.Component{
         <div>
         <Welcome username={this.props.user.username}/>
         </div>
-        <CurrentCampaigns />
+        <CurrentCampaigns campaigns={this.props.campaigns}/>
         <button onClick={this.toggleWindow}>Start a new Campaign</button>
         <NewCampaign show={this.state.isOpen}
         onClose = {this.toggleWindow} 

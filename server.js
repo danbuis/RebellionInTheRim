@@ -137,6 +137,15 @@ app.prepare().then(() => {
       })
     })
 
+    server.get("/participatingCampaigns/:userID", async function(req, res, next){
+      const userID = req.params.userID
+      const rebels = await Campaign.find({rebels:userID})
+      const imperials = await Campaign.find({imperials:userID})
+      console.log(rebels)
+      var total= await rebels.concat(imperials)
+      res.json(total)
+    })
+
     server.get('*', (req, res) => handle(req, res));
 
  //listen on the port
