@@ -23,6 +23,15 @@ campaignSchema.methods.addPlayer = function(userID, faction) {
   }
 };
 
+campaignSchema.methods.invitePlayer = function(userID, faction){
+  this.pendingInvites.push(
+    {
+      user: userID,
+      faction: faction
+    }
+  )
+}
+
 var Campaign = mongoose.model("Campaign", campaignSchema);
 
 module.exports = Campaign;

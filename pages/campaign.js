@@ -1,5 +1,6 @@
 import Header from '../reactComponents/Header'
 import CampaignHeader from '../reactComponents/CampaignHeader'
+import CampaignInvites from '../reactComponents/CampaignInvites'
 import React, {Component} from 'react'
 
 export default class extends React.Component{
@@ -12,6 +13,7 @@ export default class extends React.Component{
             <div>
                 <Header />
                 <CampaignHeader campaignName = {this.props.campaign.name}/>
+                <CampaignInvites />
             </div>
         )
     }
