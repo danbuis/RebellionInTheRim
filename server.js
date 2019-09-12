@@ -112,6 +112,18 @@ app.prepare().then(() => {
         return res.redirect("campaign/"+campaignName)
     })
 
+    server.post("/invitePlayer", async function(req, res, next){
+      console.log("inside server route looking for user "+req.body.user)
+
+      const user = await User.findOne({username:req.body.user});
+
+      console.log("inside server route looking for campaign "+req.body.campaign)
+      const campaign = await Campaign.findById(req.body.campaign);
+
+      await campaign.invitePlayer(user._id, req.body.faction);
+      await res.redirect("/campaign/"+campaign.name) 
+    })
+
     server.get("/campaign/:name", function(req,res,next){
         const campaignName = req.params.name
         Campaign.findOne({name:campaignName}, function (err, campaign){

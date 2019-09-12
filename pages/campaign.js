@@ -13,7 +13,7 @@ export default class extends React.Component{
             <div>
                 <Header />
                 <CampaignHeader campaignName = {this.props.campaign.name}/>
-                <CampaignInvites invites = {this.props.campaign.pendingInvites}/>
+                <CampaignInvites invites = {this.props.campaign.pendingInvites} _id={this.props.campaign._id}/>
             </div>
         )
     }

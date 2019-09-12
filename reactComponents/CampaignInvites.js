@@ -1,4 +1,4 @@
-import CampaignInvitesNew from '../reactComponents/CampaignInvitesnew'
+import CampaignInvitesNew from '../reactComponents/CampaignInvitesNew'
 
 class CampaignInvites extends React.Component {
     populateTable(){
@@ -31,7 +31,7 @@ class CampaignInvites extends React.Component {
 
             {this.populateTable()}
 
-            <CampaignInvitesNew />
+            <CampaignInvitesNew campaign={this.props._id}/>
             
 
         </div>;
