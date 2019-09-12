@@ -5,6 +5,7 @@ import NewCampaign from '../reactComponents/NewCampaign'
 import Link from 'next/link';
 import React, {Component} from 'react';
 import axios from 'axios';
+import EditProfile from '../reactComponents/EditProfile';
 
 export default class extends React.Component{
     static async getInitialProps(userData){
@@ -31,15 +32,24 @@ export default class extends React.Component{
         <Header user={this.props.user}/>
         <div>
         <Welcome username={this.props.user.username}/>
+        <EditProfile />
         </div>
         <CurrentCampaigns campaigns={this.props.campaigns}/>
         <button onClick={this.toggleWindow}>Start a new Campaign</button>
         <NewCampaign show={this.state.isOpen}
         onClose = {this.toggleWindow} 
         user={this.props.user}/>
-        
+
         </div>
+     
+        
+        
         )
+        
     }
 }
+
+
+
+
 

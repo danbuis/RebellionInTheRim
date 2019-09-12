@@ -1,3 +1,4 @@
+import Link from 'next/link';
 class CurrentCampaigns extends React.Component {
 
 
@@ -5,7 +6,7 @@ class CurrentCampaigns extends React.Component {
         const rows = this.props.campaigns.map((campaign, index) => {
             return (
                 <tr key={index}>
-                    <td>{campaign.name}</td>
+                    <td><Link href={"/campaign/"+campaign.name}><a>{campaign.name}</a></Link></td>
                     <td>no commander data</td>
                 </tr>
             )
@@ -22,7 +23,11 @@ class CurrentCampaigns extends React.Component {
                 <tbody>{rows}</tbody>
             </table>
         </div>
+
+        
     }
+ 
 }
 
 export default CurrentCampaigns;
+
