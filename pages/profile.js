@@ -6,6 +6,7 @@ import Link from 'next/link';
 import React, {Component} from 'react';
 import axios from 'axios';
 import EditProfile from '../reactComponents/EditProfile';
+import UserCampaigns from '../reactComponents/UserCampaigns'
 
 export default class extends React.Component{
     static async getInitialProps(userData){
@@ -39,6 +40,7 @@ export default class extends React.Component{
         <NewCampaign show={this.state.isOpen}
         onClose = {this.toggleWindow} 
         user={this.props.user}/>
+        <UserCampaigns />
 
         </div>
      
