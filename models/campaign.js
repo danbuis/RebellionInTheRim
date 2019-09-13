@@ -1,19 +1,20 @@
 var mongoose = require("mongoose");
 var User = require ('../models/user')
 
-var Invite = mongoose.Schema({userID:String, faction:String})
-
 var campaignSchema = mongoose.Schema({
   name: { type: String, required: true, unique: true },
   dateStarted: {type: Date, default:Date.now },
   dateEnded: Date,
   numberPlayers: Number,
-  pendingInvites: [Invite],
-  messages: [Object],
+  pendingInviteIDs: [String],
+  pendingInviteFactions: [String],
+  messages: [String],
+  messageTypes: [String],
   rebels: [String],
   imperials: [String],
-  systems: [Object],
-  battles: [Object]
+  systemNames: [String],
+  systemOwnership: [String],
+  battles: [String]
 });
 
 campaignSchema.methods.addPlayer = function(userID, faction) {
@@ -30,9 +31,8 @@ campaignSchema.methods.invitePlayer = function(userID, faction){
   console.log(userID)
   console.log(faction)
 
-  var invite = {user:userID, faction:faction}
-  console.log(invite)
-  this.pendingInvites.push(invite)
+  this.pendingInviteIDs.push(userID);
+  this.pendingInviteFactions.push(faction)
 }
 
 var Campaign = mongoose.model("Campaign", campaignSchema);
