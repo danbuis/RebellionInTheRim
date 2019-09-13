@@ -5,10 +5,10 @@ class CampaignInvites extends React.Component {
         if(this.props.invites.length===0 ){
             return (<p> No pending invites</p>)
         }else{
-            const rows = this.props.invites.map((invite) => {
+            const rows = this.props.invites.map((invite, index) => {
                 return (
-                    <tr>
-                        <td>{invite.user}</td>
+                    <tr key={index}>
+                        <td>{invite.userID}</td>
                         <td>{invite.faction}</td>
                     </tr>
                     )

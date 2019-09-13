@@ -6,8 +6,7 @@ var campaignSchema = mongoose.Schema({
   dateStarted: {type: Date, default:Date.now },
   dateEnded: Date,
   numberPlayers: Number,
-  pendingInviteIDs: [String],
-  pendingInviteFactions: [String],
+  pendingInvites: [{userID:String, faction:String}],
   messages: [String],
   messageTypes: [String],
   rebels: [String],
@@ -30,9 +29,10 @@ campaignSchema.methods.invitePlayer = function(userID, faction){
   console.log("inviting")
   console.log(userID)
   console.log(faction)
-
-  this.pendingInviteIDs.push(userID);
-  this.pendingInviteFactions.push(faction)
+  console.log(this.pendingInvites)
+  this.pendingInvites.push({userID: userID, faction:faction})
+  console.log(this.pendingInvites)
+  this.save()
 }
 
 var Campaign = mongoose.model("Campaign", campaignSchema);

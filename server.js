@@ -121,6 +121,7 @@ app.prepare().then(() => {
       const campaign = await Campaign.findById(req.body.campaign);
 
       await campaign.invitePlayer(user._id, req.body.faction);
+      await campaign.save()
       await res.redirect("/campaign/"+campaign.name) 
     })
 

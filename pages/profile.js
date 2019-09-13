@@ -13,8 +13,11 @@ export default class extends React.Component{
         const user = userData.query.user;
         const campaignData = await axios.get("http://localhost:3000/participatingCampaigns/"+user._id);
         const campaigns = await campaignData.data;
+
+        const invitesData = await axios.get("http://localhost:3000/invitingCampaigns/"+user._id);
+        const invites = await invitesData.data;
       
-        return {user, campaigns};
+        return {user, campaigns, invites};
     }
 
     constructor(props){
@@ -41,6 +44,7 @@ export default class extends React.Component{
         onClose = {this.toggleWindow} 
         user={this.props.user}/>
         <UserCampaigns />
+        <UserInvites  userID={this.props.user._id}/>
 
         </div>
      
