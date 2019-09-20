@@ -137,6 +137,8 @@ app.prepare().then(() => {
         })
     })
 
+
+
     server.get("/profile/:name", function(req, res, next){
       const username = req.params.name
       //console.log (req)
@@ -152,11 +154,27 @@ app.prepare().then(() => {
 
     server.get("/participatingCampaigns/:userID", async function(req, res, next){
       const userID = req.params.userID
-      const rebels = await Campaign.find({rebels:userID})
-      const imperials = await Campaign.find({imperials:userID})
+      const rebels = await Campaign.find({"rebels.playerID":userID})
+      const imperials = await Campaign.find({"imperials.playerID":userID})
       console.log(rebels)
       var total= await rebels.concat(imperials)
       res.json(total)
+    })
+
+    server.get("/invites/:userID", async function(req, res, next){
+      const user = req.params.userID
+
+      const invites = await Campaign.find({"pendingInvites.userID":user})
+      console.log(invites)
+      res.json(invites)
+    })
+
+    server.get("/user/:userID", async function(req, res, next){
+      const userID = req.params.userID
+
+      const user = await User.findById(userID)
+      console.log(user)
+      res.json(user)
     })
 
     server.get('*', (req, res) => handle(req, res));

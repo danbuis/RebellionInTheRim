@@ -7,6 +7,7 @@ import React, {Component} from 'react';
 import axios from 'axios';
 import EditProfile from '../reactComponents/EditProfile';
 import UserCampaigns from '../reactComponents/UserCampaigns'
+import UserInvites from '../reactComponents/Userinvites'
 
 export default class extends React.Component{
     static async getInitialProps(userData){
@@ -14,7 +15,7 @@ export default class extends React.Component{
         const campaignData = await axios.get("http://localhost:3000/participatingCampaigns/"+user._id);
         const campaigns = await campaignData.data;
 
-        const invitesData = await axios.get("http://localhost:3000/invitingCampaigns/"+user._id);
+        const invitesData = await axios.get("http://localhost:3000/invites/"+user._id);
         const invites = await invitesData.data;
       
         return {user, campaigns, invites};
@@ -44,7 +45,7 @@ export default class extends React.Component{
         onClose = {this.toggleWindow} 
         user={this.props.user}/>
         <UserCampaigns />
-        <UserInvites  userID={this.props.user._id}/>
+        <UserInvites  invites={this.props.invites} user={this.props.user}/>
 
         </div>
      

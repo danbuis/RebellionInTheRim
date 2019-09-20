@@ -17,9 +17,9 @@ var campaignSchema = mongoose.Schema({
 campaignSchema.methods.addPlayer = function(userID, faction) {
   console.log(faction)
   if(faction =="rebel"){
-    this.rebels.push(userID)
+    this.rebels.push(userID, "none")
   }else{
-    this.imperials.push(userID)
+    this.imperials.push(userID, "none")
   }
 };
 
@@ -30,7 +30,6 @@ campaignSchema.methods.invitePlayer = function(userID, faction){
   console.log(this.pendingInvites)
   this.pendingInvites.push({userID: userID, faction:faction})
   console.log(this.pendingInvites)
-  this.save()
 }
 
 var Campaign = mongoose.model("Campaign", campaignSchema);
