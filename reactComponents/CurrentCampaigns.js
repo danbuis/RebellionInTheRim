@@ -3,6 +3,9 @@ class CurrentCampaigns extends React.Component {
 
 
     render () {
+        if(this.props.campaigns.length===0) {
+            return(<p>No Available Campaigns</p>)
+        }else{
         const rows = this.props.campaigns.map((campaign, index) => {
             return (
                 <tr key={index}>
@@ -23,6 +26,7 @@ class CurrentCampaigns extends React.Component {
                 <tbody>{rows}</tbody>
             </table>
         </div>
+        }
 
         
     }
@@ -30,4 +34,3 @@ class CurrentCampaigns extends React.Component {
 }
 
 export default CurrentCampaigns;
-
