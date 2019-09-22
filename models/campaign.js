@@ -14,13 +14,14 @@ var campaignSchema = mongoose.Schema({
   battles: [String]
 });
 
-campaignSchema.methods.addPlayer = function(userID, faction) {
-  console.log(faction)
+campaignSchema.methods.addPlayer = function(user, faction) {
+  console.log("addPlayer "+faction)
   if(faction =="rebel"){
-    this.rebels.push(userID, "none")
+    this.rebels.push({playerID:user, commanderID:"none"})
   }else{
-    this.imperials.push(userID, "none")
+    this.imperials.push({playerID:user, commanderID:"none"})
   }
+  console.log("end add player")
 };
 
 campaignSchema.methods.invitePlayer = function(userID, faction){

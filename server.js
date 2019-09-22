@@ -106,6 +106,7 @@ app.prepare().then(() => {
         newCampaign.save(next)
 
         userID = req.body.user
+        console.log(userID)
         console.log(faction)
         newCampaign.addPlayer(userID, faction)
 
