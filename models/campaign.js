@@ -7,7 +7,7 @@ var campaignSchema = mongoose.Schema({
   dateEnded: Date,
   numberPlayers: Number,
   pendingInvites: [{userID:String, faction:String}],
-  messages: [{messageType:String, text:String}],
+  messages: [{messageType:String, text:String, source:String}],
   rebels: [{playerID:String, commanderID:String}],
   imperials: [{playerID:String, commanderID:String}],
   systems: [{name:String, facility:String}],
