@@ -106,7 +106,7 @@ app.prepare().then(() => {
         newCampaign.addPlayer(userID, faction)
         newCampaign.addMessage("initialization", "New campaign begun.  Good luck Admirals!", "auto")
         newCampaign.save(next)
-        
+
         return res.redirect("campaign/"+campaignName)
     })
 
@@ -119,6 +119,9 @@ app.prepare().then(() => {
       const campaign = await Campaign.findById(req.body.campaign);
 
       await campaign.invitePlayer(user._id, req.body.faction);
+      await campaign.addMessage("invite", 
+                            user.username+" invited to join the "+req.body.faction+" team", 
+                            "auto")
       await campaign.save()
       await res.redirect("/campaign/"+campaign.name) 
     })

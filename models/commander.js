@@ -3,7 +3,7 @@ var mongoose = require("mongoose");
 var commanderSchema = mongoose.Schema({
   name: String,
   playerID: String,
-  abilities: [String]
+  abilities: [Number]
 });
 
 
