@@ -101,15 +101,12 @@ app.prepare().then(() => {
             numberPlayers: playerCount
         })
 
-        
-
-        newCampaign.save(next)
-
         userID = req.body.user
-        console.log(userID)
-        console.log(faction)
-        newCampaign.addPlayer(userID, faction)
 
+        newCampaign.addPlayer(userID, faction)
+        newCampaign.addMessage("initialization", "New campaign begun.  Good luck Admirals!", "auto")
+        newCampaign.save(next)
+        
         return res.redirect("campaign/"+campaignName)
     })
 
