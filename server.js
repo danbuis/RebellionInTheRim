@@ -17,6 +17,7 @@ const handle = app.getRequestHandler();
 
 var User = require ('./models/user')
 var Campaign = require ('./models/campaign')
+var Commander = require('./models/commander')
 
 //connect to MongoDB
 mongoose.connect("mongodb+srv://danbuis88:VGXSydm9KdVDvvG@cluster0-ptart.mongodb.net/test?retryWrites=true&w=majority", function(err){
@@ -126,6 +127,48 @@ app.prepare().then(() => {
       await res.redirect("/campaign/"+campaign.name) 
     })
 
+    server.get("/newCommander/:player/:campaign", async function(req, res, next){
+      console.log("in server method")
+      var newCommander = new Commander({
+        name: "Default Name",
+        playerID: req.params.player,
+        campaign: req.params.campaign,
+        currentPoints: 0
+      })
+
+      newCommander.save(next)
+      return res.redirect("/commander/"+newCommander._id)
+    })
+
+    server.post("/changeCommanderName", async function(req, res, next){
+      const commander = await Commander.findById(req.body.commanderID)
+
+      await commander.changeName(req.body.newName)
+      await commander.save()
+      await res.redirect("/commander/"+req.body.commanderID)
+    })
+
+    server.post("/addSkill/:commander/:skillID", async function(req, res, next){
+      const commanderID = req.params.commander
+      console.log(commanderID)
+      const commander = await Commander.findById(commanderID)
+      console.log(commander)
+      await commander.addSkill(req.params.skillID)
+      await commander.save()
+      await res.redirect("/commander/"+commanderID)
+    })
+
+    server.post("/upgradeSkill", async function(req, res, next){
+      const commanderID = req.body.commanderID
+      const currentSkillID = req.body.currentSkillID
+      const newSkillID = req.body.newSkillID
+
+      const commander = await Commander.findById(commanderID)
+      await commander.upgradeSkill(currentSkillID, newSkillID)
+      await commander.save()
+      await res.redirect("/commander/"+commanderID)
+    })
+
     server.get("/campaign/:name", function(req,res,next){
         const campaignName = req.params.name
         Campaign.findOne({name:campaignName}, function (err, campaign){
@@ -138,8 +181,13 @@ app.prepare().then(() => {
         })
     })
 
+    server.get("/campaignByID/:campaignID", async function(req,res,next){
+      const campaignID = req.params.campaignID
+      const campaign = await Campaign.findById(campaignID)
 
-
+      res.json(campaign)
+      })
+  
     server.get("/profile/:name", function(req, res, next){
       const username = req.params.name
       //console.log (req)
@@ -176,6 +224,18 @@ app.prepare().then(() => {
       const user = await User.findById(userID)
       console.log(user)
       res.json(user)
+    })
+
+    server.get("/commander/:commanderID", async function(req,res, next){
+      const commanderID = req.params.commanderID
+
+      const commander = await Commander.findById(commanderID)
+      if(commander){
+        return app.render(req, res, '/commander', {commander: commander})
+      }
+      if(err){
+          console.log ("no commander found with that ID")
+      }
     })
 
     server.get('*', (req, res) => handle(req, res));

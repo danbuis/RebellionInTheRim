@@ -1,4 +1,14 @@
+import Link from 'next/link';
+
 class CampaignPlayers extends React.Component {
+    commanderLabel(label, player){
+        if (label ==="none") return (
+            //+this.props.campaignID+"/"+player
+            <td><Link href={"/newCommander/"+player +"/"+this.props.campaignID}><a>Create Commander</a></Link></td>
+        )
+        else return label
+    }
+    
     populateTable(){
         if(this.props.players.length===0 ){
             return (<p> No current players</p>)
@@ -7,7 +17,7 @@ class CampaignPlayers extends React.Component {
                 return (
                     <tr key={index}>
                         <td>{player.playerID}</td>
-                        <td>{player.commanderID}</td>
+                        <td>{this.commanderLabel(player.commanderID, player.playerID)}</td>
                     </tr>
                     )
                 })

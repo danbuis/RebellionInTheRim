@@ -20,8 +20,8 @@ export default class extends React.Component{
                 <CampaignInvites invites = {this.props.campaign.pendingInvites} _id={this.props.campaign._id}/>
                 <CampaignSystems />
                 <CampaignMessages messages = {this.props.campaign.messages}/>
-                <CampaignPlayers faction = "Rebel" players = {this.props.campaign.rebels} />
-                <CampaignPlayers faction = "Imperial" players = {this.props.campaign.imperials} />
+                <CampaignPlayers faction = "Rebel" players = {this.props.campaign.rebels} campaignID = {this.props.campaign._id}/>
+                <CampaignPlayers faction = "Imperial" players = {this.props.campaign.imperials} campaignID = {this.props.campaign._id}/>
             </div>
         )
     }

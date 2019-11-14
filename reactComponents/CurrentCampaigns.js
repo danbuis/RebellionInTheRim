@@ -1,7 +1,5 @@
 import Link from 'next/link';
 class CurrentCampaigns extends React.Component {
-
-
     render () {
         if(this.props.campaigns.length===0) {
             return(<p>No Available Campaigns</p>)
