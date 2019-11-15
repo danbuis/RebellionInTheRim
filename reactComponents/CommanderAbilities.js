@@ -9,7 +9,7 @@ class CommanderAbilities extends React.Component {
                 return Abilities[i].Title
             }
         }
-        return "none"
+        return "None"
     }
 
     addSkill(ability){
@@ -29,15 +29,17 @@ class CommanderAbilities extends React.Component {
             return (<p> Error, no abilities found!!!  Its all broken!!!</p>)
         }else{
             const rows = Abilities.map((ability, index) => {
-                return (
-                    <tr key={index}>
-                        <td>{ability.Title}</td>
-                        <td>{ability.Tier}</td>
-                        <td>{ability.Cost}</td>
-                        <td>{this.findItemByID(ability.Next)}</td>
-                        <td>{this.addSkill(ability)}</td>
-                    </tr>
-                    )
+                if(ability.Base === "Yes"){
+                    return (
+                        <tr key={index}>
+                            <td>{ability.Title}</td>
+                            <td>{ability.Tier}</td>
+                            <td>{ability.Cost}</td>
+                            <td>{this.findItemByID(ability.Next)}</td>
+                            <td>{this.addSkill(ability)}</td>
+                        </tr>
+                        )
+                    }
                 })
             return(
                 <table border="1">

@@ -1,4 +1,5 @@
 import Abilities from '../commanderAbilities.js'
+import { AST_This } from 'terser'
 
 class CommanderAbilities extends React.Component {
     listItems(items){
@@ -13,13 +14,15 @@ class CommanderAbilities extends React.Component {
         )
     }
 
-    findItemByID(id){
+    findItemByID(id){        
         for(var i=0; i<Abilities.length; i++){
             if(Abilities[i].ID === id){
                 return Abilities[i]
             }
         }
-        return "none"
+        return {
+            Title: "None"
+        }
     }
 
     upgrade(ability){
@@ -50,6 +53,7 @@ class CommanderAbilities extends React.Component {
                         <td>{ability.Title}</td>
                         <td>{ability.Tier}</td>
                         <td>{ability.Cost}</td>
+                        <td>{this.findItemByID(ability.Next).Title}</td>
                         <td>{this.upgrade(ability)}</td>
                     </tr>
                     )
@@ -61,6 +65,7 @@ class CommanderAbilities extends React.Component {
                             <th>Ability Name</th>
                             <th>Tier</th>
                             <th>Cost</th>
+                            <th>Upgrades to...</th>
                             <th>Upgrade?</th>
                         </tr>
                     </thead>
