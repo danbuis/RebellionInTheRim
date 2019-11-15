@@ -1,17 +1,7 @@
 import Abilities from '../commanderAbilities.js'
 
 class CommanderAbilities extends React.Component {
-    listItems(items){
-        const list = items.map((item, index) => {
-            return<li>{item}</li>
-        })
-
-        return(
-            <ul>
-                {list}
-            </ul>
-        )
-    }
+    
 
     findItemByID(id){
         for(var i=0; i<Abilities.length; i++){
@@ -51,13 +41,15 @@ class CommanderAbilities extends React.Component {
                 })
             return(
                 <table border="1">
-                    <tr>
-                    <th>Ability Name</th>
-                    <th>Tier</th>
-                    <th>Cost</th>
-                    <th>Upgrades to</th>
-                    <th>Add Skill</th>
-                    </tr>
+                    <thead>
+                        <tr>
+                            <th>Ability Name</th>
+                            <th>Tier</th>
+                            <th>Cost</th>
+                            <th>Upgrades to</th>
+                            <th>Add Skill</th>
+                        </tr>
+                    </thead>
                     <tbody>{rows}</tbody>
                 </table>
             )

@@ -38,12 +38,12 @@ class CampaignPlayers extends React.Component {
     commanderLabel(label, player, index){
         if (label ==="none") return (
             //+this.props.campaignID+"/"+player
-            <td><Link href={"/newCommander/"+player +"/"+this.props.campaignID}><a>Create Commander</a></Link></td>
+            <Link href={"/newCommander/"+player +"/"+this.props.campaignID}><a>Create Commander</a></Link>
         )
         else {
             console.log("error?")
             
-            return <td><Link href={"/commander/"+label}><a>{this.state.commanders[index]}</a></Link></td>
+            return <Link href={"/commander/"+label}><a>{this.state.commanders[index]}</a></Link>
         }
     }
 
@@ -65,10 +65,12 @@ class CampaignPlayers extends React.Component {
                 })
             return(
                 <table border="1">
-                    <tr>
-                    <th>Player</th>
-                    <th>Commander</th>
-                    </tr>
+                    <thead>
+                        <tr>
+                            <th>Player</th>
+                            <th>Commander</th>
+                        </tr>
+                    </thead>
                     <tbody>{rows}</tbody>
                 </table>
             )

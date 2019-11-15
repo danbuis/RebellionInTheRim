@@ -5,9 +5,9 @@ class CampaignMessageList extends React.Component {
             return (<li>No messages at this time</li>)
         }
 
-        const messageDisplay = this.props.messages.map((message) =>{
+        const messageDisplay = this.props.messages.map((message, index) =>{
             return (
-                <li>{message.text}</li>
+                <li key={index}>{message.text}</li>
             )
         })
 

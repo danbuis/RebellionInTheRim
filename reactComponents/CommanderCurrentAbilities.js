@@ -56,12 +56,14 @@ class CommanderAbilities extends React.Component {
                 })
             return(
                 <table border="1">
-                    <tr>
-                    <th>Ability Name</th>
-                    <th>Tier</th>
-                    <th>Cost</th>
-                    <th>Upgrade?</th>
-                    </tr>
+                    <thead>
+                        <tr>
+                            <th>Ability Name</th>
+                            <th>Tier</th>
+                            <th>Cost</th>
+                            <th>Upgrade?</th>
+                        </tr>
+                    </thead>
                     <tbody>{rows}</tbody>
                 </table>
             )

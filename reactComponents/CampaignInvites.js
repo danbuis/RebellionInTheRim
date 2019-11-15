@@ -44,10 +44,12 @@ class CampaignInvites extends React.Component {
                 })
             return(
                 <table border="1">
-                    <tr>
-                    <th>Player</th>
-                    <th>Faction</th>
-                    </tr>
+                    <thead>
+                        <tr>
+                            <th>Player</th>
+                            <th>Faction</th>
+                        </tr>
+                    </thead>
                     <tbody>{rows}</tbody>
                 </table>
             )

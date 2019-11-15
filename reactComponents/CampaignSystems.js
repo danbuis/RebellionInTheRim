@@ -3,7 +3,7 @@ import Systems from '../systems.js'
 class CampaignSystems extends React.Component {
     listItems(items){
         const list = items.map((item, index) => {
-            return<li>{item}</li>
+            return<li key={index}>{item}</li>
         })
 
         return(
@@ -30,13 +30,15 @@ class CampaignSystems extends React.Component {
                 })
             return(
                 <table border="1">
-                    <tr>
-                    <th>System Name</th>
-                    <th>Area</th>
-                    <th>Strategic Effect</th>
-                    <th>Ownership</th>
-                    <th>Bonus Points</th>
-                    </tr>
+                    <thead>
+                        <tr>
+                            <th>System Name</th>
+                            <th>Area</th>
+                            <th>Strategic Effect</th>
+                            <th>Ownership</th>
+                            <th>Bonus Points</th>
+                        </tr>
+                    </thead>
                     <tbody>{rows}</tbody>
                 </table>
             )
