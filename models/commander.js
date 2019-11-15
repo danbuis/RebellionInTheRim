@@ -13,7 +13,10 @@ commanderSchema.methods.changeName = function(newName){
 }
 
 commanderSchema.methods.addSkill = function(ID){
-  this.abilities.push(ID)
+  var index = this.abilities.indexOf(ID)
+  if(index < 0){
+    this.abilities.push(ID)
+  }
 }
 
 commanderSchema.methods.upgradeSkill = function(currentID, newID){

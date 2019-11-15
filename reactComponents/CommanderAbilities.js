@@ -24,12 +24,14 @@ class CommanderAbilities extends React.Component {
         }
     }
 
+   
+
     populateTable(){
         if(Abilities.length===0 ){
             return (<p> Error, no abilities found!!!  Its all broken!!!</p>)
         }else{
             const rows = Abilities.map((ability, index) => {
-                if(ability.Base === "Yes"){
+                if(ability.Base === "Yes" && this.props.commander.abilities.includes(ability.ID)){
                     return (
                         <tr key={index}>
                             <td>{ability.Title}</td>
