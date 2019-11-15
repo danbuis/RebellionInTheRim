@@ -25,7 +25,9 @@ class CommanderAbilities extends React.Component {
     addSkill(ability){
         if (ability.Base === "Yes"){
             return(
-                <form action={"/addSkill/"+this.props.commander._id +"/"+ability.ID} method="post">
+                <form action="/addSkill" method="post">
+                    <input type="hidden" name="commanderID" value={this.props.commander._id} />
+                    <input type="hidden" name="abilityID" value={ability.ID} />
                     <input type="submit" value="Add Skill" />
                 </form>
             )

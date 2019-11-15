@@ -33,6 +33,25 @@ campaignSchema.methods.invitePlayer = function(userID, faction){
   console.log(this.pendingInvites)
 }
 
+campaignSchema.methods.updateCommander = function(commander){
+  const targetPlayer = commander.playerID
+  this.rebels.map((player) => {
+      if(player.playerID === targetPlayer){
+        player.commanderID = commander._id
+        return
+      }
+    }
+  )
+
+  this.imperials.map((player) => {
+    if(player.playerID === targetPlayer){
+      player.commanderID = commander._id
+      return
+    }
+  }
+)
+}
+
 
 /*types include things like user communication, player add/drops, battle creation/results, 
 commander creation/promotion, and fleet retirement.

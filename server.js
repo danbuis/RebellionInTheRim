@@ -137,6 +137,11 @@ app.prepare().then(() => {
       })
 
       newCommander.save(next)
+
+      //update campaign info
+      const campaign = await Campaign.findById(req.params.campaign)
+      await campaign.updateCommander(newCommander)
+      await campaign.save()
       return res.redirect("/commander/"+newCommander._id)
     })
 
@@ -148,12 +153,12 @@ app.prepare().then(() => {
       await res.redirect("/commander/"+req.body.commanderID)
     })
 
-    server.post("/addSkill/:commander/:skillID", async function(req, res, next){
-      const commanderID = req.params.commander
+    server.post("/addSkill", async function(req, res, next){
+      const commanderID = req.body.commanderID
       console.log(commanderID)
       const commander = await Commander.findById(commanderID)
       console.log(commander)
-      await commander.addSkill(req.params.skillID)
+      await commander.addSkill(req.body.abilityID)
       await commander.save()
       await res.redirect("/commander/"+commanderID)
     })
@@ -222,8 +227,14 @@ app.prepare().then(() => {
       const userID = req.params.userID
 
       const user = await User.findById(userID)
-      console.log(user)
       res.json(user)
+    })
+
+    server.get("/commanderData/:commanderID", async function(req, res, next){
+      const commanderID = req.params.commanderID
+
+      const commander = await Commander.findById(commanderID)
+      res.json(commander)
     })
 
     server.get("/commander/:commanderID", async function(req,res, next){
