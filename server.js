@@ -178,6 +178,30 @@ app.prepare().then(() => {
       res.json(user)
     })
 
+    server.post("/acceptInvite/:campaignName/:userID/:faction", async function(req, res, next){
+      const user = req.params.userID
+      const faction = req.params.faction
+      const campaignName = req.params.campaignName
+
+      console.log("inside server post method")
+      console.log(user)
+      console.log(faction)
+
+      var campaign= await Campaign.find({name:campaignName})
+      await console.log(campaign)
+
+      //add the player
+      await campaign.addPlayer(user, faction)
+
+      //remove the invite
+      await campaign.removeInvite(user)
+
+      //save the changes
+      await campaign.save()
+
+      await res.redirect("/campaign/"+campaign.name)
+    })
+
     server.get('*', (req, res) => handle(req, res));
 
  //listen on the port
