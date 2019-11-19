@@ -138,9 +138,13 @@ app.prepare().then(() => {
 
       newCommander.save(next)
 
+      const player = await User.findById(req.params.player)
+
+
       //update campaign info
       const campaign = await Campaign.findById(req.params.campaign)
       await campaign.updateCommander(newCommander)
+      await campaign.addMessage("commander", player.username + " has created a new commander", "auto")
       await campaign.save()
       return res.redirect("/commander/"+newCommander._id)
     })
@@ -155,9 +159,12 @@ app.prepare().then(() => {
 
     server.post("/addSkill", async function(req, res, next){
       const commanderID = req.body.commanderID
-      console.log(commanderID)
       const commander = await Commander.findById(commanderID)
-      console.log(commander)
+
+      const campaign = await Campaign.findById(commander.campaign)
+      await campaign.addMessage("commander", commander.name + " has gained the "+req.body.abilityTitle+" ability", "auto") 
+      await campaign.save()
+
       await commander.addSkill(req.body.abilityID)
       await commander.save()
       await res.redirect("/commander/"+commanderID)
@@ -171,6 +178,11 @@ app.prepare().then(() => {
       const commander = await Commander.findById(commanderID)
       await commander.upgradeSkill(currentSkillID, newSkillID)
       await commander.save()
+
+      const campaign = await Campaign.findById(commander.campaign)
+      await campaign.addMessage("commander", commander.name + " has upgraded an ability to "+req.body.newSkillTitle, "auto") 
+      await campaign.save()
+
       await res.redirect("/commander/"+commanderID)
     })
 

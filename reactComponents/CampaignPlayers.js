@@ -22,6 +22,7 @@ class CampaignPlayers extends React.Component {
         }
 
         const getCommanderName = async player =>{
+            if(player.commanderID === "none") return "none"
             const commander = await axios.get('http://localhost:3000/commanderData/'+player.commanderID)
             const commanderName = await commander.data.name
             return await commanderName

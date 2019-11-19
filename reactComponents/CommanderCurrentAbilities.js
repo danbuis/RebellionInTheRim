@@ -35,6 +35,7 @@ class CommanderAbilities extends React.Component {
                     <input type="hidden" name="commanderID" value = {this.props.commander._id} />
                     <input type="hidden" name="currentSkillID" value = {ability.ID} />
                     <input type="hidden" name="newSkillID" value = {ability.Next} />
+                    <input type="hidden" name="newSkillTitle" value = {ability.Title} />
                     <input type="submit" value="Upgrade Skill" />
                 </form>
             )

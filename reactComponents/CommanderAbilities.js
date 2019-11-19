@@ -18,6 +18,7 @@ class CommanderAbilities extends React.Component {
                 <form action="/addSkill" method="post">
                     <input type="hidden" name="commanderID" value={this.props.commander._id} />
                     <input type="hidden" name="abilityID" value={ability.ID} />
+                    <input type="hidden" name="abilityTitle" value={ability.Title} />
                     <input type="submit" value="Add Skill" />
                 </form>
             )
@@ -31,7 +32,7 @@ class CommanderAbilities extends React.Component {
             return (<p> Error, no abilities found!!!  Its all broken!!!</p>)
         }else{
             const rows = Abilities.map((ability, index) => {
-                if(ability.Base === "Yes" && this.props.commander.abilities.includes(ability.ID)){
+                if(ability.Base === "Yes" && !this.props.commander.abilities.includes(ability.ID)){
                     return (
                         <tr key={index}>
                             <td>{ability.Title}</td>
