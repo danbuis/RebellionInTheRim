@@ -2,16 +2,18 @@ import React from 'react';
 import axios from 'axios';
 
 class CampaignInviteRespond extends React.Component {
-    acceptInvite(){
-        console.log("posting")
-        axios.post("http://localhost:3000/acceptInvite/"+this.props.campaign+"/"+this.props.user+"/"+this.props.faction)
-    }
+    
     
     render () {
         
         return <div>
             
-            <button onClick={this.acceptInvite()}>Accept</button>       
+            <form action={"/acceptInvite"} method="post">
+                <input type="hidden" name="campaign" value={this.props.campaign} />
+                <input type="hidden" name="user" value={this.props.user} />
+                <input type="hidden" name="faction" value={this.props.faction} />
+                <input type="submit" value="Accept" />
+            </form>       
 
         </div>;
     }

@@ -203,7 +203,7 @@ app.prepare().then(() => {
       const campaign = await Campaign.findById(campaignID)
 
       res.json(campaign)
-      })
+    })
   
     server.get("/profile/:name", function(req, res, next){
       const username = req.params.name
@@ -242,21 +242,21 @@ app.prepare().then(() => {
       res.json(user)
     })
 
-    server.post("/acceptInvite/:campaignName/:userID/:faction", async function(req, res, next){
-      const user = req.params.userID
-      const faction = req.params.faction
-      const campaignName = req.params.campaignName
+    server.post("/acceptInvite", async function(req, res, next){
+      const user = req.body.user
+      const faction = req.body.faction
+      const campaignName = req.body.campaign
 
       console.log("inside server post method")
       console.log(user)
       console.log(faction)
-
-      var campaign= await Campaign.find({name:campaignName})
+      console.log(campaignName)
+      const campaign = await Campaign.findOne({name:campaignName})
       await console.log(campaign)
-
+      await console.log("checking name : "+campaign.name)
       //add the player
+      await console.log("checking for addPlayer")
       await campaign.addPlayer(user, faction)
-
       //remove the invite
       await campaign.removeInvite(user)
 
@@ -264,6 +264,9 @@ app.prepare().then(() => {
       await campaign.save()
 
       await res.redirect("/campaign/"+campaign.name)
+
+    })
+
     server.get("/commanderData/:commanderID", async function(req, res, next){
       const commanderID = req.params.commanderID
 
