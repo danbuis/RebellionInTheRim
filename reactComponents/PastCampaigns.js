@@ -6,10 +6,12 @@ class PastCampaigns extends React.Component {
             <h2>Past Campaigns</h2>
 
             <table border='1'>
-                <tr>
-                    <th>Campaign Name</th>
-                    <th>Commander</th>
-                </tr>
+                <thead>
+                    <tr>
+                        <th>Campaign Name</th>
+                        <th>Commander</th>
+                    </tr>
+                </thead>
             </table>
         </div>
     }

@@ -6,8 +6,8 @@ class CampaignMessages extends React.Component {
         
         return <div>
             <h1>Comms</h1>
-            <CampaignMessageList />
-            <CampaignAddMessage />
+            <CampaignMessageList messages={this.props.messages}/>
+            
             
 
         </div>;

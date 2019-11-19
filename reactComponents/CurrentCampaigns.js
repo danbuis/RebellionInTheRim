@@ -1,7 +1,5 @@
 import Link from 'next/link';
 class CurrentCampaigns extends React.Component {
-
-
     render () {
         if(this.props.campaigns.length===0) {
             return(<p>No Available Campaigns</p>)
@@ -19,10 +17,12 @@ class CurrentCampaigns extends React.Component {
             <h2>Current Campaigns</h2>
             
             <table border="1">
-                <tr>
-                    <th>Campaign Name</th>
-                    <th>Commander</th>
-                </tr>
+                <thead>
+                    <tr>
+                        <th>Campaign Name</th>
+                        <th>Commander</th>
+                    </tr>
+                </thead>
                 <tbody>{rows}</tbody>
             </table>
         </div>
