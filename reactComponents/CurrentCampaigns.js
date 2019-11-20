@@ -8,7 +8,7 @@ class CurrentCampaigns extends React.Component {
             return (
                 <tr key={index}>
                     <td><Link href={"/campaign/"+campaign.name}><a>{campaign.name}</a></Link></td>
-                    <td>no commander data</td>
+                    <td>no commander data (Placeholder)</td>
                 </tr>
             )
         })

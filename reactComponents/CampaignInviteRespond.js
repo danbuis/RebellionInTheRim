@@ -13,7 +13,12 @@ class CampaignInviteRespond extends React.Component {
                 <input type="hidden" name="user" value={this.props.user} />
                 <input type="hidden" name="faction" value={this.props.faction} />
                 <input type="submit" value="Accept" />
-            </form>       
+            </form>
+            <form action={"/declineInvite"} method="post">
+                <input type="hidden" name="campaign" value={this.props.campaign} />
+                <input type="hidden" name="user" value={this.props.user} />
+                <input type="submit" value="Decline" />
+            </form>  
 
         </div>;
     }

@@ -115,16 +115,53 @@ app.prepare().then(() => {
       console.log("inside server route looking for user "+req.body.user)
 
       const user = await User.findOne({username:req.body.user});
+      if(!user){
+        res.redirect("/error/4")
+      }else{
 
-      console.log("inside server route looking for campaign "+req.body.campaign)
-      const campaign = await Campaign.findById(req.body.campaign);
+        console.log("inside server route looking for campaign "+req.body.campaign)
+        const campaign = await Campaign.findById(req.body.campaign);
+        //check if player is already involved in the campaign
+        
+        var alreadyInvited = false
+        var alreadyRebel = false
+        var alreadyImperial = false
+        console.log("checking previously participating")
 
-      await campaign.invitePlayer(user._id, req.body.faction);
-      await campaign.addMessage("invite", 
-                            user.username+" invited to join the "+req.body.faction+" team", 
-                            "auto")
-      await campaign.save()
-      await res.redirect("/campaign/"+campaign.name) 
+        console.log(campaign)
+
+        campaign.pendingInvites.map(invite => {
+          console.log("checking invites")
+          console.log(invite.userID)
+          console.log(user._id)
+          if(invite.userID == user._id){
+            alreadyInvited = true
+          } 
+        })
+
+        campaign.rebels.map(player => {
+          if(player.playerID == user._id) alreadyInvited = true
+        })
+
+        campaign.imperials.map(player => {
+          if(player.playerID == user._id) alreadyInvited = true
+        })
+
+        console.log(alreadyInvited)
+        console.log(alreadyRebel)
+        console.log(alreadyImperial)
+
+        if(alreadyInvited || alreadyRebel || alreadyImperial){
+          res.redirect("/error/1")
+        }else{
+          await campaign.invitePlayer(user._id, req.body.faction);
+          await campaign.addMessage("invite", 
+                                user.username+" has been invited to join the "+req.body.faction+" team", 
+                                "auto")
+          await campaign.save()
+          await res.redirect("/campaign/"+campaign.name) 
+        }
+      }
     })
 
     server.get("/newCommander/:player/:campaign", async function(req, res, next){
@@ -151,10 +188,16 @@ app.prepare().then(() => {
 
     server.post("/changeCommanderName", async function(req, res, next){
       const commander = await Commander.findById(req.body.commanderID)
+      const newName=req.body.newName
+      const cleanName = newName.toLowerCase().trim();
 
-      await commander.changeName(req.body.newName)
-      await commander.save()
-      await res.redirect("/commander/"+req.body.commanderID)
+      if(cleanName === "none"){
+        res.redirect("/error/2")
+      }else{
+        await commander.changeName(req.body.newName)
+        await commander.save()
+        await res.redirect("/commander/"+req.body.commanderID)
+      }
     })
 
     server.post("/addSkill", async function(req, res, next){
@@ -198,6 +241,27 @@ app.prepare().then(() => {
         })
     })
 
+    server.get("/error/:errorCode", function(req, res, next){
+      const errorCode = req.params.errorCode
+      var errorMessage
+      switch (errorCode) {
+        case '1':
+          errorMessage = "User is already participating in that campaign"
+          break;
+        case '2':
+          errorMessage = "Commander name is not allowed"
+          break
+        case '3':
+          errorMessage = "That username is already in use."
+          break
+        case '4':
+          errorMessage = "That user cannot be found, check the spelling"
+          break
+      }
+
+      return app.render(req,res, '/error', {errorMessage: errorMessage})
+    })
+
     server.get("/campaignByID/:campaignID", async function(req,res,next){
       const campaignID = req.params.campaignID
       const campaign = await Campaign.findById(campaignID)
@@ -231,7 +295,6 @@ app.prepare().then(() => {
       const user = req.params.userID
 
       const invites = await Campaign.find({"pendingInvites.userID":user})
-      console.log(invites)
       res.json(invites)
     })
 
@@ -247,24 +310,38 @@ app.prepare().then(() => {
       const faction = req.body.faction
       const campaignName = req.body.campaign
 
-      console.log("inside server post method")
-      console.log(user)
-      console.log(faction)
-      console.log(campaignName)
+      const userData = await User.findById(user)
       const campaign = await Campaign.findOne({name:campaignName})
-      await console.log(campaign)
-      await console.log("checking name : "+campaign.name)
+
       //add the player
-      await console.log("checking for addPlayer")
       await campaign.addPlayer(user, faction)
+
       //remove the invite
       await campaign.removeInvite(user)
-
+      await campaign.addMessage("invite", userData.username+" has joined this campaign", "auto")
+      
       //save the changes
       await campaign.save()
 
       await res.redirect("/campaign/"+campaign.name)
 
+    })
+
+    server.post("/declineInvite", async function(req, res, next){
+      const user = req.body.user
+      const campaignName = req.body.campaign
+
+      const campaign = await Campaign.findOne({name:campaignName})
+      const userData = await User.findById(user)
+      await campaign.removeInvite(user)
+
+      await campaign.addMessage("invite", userData.username+" has declined the invite to join this campaign", "auto")
+      //save the changes
+      await campaign.save()
+
+      
+
+      await res.redirect("/profile/"+userData.username)
     })
 
     server.get("/commanderData/:commanderID", async function(req, res, next){
