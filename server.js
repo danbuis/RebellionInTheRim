@@ -19,9 +19,11 @@ const app = next({ dev });
 const handle = app.getRequestHandler();
 
 
+//old mongo atlad connection string
+//mongodb+srv://danbuis88:VGXSydm9KdVDvvG@cluster0-ptart.mongodb.net/test?retryWrites=true&w=majority
 
 //connect to MongoDB
-mongoose.connect("mongodb+srv://danbuis88:VGXSydm9KdVDvvG@cluster0-ptart.mongodb.net/test?retryWrites=true&w=majority", function(err){
+mongoose.connect("mongodb://heroku_tv8w8h8x:4q96fd2jubps28bjf7upeqf8un@ds153766.mlab.com:53766/heroku_tv8w8h8x", {useNewUrlParser: true }, function(err){
     if (err){
         console.log('NOT CONNECTED TO MONGOOSE')
         console.log(err)
