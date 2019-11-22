@@ -39,11 +39,13 @@ class CampaignPlayers extends React.Component {
     commanderLabel(label, player, index){
         if (label ==="none") return (
             //+this.props.campaignID+"/"+player
-            <Link href={"/newCommander/"+player +"/"+this.props.campaignID}><a>Create Commander</a></Link>
+            <form action="/newCommander" method="post">
+                <input type="hidden" name="player" value={player} />
+                <input type="hidden" name="campaign" value={this.props.campaignID} />
+                <input type="submit" value="Create Commander" />
+            </form>
         )
         else {
-            console.log("error?")
-            
             return <Link href={"/commander/"+label}><a>{this.state.commanders[index]}</a></Link>
         }
     }

@@ -95,23 +95,28 @@ app.prepare().then(() => {
         }
       );
 
-    server.post("/initCampaign", function(req, res, next){
+    server.post("/initCampaign", async function(req, res, next){
         var campaignName = req.body.name;
         var playerCount = req.body.players;
         var faction = req.body.faction;
 
-        var newCampaign = new Campaign({
+        const campaign = await Campaign.find({name:campaignName})
+        if(campaign.length>0){
+          return res.redirect("/error/5")
+        }else{
+          var newCampaign = new Campaign({
             name: campaignName,
             numberPlayers: playerCount
         })
 
         userID = req.body.user
 
-        newCampaign.addPlayer(userID, faction)
-        newCampaign.addMessage("initialization", "New campaign begun.  Good luck Admirals!", "auto")
-        newCampaign.save(next)
+        await newCampaign.addPlayer(userID, faction)
+        await newCampaign.addMessage("initialization", "New campaign begun.  Good luck Admirals!", "auto")
+        await newCampaign.save()
 
-        return res.redirect("campaign/"+campaignName)
+        return res.redirect("/campaign/"+campaignName)
+        }      
     })
 
     server.post("/invitePlayer", async function(req, res, next){
@@ -167,24 +172,32 @@ app.prepare().then(() => {
       }
     })
 
-    server.get("/newCommander/:player/:campaign", async function(req, res, next){
+    server.post("/newCommander", async function(req, res, next){
       console.log("in server method")
-      var newCommander = new Commander({
+      var newCommander =  new Commander({
         name: "Default Name",
-        playerID: req.params.player,
-        campaign: req.params.campaign,
+        playerID: req.body.player,
+        campaign: req.body.campaign,
         currentPoints: 0
       })
 
-      newCommander.save(next)
-
-      const player = await User.findById(req.params.player)
+      await newCommander.save()
+      console.log("saved Commander "+newCommander)
+      const player = await User.findById(req.body.player)
+          .catch(console.log("could not find player"))
 
       //update campaign info
-      const campaign = await Campaign.findById(req.params.campaign)
+      const campaign = await Campaign.findById(req.body.campaign)
+          .catch(console.log("Could not find campaign"))
+
       await campaign.updateCommander(newCommander)
       await campaign.addMessage("commander", player.username + " has created a new commander", "auto")
       await campaign.save()
+
+      console.log("just before redirect "+newCommander._id)
+      await console.log("just before redirect "+newCommander._id)
+
+      //return app.render(req, res, '/commander', {commander: newCommander, campaign:campaign})
       return res.redirect("/commander/"+newCommander._id)
     })
 
@@ -258,6 +271,9 @@ app.prepare().then(() => {
           break
         case '4':
           errorMessage = "That user cannot be found, check the spelling"
+          break
+        case '5' :
+          errorMessage = "That campaign name is already in use"
           break
       }
 
@@ -360,6 +376,7 @@ app.prepare().then(() => {
     })
 
     server.get("/commander/:commanderID", async function(req,res, next){
+      console.log("next server method")
       const commanderID = req.params.commanderID
 
       const commander = await Commander.findById(commanderID)
@@ -367,7 +384,7 @@ app.prepare().then(() => {
         //get the campaign this commander is in
         const campaignID = commander.campaign
         const campaign = await Campaign.findById(campaignID)
-
+        console.log("just before render")
         return app.render(req, res, '/commander', {commander: commander, campaign:campaign})
       }
       if(err){

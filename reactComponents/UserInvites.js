@@ -34,11 +34,13 @@ class UserInvites extends React.Component {
                 })
             return(
                 <table border="1">
-                    <tr>
-                    <th>Campaign</th>
-                    <th>Faction</th>
-                    <th>Response</th>
-                    </tr>
+                    <thead>
+                        <tr>
+                            <th>Campaign</th>
+                            <th>Faction</th>
+                            <th>Response</th>
+                        </tr>
+                    </thead>
                     <tbody>{rows}</tbody>
                 </table>
             )
