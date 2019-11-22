@@ -6,6 +6,7 @@ class CurrentCampaigns extends React.Component {
         }else{
         const rows = this.props.campaigns.map((campaign, index) => {
             return (
+               
                 <tr key={index}>
                     <td><Link href={"/campaign/"+campaign.name}><a>{campaign.name}</a></Link></td>
                     <td>no commander data (Placeholder)</td>

@@ -16,14 +16,14 @@ class CampaignPlayers extends React.Component {
     async populateState(playerArray){
 
         const getUsername = async player =>{
-          const user = await axios.get('http://localhost:3000/user/'+player.playerID);
+          const user = await axios.get('/user/'+player.playerID);
           const username = await user.data.username
           return await username
         }
 
         const getCommanderName = async player =>{
             if(player.commanderID === "none") return "none"
-            const commander = await axios.get('http://localhost:3000/commanderData/'+player.commanderID)
+            const commander = await axios.get('/commanderData/'+player.commanderID)
             const commanderName = await commander.data.name
             return await commanderName
         }

@@ -7,17 +7,18 @@ const flash = require("connect-flash");
 const session = require("express-session");
 const cookieParser = require("cookie-parser");
 const morgan = require("morgan");
-
+var User = require ('./models/user')
+var Campaign = require ('./models/campaign')
+var Commander = require('./models/commander')
 const setUpPassport = require("./setuppassport");
+
 
 const port = parseInt(process.env.PORT, 10) || 3000;
 const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev });
 const handle = app.getRequestHandler();
 
-var User = require ('./models/user')
-var Campaign = require ('./models/campaign')
-var Commander = require('./models/commander')
+
 
 //connect to MongoDB
 mongoose.connect("mongodb+srv://danbuis88:VGXSydm9KdVDvvG@cluster0-ptart.mongodb.net/test?retryWrites=true&w=majority", function(err){

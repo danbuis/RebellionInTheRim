@@ -15,7 +15,7 @@ class CampaignInvites extends React.Component {
     async populateState(){
         const getUserData = async invite =>{
             console.log("looking up user")
-            const user = await axios.get('http://localhost:3000/user/'+invite.userID);
+            const user = await axios.get('/user/'+invite.userID);
             const userdata = await user.data
             await console.log(userdata)
             return await userdata
