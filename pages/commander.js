@@ -7,10 +7,7 @@ import Link from 'next/link';
 export default class extends React.Component{
     static async getInitialProps(commanderData){
         const commander = await commanderData.query.commander
-        console.log(commander.campaign)
-        console.log(commander)
-        const campaignData = await Axios.get("/campaignByID/"+commander.campaign)
-        const campaign = await campaignData.data
+        const campaign = await commanderData.query.campaign
         console.log(campaign)
         return {commander, campaign};
     }

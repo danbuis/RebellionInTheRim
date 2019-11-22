@@ -180,7 +180,6 @@ app.prepare().then(() => {
 
       const player = await User.findById(req.params.player)
 
-
       //update campaign info
       const campaign = await Campaign.findById(req.params.campaign)
       await campaign.updateCommander(newCommander)
@@ -275,16 +274,22 @@ app.prepare().then(() => {
     server.get("/profile/:name", function(req, res, next){
       const username = req.params.name
       //console.log (req)
-      User.findOne({username: username}, function(err, user){
+      User.findOne({username: username}, async function(err, user){
         if(user){
-          return app.render(req, res, '/profile', {user:user})
+          //if user, populate the other required props
+          const rebels = await Campaign.find({"rebels.playerID":user._id})
+          const imperials = await Campaign.find({"imperials.playerID":user._id})
+          const campaigns = await rebels.concat(imperials)
+
+          const invites = await Campaign.find({"pendingInvites.userID":user._id})
+          return app.render(req, res, '/profile', {user:user, campaigns:campaigns, invites:invites})
         }
         if(err){
           console.log("no user found by that name")
         }
       })
     })
-
+/*
     server.get("/participatingCampaigns/:userID", async function(req, res, next){
       const userID = req.params.userID
       const rebels = await Campaign.find({"rebels.playerID":userID})
@@ -300,7 +305,7 @@ app.prepare().then(() => {
       const invites = await Campaign.find({"pendingInvites.userID":user})
       res.json(invites)
     })
-
+*/
     server.get("/user/:userID", async function(req, res, next){
       const userID = req.params.userID
 
@@ -359,7 +364,11 @@ app.prepare().then(() => {
 
       const commander = await Commander.findById(commanderID)
       if(commander){
-        return app.render(req, res, '/commander', {commander: commander})
+        //get the campaign this commander is in
+        const campaignID = commander.campaign
+        const campaign = await Campaign.findById(campaignID)
+
+        return app.render(req, res, '/commander', {commander: commander, campaign:campaign})
       }
       if(err){
           console.log ("no commander found with that ID")
