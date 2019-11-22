@@ -7,7 +7,7 @@ import React, {Component} from 'react';
 import axios from 'axios';
 import EditProfile from '../reactComponents/EditProfile';
 import UserCampaigns from '../reactComponents/UserCampaigns'
-import UserInvites from '../reactComponents/Userinvites'
+import UserInvites from '../reactComponents/UserInvites'
 
 export default class extends React.Component{
     static async getInitialProps(userData){
