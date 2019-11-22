@@ -9,7 +9,7 @@ export default class extends React.Component{
         const commander = await commanderData.query.commander
         console.log(commander.campaign)
         console.log(commander)
-        const campaignData = await Axios.get("http://localhost:3000/campaignByID/"+commander.campaign)
+        const campaignData = await Axios.get("/campaignByID/"+commander.campaign)
         const campaign = await campaignData.data
         console.log(campaign)
         return {commander, campaign};
