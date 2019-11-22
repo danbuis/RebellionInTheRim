@@ -12,10 +12,10 @@ import UserInvites from '../reactComponents/UserInvites'
 export default class extends React.Component{
     static async getInitialProps(userData){
         const user = userData.query.user;
-        const campaignData = await axios.get("http://localhost:3000/participatingCampaigns/"+user._id);
+        const campaignData = await axios.get("/participatingCampaigns/"+user._id);
         const campaigns = await campaignData.data;
 
-        const invitesData = await axios.get("http://localhost:3000/invites/"+user._id);
+        const invitesData = await axios.get("/invites/"+user._id);
         const invites = await invitesData.data;
       
         return {user, campaigns, invites};
