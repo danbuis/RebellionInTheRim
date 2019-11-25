@@ -8,16 +8,13 @@ class CampaignInvites extends React.Component {
 
     constructor(props){
         super(props)
-        console.log("about to populate the state")
         this.populateState()
     }
 
     async populateState(){
         const getUserData = async invite =>{
-            console.log("looking up user")
             const user = await axios.get('/user/'+invite.userID);
             const userdata = await user.data
-            await console.log(userdata)
             return await userdata
           }
         
@@ -26,8 +23,6 @@ class CampaignInvites extends React.Component {
         await this.setState({
             users: users
         })
-
-        await console.log(this.state.users)
     }
 
     populateTable(){
@@ -62,7 +57,7 @@ class CampaignInvites extends React.Component {
 
             {this.populateTable()}
 
-            <CampaignInvitesNew campaign={this.props._id}/>
+            <CampaignInvitesNew campaign={this.props.campaign}/>
             
 
         </div>;

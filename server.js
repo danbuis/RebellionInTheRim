@@ -128,23 +128,24 @@ app.prepare().then(() => {
       }else{
 
         console.log("inside server route looking for campaign "+req.body.campaign)
-        const campaign = await Campaign.findById(req.body.campaign);
+        const campaign = await Campaign.findById(req.body.campaign)
+                    .catch(console.log("Did not find a campaign"));
         //check if player is already involved in the campaign
         
         var alreadyInvited = false
         var alreadyRebel = false
         var alreadyImperial = false
-        console.log("checking previously participating")
 
-        console.log(campaign)
+        var rebelInvites = 0
+        var imperialInvites = 0
 
         campaign.pendingInvites.map(invite => {
-          console.log("checking invites")
-          console.log(invite.userID)
-          console.log(user._id)
-          if(invite.userID == user._id){
+           if(invite.userID == user._id){
             alreadyInvited = true
           } 
+          if(invite.faction == "rebel"){
+            rebelInvites++
+          }else imperialInvites++
         })
 
         campaign.rebels.map(player => {
@@ -155,13 +156,28 @@ app.prepare().then(() => {
           if(player.playerID == user._id) alreadyInvited = true
         })
 
-        console.log(alreadyInvited)
-        console.log(alreadyRebel)
-        console.log(alreadyImperial)
+        var rebelFull = false
+        var imperialFull = false
+
+        console.log(rebelInvites)
+        console.log(imperialInvites)
+        console.log(campaign.rebels.length)
+
+        if(rebelInvites+campaign.rebels.length >= campaign.numberPlayers/2){
+          rebelFull = true
+        }
+
+        if(imperialInvites + campaign.imperials.length >= campaign.numberPlayers/2){
+          imperialFull = true
+        }
 
         if(alreadyInvited || alreadyRebel || alreadyImperial){
           res.redirect("/error/1")
-        }else{
+        }else if(rebelFull && req.body.faction =="rebel"){
+          res.redirect("/error/6")
+        }else if (imperialFull && req.body.faction == "imperial"){
+          res.redirect("/error/6")
+        }else {
           await campaign.invitePlayer(user._id, req.body.faction);
           await campaign.addMessage("invite", 
                                 user.username+" has been invited to join the "+req.body.faction+" team", 
@@ -274,6 +290,9 @@ app.prepare().then(() => {
           break
         case '5' :
           errorMessage = "That campaign name is already in use"
+          break
+        case '6' :
+          errorMessage = "That faction is full"
           break
       }
 
