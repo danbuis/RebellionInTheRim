@@ -63,10 +63,8 @@ app.prepare().then(() => {
 
     server.post("/login", passport.authenticate("login"), 
       function(req,res){
-         // console.log("logging in")
-         // console.log(req.user)
+        
          res.redirect("/profile/"+req.user.username);
-        //res.redirect("/commander");
       });
    
 
