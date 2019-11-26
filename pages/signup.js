@@ -1,5 +1,5 @@
 import Header from '../reactComponents/Header'
-import SignUpBlock from '../reactComponents/SignUpBlock'
+import SignUpBlock from '../reactComponents/signUpBlock'
 
 export default () => 
 
