@@ -25,6 +25,17 @@ class CampaignInvites extends React.Component {
         })
     }
 
+    /*including a method to clean up strings just in case something weird happens
+    in the backend*/
+    displayFaction(string){
+        const lowercase = string.toLowerCase()
+
+        if(lowercase == "rebel") return "Rebel"
+        if(lowercase == "empire") return "Empire"
+
+        return "Error"
+    }
+
     populateTable(){
         if(this.props.invites.length===0 || this.state.users.length === 0){
             return (<p> No pending invites</p>)
@@ -33,7 +44,7 @@ class CampaignInvites extends React.Component {
                 return (
                     <tr key={index}>
                         <td>{this.state.users[index].username}</td>
-                        <td>{invite.faction}</td>
+                        <td>{this.displayFaction(invite.faction)}</td>
                     </tr>
                     )
                 })

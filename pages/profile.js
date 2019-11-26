@@ -41,7 +41,6 @@ export default class extends React.Component{
         <NewCampaign show={this.state.isOpen}
         onClose = {this.toggleWindow} 
         user={this.props.user}/>
-        <UserCampaigns />
         <UserInvites  invites={this.props.invites} user={this.props.user}/>
 
         </div>
