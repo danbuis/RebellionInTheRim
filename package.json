@@ -2,8 +2,8 @@
   "name": "rebellion-in-the-rim",
   "version": "1.0.0",
   "engines":{
-    "node":"10.14.1",
-    "yarn":"1.16.0"
+    "node":"10.16.3",
+    "yarn":"1.17.3"
   },
   "main": "index.js",
   "repository": "https://github.com/danbuis/RebellionInTheRim.git",

@@ -9,7 +9,8 @@ var Abilities = [
         "Tier" : 1,
         "Cost" : 3,
         "Next" : 2,
-        "Base" : "Yes"
+        "Base" : "Yes",
+        "Family" : 0
     },
     {
         "ID" : 2,
@@ -17,7 +18,8 @@ var Abilities = [
         "Tier" : 2,
         "Cost" : 3,
         "Next" : 3,
-        "Base" : "No"
+        "Base" : "No",
+        "Family" : 0
     },
     {
         "ID" : 3,
@@ -25,7 +27,8 @@ var Abilities = [
         "Tier" : 1,
         "Cost" : 4,
         "Next" : -1,
-        "Base" : "No"
+        "Base" : "No",
+        "Family" : 0
     },
     {
         "ID" : 4,
@@ -33,7 +36,8 @@ var Abilities = [
         "Tier" : 1,
         "Cost" : 2,
         "Next" : -1,
-        "Base" : "Yes"
+        "Base" : "Yes",
+        "Family" : 1
     },
     {
         "ID" : 5,
@@ -41,7 +45,8 @@ var Abilities = [
         "Tier" : 1,
         "Cost" : 2,
         "Next" : 6,
-        "Base" : "Yes"
+        "Base" : "Yes",
+        "Family" : 2
     },
     {
         "ID" : 6,
@@ -49,7 +54,8 @@ var Abilities = [
         "Tier" : 2,
         "Cost" : 3,
         "Next" : 7,
-        "Base" : "No"
+        "Base" : "No",
+        "Family" : 2
     },
     {
         "ID" : 7,
@@ -57,7 +63,8 @@ var Abilities = [
         "Tier" : 3,
         "Cost" : 4,
         "Next" : -1,
-        "Base" : "No"
+        "Base" : "No",
+        "Family" : 2
     },
     {
         "ID" : 8,
@@ -65,7 +72,8 @@ var Abilities = [
         "Tier" : 1,
         "Cost" : 2,
         "Next" : 9,
-        "Base" : "Yes"
+        "Base" : "Yes",
+        "Family" : 3
     },
     {
         "ID" : 9,
@@ -73,7 +81,8 @@ var Abilities = [
         "Tier" : 2,
         "Cost" : 3,
         "Next" : 10,
-        "Base" : "No"
+        "Base" : "No",
+        "Family" : 3
     },
     {
         "ID" : 10,
@@ -81,7 +90,8 @@ var Abilities = [
         "Tier" : 3,
         "Cost" : 3,
         "Next" : -1,
-        "Base" : "No"
+        "Base" : "No",
+        "Family" : 3
     }
 ]
 
