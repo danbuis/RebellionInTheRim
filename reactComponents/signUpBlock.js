@@ -94,6 +94,14 @@ class SignUpBlock extends React.Component {
     render() {
  
         return <div>
+            <h1>Signup</h1>
+            <p>Username and password must meet the following criteria.</p>
+            <ul>
+                <li>No longer than 20 characters</li>
+                <li>No special characters other than the following : _ ' "</li>
+                <li>No leading or trailing spaces</li>
+            </ul>
+            <p>Usernames and passwords are case sensitive</p>
             <form action="/signup" method="post">
                 <label>Username</label>
                 <input type="text" name="username" default="Username" required onChange={this.updateUsername}/>
