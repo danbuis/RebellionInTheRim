@@ -79,7 +79,7 @@ app.prepare().then(() => {
           if (err) { return next(err); }
           if (user) {
             req.flash("error", "User already exists");
-            return res.redirect("/signup");
+            return res.redirect("/error/7");
           }
       
           var newUser = new User({
@@ -293,6 +293,12 @@ app.prepare().then(() => {
           break
         case '6' :
           errorMessage = "That faction is full"
+          break
+        case '7' :
+          errorMessage = "That username is already taken, try another one."
+          break
+        case '8' :
+          errorMessage = "That username and password cannot be found.  Please ensure it is typed correctly."
           break
       }
 
