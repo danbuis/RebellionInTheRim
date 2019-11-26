@@ -27,7 +27,6 @@ export default class extends React.Component{
                 <h3>Current available ability points</h3>
                 <p>{this.props.commander.currentPoints}</p>
 
-                <h3>Current commander abilities</h3>
                 <CommanderCurrentAbilities commander={this.props.commander}/>
 
                 <CommanderAbilities commander={this.props.commander}/>

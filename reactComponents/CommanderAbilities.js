@@ -77,7 +77,7 @@ class CommanderAbilities extends React.Component {
 
     render () {      
         return <div>
-            <h2>Commander Abilities</h2>
+            <h2>Available Commander Abilities</h2>
             {this.populateTable()}          
         </div>;
     }
