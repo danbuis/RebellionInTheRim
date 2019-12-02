@@ -13,7 +13,7 @@ class CampaignInvitesNew extends React.Component {
     empireValid(){
         var empireFull = false
 
-        if(empireInvites+this.props.campaign.imperials.length >= this.props.campaign.numberPlayers/2){
+        if(this.sumEmpire() >= this.props.campaign.numberPlayers/2){
           empireFull = true
         }
 

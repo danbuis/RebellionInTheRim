@@ -232,7 +232,7 @@ app.prepare().then(() => {
       const commander = await Commander.findById(commanderID)
 
       const campaign = await Campaign.findById(commander.campaign)
-      await campaign.addMessage("commander", commander.name + " has gained the "+req.body.abilityTitle+" ability", "auto") 
+      await campaign.addMessage("commander", " has gained the "+req.body.abilityTitle+" ability", commander._id) 
       await campaign.save()
 
       await commander.addSkill(req.body.abilityID)
@@ -250,7 +250,7 @@ app.prepare().then(() => {
       await commander.save()
 
       const campaign = await Campaign.findById(commander.campaign)
-      await campaign.addMessage("commander", commander.name + " has upgraded an ability to "+req.body.newSkillTitle, "auto") 
+      await campaign.addMessage("commander", " has upgraded an ability to "+req.body.newSkillTitle, commander._id) 
       await campaign.save()
 
       await res.redirect("/commander/"+commanderID)
