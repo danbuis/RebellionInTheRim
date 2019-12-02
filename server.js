@@ -123,7 +123,10 @@ app.prepare().then(() => {
       const user = await User.findOne({username:req.body.user});
       if(!user){
         res.redirect("/error/4")
-      }else{
+      }else if(req.body.faction =="null"){
+        res.redirect("/error/9")
+      }
+      else {
 
         console.log("inside server route looking for campaign "+req.body.campaign)
         const campaign = await Campaign.findById(req.body.campaign)
@@ -140,7 +143,7 @@ app.prepare().then(() => {
         campaign.pendingInvites.map(invite => {
            if(invite.userID == user._id){
             alreadyInvited = true
-          } 
+          }
           if(invite.faction == "rebel"){
             rebelInvites++
           }else imperialInvites++
@@ -297,6 +300,9 @@ app.prepare().then(() => {
           break
         case '8' :
           errorMessage = "That username and password cannot be found.  Please ensure it is typed correctly."
+          break
+        case '9' :
+          errorMessage = "You must include a faction when inviting a player"
           break
       }
 
