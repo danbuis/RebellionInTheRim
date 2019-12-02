@@ -20,17 +20,17 @@ var stringTests = {
         } else return false
     },
 
-    validLength : function(string){
-        var length = string.length
-        if(length <= 20 ) return true
+    validLength : function(string, length){
+        var stringLength = string.length
+        if(stringLength <= length ) return true
         else return false
     },
 
-    checkString : function(string){
+    checkString : function(string, length){
        // console.log("in checkString")
         var errors =[]
        // console.log(errors)
-        if(!this.validLength(string)) errors.push("too long")
+        if(!this.validLength(string, length)) errors.push("too long")
        // console.log(errors)
         if(!this.onlyValidChars(string)) errors.push("has one or more invalid characters")
         //console.log(errors)

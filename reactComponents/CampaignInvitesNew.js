@@ -1,16 +1,8 @@
 class CampaignInvitesNew extends React.Component {
     rebelValid(){
-        var rebelInvites = 0
-
-        this.props.campaign.pendingInvites.map(invite => { 
-          if(invite.faction == "rebel"){
-            rebelInvites++
-          }
-        })
-
         var rebelFull = false
 
-        if(rebelInvites+this.props.campaign.rebels.length >= this.props.campaign.numberPlayers/2){
+        if(this.sumRebel() >= this.props.campaign.numberPlayers/2){
           rebelFull = true
         }
 
@@ -19,14 +11,6 @@ class CampaignInvitesNew extends React.Component {
     }
 
     empireValid(){
-        var empireInvites = 0
-
-        this.props.campaign.pendingInvites.map(invite => { 
-          if(invite.faction != "rebel"){
-            empireInvites++
-          }
-        })
-
         var empireFull = false
 
         if(empireInvites+this.props.campaign.imperials.length >= this.props.campaign.numberPlayers/2){
@@ -37,9 +21,35 @@ class CampaignInvitesNew extends React.Component {
         else return
     }
 
+    sumRebel(){
+      var rebelInvites = 0
+
+      this.props.campaign.pendingInvites.map(invite => { 
+        if(invite.faction == "rebel"){
+          rebelInvites++
+        }
+      })
+
+      return rebelInvites + this.props.campaign.rebels.length
+    }
+
+    sumEmpire(){
+      var empireInvites = 0
+
+      this.props.campaign.pendingInvites.map(invite => { 
+        if(invite.faction != "rebel"){
+          empireInvites++
+        }
+      })
+
+      return empireInvites + this.props.campaign.imperials.length
+    }
+
     render () {
-        
-        return <div>
+      if(this.sumRebel() == this.props.campaign.numberPlayers/2 && this.sumEmpire() == this.props.campaign.numberPlayers/2){
+        return <h3>Campaign full</h3>
+      }else{
+              return <div>
             <h3>Invite players</h3>
             <form action="/invitePlayer" method="post">
                 <label>Player name</label>
@@ -56,6 +66,7 @@ class CampaignInvitesNew extends React.Component {
 
         </div>;
     }
+  }
 }
 
 export default CampaignInvitesNew;

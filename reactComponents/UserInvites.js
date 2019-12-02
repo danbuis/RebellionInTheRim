@@ -12,6 +12,12 @@ class UserInvites extends React.Component {
         }
     }
 
+    listFaction(faction){
+        if(faction === "rebel"){
+            return "Rebel"
+        } else return "Empire"
+    }
+
     populateTable(){
 
         if(this.props.invites.length===0 ){
@@ -23,7 +29,7 @@ class UserInvites extends React.Component {
                 return (
                     <tr key={index}>
                         <td>{invite.name}</td>
-                        <td>{faction}</td>
+                        <td>{this.listFaction(faction)}</td>
                         <td><CampaignInviteRespond 
                             user={this.props.user._id}
                             faction = {faction}

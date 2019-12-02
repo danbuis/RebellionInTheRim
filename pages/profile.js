@@ -11,7 +11,6 @@ import UserInvites from '../reactComponents/UserInvites'
 
 export default class extends React.Component{
     static async getInitialProps(userData){
-        console.log(userData)
         const user = userData.query.user;
         const campaigns = userData.query.campaigns;
         const invites = userData.query.invites

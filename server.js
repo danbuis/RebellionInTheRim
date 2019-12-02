@@ -118,17 +118,14 @@ app.prepare().then(() => {
     })
 
     server.post("/invitePlayer", async function(req, res, next){
-      console.log("inside server route looking for user "+req.body.user)
-
       const user = await User.findOne({username:req.body.user});
       if(!user){
         res.redirect("/error/4")
-      }else if(req.body.faction =="null"){
+      }else if(req.body.faction == null){
         res.redirect("/error/9")
       }
       else {
 
-        console.log("inside server route looking for campaign "+req.body.campaign)
         const campaign = await Campaign.findById(req.body.campaign)
                     .catch(console.log("Did not find a campaign"));
         //check if player is already involved in the campaign
@@ -190,7 +187,6 @@ app.prepare().then(() => {
     })
 
     server.post("/newCommander", async function(req, res, next){
-      console.log("in server method")
       var newCommander =  new Commander({
         name: "Default Name",
         playerID: req.body.player,
@@ -199,7 +195,6 @@ app.prepare().then(() => {
       })
 
       await newCommander.save()
-      console.log("saved Commander "+newCommander)
       const player = await User.findById(req.body.player)
           .catch(console.log("could not find player"))
 
@@ -318,7 +313,6 @@ app.prepare().then(() => {
   
     server.get("/profile/:name", function(req, res, next){
       const username = req.params.name
-      //console.log (req)
       User.findOne({username: username}, async function(err, user){
         if(user){
           //if user, populate the other required props
@@ -334,23 +328,7 @@ app.prepare().then(() => {
         }
       })
     })
-/*
-    server.get("/participatingCampaigns/:userID", async function(req, res, next){
-      const userID = req.params.userID
-      const rebels = await Campaign.find({"rebels.playerID":userID})
-      const imperials = await Campaign.find({"imperials.playerID":userID})
-      console.log(rebels)
-      var total= await rebels.concat(imperials)
-      res.json(total)
-    })
 
-    server.get("/invites/:userID", async function(req, res, next){
-      const user = req.params.userID
-
-      const invites = await Campaign.find({"pendingInvites.userID":user})
-      res.json(invites)
-    })
-*/
     server.get("/user/:userID", async function(req, res, next){
       const userID = req.params.userID
 

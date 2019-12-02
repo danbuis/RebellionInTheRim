@@ -17,7 +17,6 @@ class SignUpBlock extends React.Component {
     } 
 
     async updatePassword(event){
-        //console.log("Current password "+event.target.value)
         await this.setState({
             password: event.target.value
         })
@@ -26,7 +25,6 @@ class SignUpBlock extends React.Component {
     }
 
     async updateConfirm(event){
-        //console.log("Current confirm password "+event.target.value)
         await this.setState({
             confirm: event.target.value
         })
@@ -35,7 +33,6 @@ class SignUpBlock extends React.Component {
     }
 
     async updateUsername(event){
-        //console.log("Current username "+event.target.value)
         await this.setState({
             username: event.target.value
         })
@@ -45,19 +42,15 @@ class SignUpBlock extends React.Component {
 
     checkInput(){
         var newErrors = []
-        //console.log(stringTests.data)
-        //console.log("checking "+this.state.password)
-        var passwordErrors = stringTests.data.checkString(this.state.password)
+        var passwordErrors = stringTests.data.checkString(this.state.password, 20)
         if (passwordErrors.length != 0){
             passwordErrors.map(message => {  
-                //console.log("pushing an error")
                 newErrors.push("Password "+message)})
             }
 
-        var usernameErrors = stringTests.data.checkString(this.state.username)
+        var usernameErrors = stringTests.data.checkString(this.state.username, 20)
         if (usernameErrors.length != 0){
             usernameErrors.map(message => {  
-                //console.log("pushing an error")
                 newErrors.push("Username "+message)})
             }
 
@@ -67,7 +60,7 @@ class SignUpBlock extends React.Component {
         }
 
         this.setState({errors: newErrors})
-        //console.log("in check input" + this.state.errors)
+
         var disabled
         if(this.state.username !== "" && this.state.password !== "" && this.state.errors.length === 0){
             disabled = false
