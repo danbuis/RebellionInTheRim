@@ -1,6 +1,7 @@
 var mongoose = require("mongoose");
 
 var battleSchema = mongoose.Schema({
+  campaign: String,
   attackingCommander: String,
   defendingCommander: String,
   attackingFaction: String,

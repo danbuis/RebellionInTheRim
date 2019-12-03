@@ -10,6 +10,7 @@ const morgan = require("morgan");
 var User = require ('./models/user')
 var Campaign = require ('./models/campaign')
 var Commander = require('./models/commander')
+var Battle = require('./models/battle')
 const setUpPassport = require("./setuppassport");
 
 
@@ -329,11 +330,74 @@ app.prepare().then(() => {
       })
     })
 
+    server.get("/battle/battleID", function(req, res, next){
+      const battleID = req.params.battleID
+      const battle = Battle.findById(battleID).catch(console.log("Could not find battle"))
+
+      return app.render(req,res, '/battle', {battle: battle})
+    })
+
+    server.post("/addBattle", async function(req,res,next){
+      console.log("Add battle method")
+      const campaign = await Campaign.findById(req.body.campaign)
+      var attackingFaction
+      var defendingFaction
+      var attackingCommander
+      var defendingCommander
+
+      if(req.body.assaultingFaction == "Rebel"){
+        attackingFaction = "Rebel"
+        defendingFaction = "Empire"
+
+        await campaign.rebels.map(player => {
+          if(player.playerID == req.body.assaultingPlayer) assaultingCommander = player.commanderID
+        })
+        await campaign.imperials.map(player => {
+          if(player.playerID == req.body.defendingPlayer) defendingCommander = player.commanderID
+        })
+
+      }else{
+        attackingFaction = "Empire"
+        defendingFaction = "Rebel"
+
+        await campaign.rebels.map(player => {
+          if(player.playerID == req.body.defendingPlayer) defendingCommander = player.commanderID
+        })
+        await campaign.imperials.map(player => {
+          if(player.playerID == req.body.assaultingPlayer) assaultingCommander = player.commanderID
+        })
+
+      }
+      console.log("end of if else")
+
+      var newBattle =  await new Battle({
+        campaign: req.body.campaign,
+        attackingCommander: attackingCommander,
+        defendingCommander: defendingCommander,
+        attackingFaction: attackingFaction,
+        defendingFaction: defendingFaction,
+        System: req.body.system
+      })
+      await console.log("end of new battle")
+      await newBattle.save()
+      await campaign.addBattle(newBattle._id)
+      await console.log("end of add battle")
+      await campaign.save()
+
+      res.redirect("/battle/" + newBattle._id)
+    })
+
     server.get("/user/:userID", async function(req, res, next){
       const userID = req.params.userID
 
       const user = await User.findById(userID)
       res.json(user)
+    })
+
+    server.get("/battleData/:battleID", async function(req,res, next){
+      const battleID = req.params.battleID
+      const battle = await battle.findById(battleID)
+      res.json(battle)
     })
 
     server.post("/acceptInvite", async function(req, res, next){

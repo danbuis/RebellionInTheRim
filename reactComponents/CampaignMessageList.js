@@ -13,12 +13,9 @@ class CampaignMessageList extends React.Component {
 
     async populateState(){
         var idList =[]
-        console.log("populating state")
 
         const getSource = async message => {
-            console.log("processing message")
             idList.push(message.source)
-            console.log(idList)
             if (message.messageType == "commander" && message.source != "auto"){
                 const commander = await axios.get('/commanderData/'+message.source)
                 const commanderData = await commander.data
@@ -29,7 +26,6 @@ class CampaignMessageList extends React.Component {
         }
 
         const sources = await Promise.all(this.props.messages.map(message => getSource(message)))
-        await console.log(sources)
         await this.setState({
             IDs:idList,
             source:sources

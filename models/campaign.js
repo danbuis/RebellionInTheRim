@@ -59,6 +59,10 @@ var campaignSchema = mongoose.Schema({
     })
   }
 
+  campaignSchema.methods.addBattle = function(battleID){
+    this.battles.push(battleID)
+  }
+
 
   /*types include things like user communication, player add/drops, battle creation/results, 
   commander creation/promotion, and fleet retirement.
