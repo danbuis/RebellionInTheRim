@@ -24,6 +24,12 @@ export default class extends React.Component{
                     <input type = "submit" value="Change Name"/>
                 </form>
 
+                <form action="/changeCommanderFleetSize" method="post">
+                    <input type="number" name="newSize" min="1" max="250" />
+                    <input type="hidden" name="commanderID" value={this.props.commander._id}/>
+                    <input type = "submit" value="Change Fleet Size"/>
+                </form>
+
                 <h3>Current available ability points</h3>
                 <p>{this.props.commander.currentPoints}</p>
 

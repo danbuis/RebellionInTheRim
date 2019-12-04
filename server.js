@@ -72,8 +72,10 @@ app.prepare().then(() => {
     server.post("/signup", function(req, res, next){
         var username = req.body.username;
         var password = req.body.password;
+
+        var lowercaseUser = username.toLowerCase()
       
-        User.findOne({ username: username }, function(err, user) {
+        User.findOne({ username: lowercaseUser }, function(err, user) {
       
           if (err) { return next(err); }
           if (user) {
@@ -82,7 +84,7 @@ app.prepare().then(() => {
           }
       
           var newUser = new User({
-            username: username,
+            username: lowercaseUser,
             password: password
           });
           newUser.save(next);
@@ -90,7 +92,7 @@ app.prepare().then(() => {
         });
       }, passport.authenticate("login"), 
         function(req,res){
-          res.redirect("/profile/"+req.user.username);
+          res.redirect("/profile/"+lowercaseUser);
         }
       );
 
@@ -226,6 +228,16 @@ app.prepare().then(() => {
         await commander.save()
         await res.redirect("/commander/"+req.body.commanderID)
       }
+    })
+    
+    server.post("/changeCommanderFleetSize", async function(req, res, next){
+      const commander = await Commander.findById(req.body.commanderID)
+      const newSize=req.body.newSize
+
+      await commander.changeFleetSize(newSize)
+      await commander.save()
+      await res.redirect("/commander/"+req.body.commanderID)
+      
     })
 
     server.post("/addSkill", async function(req, res, next){

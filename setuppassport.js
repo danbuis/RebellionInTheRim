@@ -18,7 +18,10 @@ module.exports = function() {
   passport.use("login", new LocalStrategy(function(username, password, done) {
     console.log("username "+username);
     console.log("password "+password);
-    User.findOne({ username: username }, function(err, user) {
+
+    var lowercaseUser = username.toLowerCase()
+
+    User.findOne({ username: lowercaseUser }, function(err, user) {
       if (err) { return done(err); }
       if (!user) {
         console.log("Found no user")
