@@ -3,7 +3,8 @@ class CampaignHeader extends React.Component {
         
         return <div>
             
-            <h1><center>{this.props.campaignName}</center></h1>
+            <h1><center>{this.props.campaign.name}</center></h1>
+            <h3><center>Current Round : {this.props.campaign.round}</center></h3>
             
 
         </div>;

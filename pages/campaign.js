@@ -17,7 +17,7 @@ export default class extends React.Component{
         return(
             <div>
                 <Header />
-                <CampaignHeader campaignName = {this.props.campaign.name}/>
+                <CampaignHeader campaign = {this.props.campaign}/>
                 <CampaignInvites invites = {this.props.campaign.pendingInvites} campaign={this.props.campaign}/>
                 <CampaignBattles campaign = {this.props.campaign}/>
                 <CampaignSystems />

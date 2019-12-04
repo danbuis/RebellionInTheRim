@@ -10,7 +10,8 @@ var campaignSchema = mongoose.Schema({
   rebels: [{playerID:String, commanderID:String}],
   imperials: [{playerID:String, commanderID:String}],
   systems: [{name:String, facility:String}],
-  battles: [String]
+  battles: [String],
+  round: {type: Number, default:0}
 });
 
   campaignSchema.methods.addPlayer = function(user, faction) {
@@ -25,12 +26,18 @@ var campaignSchema = mongoose.Schema({
 
 
   campaignSchema.methods.invitePlayer = function(userID, faction){
-    console.log("inviting")
-    console.log(userID)
-    console.log(faction)
-    console.log(this.pendingInvites)
     this.pendingInvites.push({userID: userID, faction:faction})
-    console.log(this.pendingInvites)
+  }
+
+  campaignSchema.methods.changeRound = function(newRound){
+    this.round = newRound
+  }
+
+  campaignSchema.methods.isFull = function(){
+    const totalConfirmedPlayers = this.rebels.length + this.imperials.length
+
+    if(totalConfirmedPlayers >= this.numberPlayers) return true
+    else return false
   }
 
   campaignSchema.methods.removeInvite = function(userID){

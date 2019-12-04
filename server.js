@@ -393,7 +393,8 @@ app.prepare().then(() => {
         defendingCommander: defendingCommander,
         attackingFaction: attackingFaction,
         defendingFaction: defendingFaction,
-        System: req.body.system
+        System: req.body.system,
+        round: campaign.round
       })
       await console.log("end of new battle")
       await console.log(newBattle)
@@ -414,7 +415,7 @@ app.prepare().then(() => {
 
     server.get("/battleData/:battleID", async function(req,res, next){
       const battleID = req.params.battleID
-      const battle = await battle.findById(battleID)
+      const battle = await Battle.findById(battleID)
       res.json(battle)
     })
 
@@ -432,7 +433,11 @@ app.prepare().then(() => {
       //remove the invite
       await campaign.removeInvite(user)
       await campaign.addMessage("invite", userData.username+" has joined this campaign", "auto")
-      
+      const full = await campaign.isFull()
+      if(full){
+        await campaign.changeRound(campaign.round + 1)
+      }
+
       //save the changes
       await campaign.save()
 

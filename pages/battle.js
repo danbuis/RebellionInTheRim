@@ -17,7 +17,7 @@ export default class extends React.Component{
                 <BattleCommanders 
                         attacker = {this.props.battle.attackingCommander} 
                         defender = {this.props.battle.defendingCommander}/>
-                <BattleSystem />
+                <BattleSystem system = {this.props.battle.System}/>
                 <BattleResults />
 
             </div>
