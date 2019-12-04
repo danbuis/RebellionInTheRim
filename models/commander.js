@@ -6,7 +6,8 @@ var commanderSchema = mongoose.Schema({
   abilities: [Number],
   campaign: String,
   currentPoints: Number,
-  fleetSize: Number
+  fleetSize: Number, 
+  faction: String
 });
 
 commanderSchema.methods.changeName = function(newName){

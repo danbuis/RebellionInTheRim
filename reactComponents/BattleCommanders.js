@@ -1,11 +1,14 @@
+import BattleCommanderInfo from '../reactComponents/BattleCommanderInfo'
 
 class BattleCommanders extends React.Component {
     render () {
         
 
         return <div>
-            <h2>Battle Participants</h2>
-            <p>Placeholder</p>
+            <h1>Battle Participants</h1>
+            <BattleCommanderInfo side="Attacking" commander = {this.props.attacker}/>
+            <BattleCommanderInfo side="Defending" commander = {this.props.defender}/>
+
             
             
         </div>

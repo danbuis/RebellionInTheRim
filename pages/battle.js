@@ -1,6 +1,6 @@
 import Header from '../reactComponents/Header'
 import BattleCommanders from '../reactComponents/BattleCommanders'
-import BattleSystem from '../reactComponents/CampaignInvites'
+import BattleSystem from '../reactComponents/BattleSystem'
 import BattleResults from '../reactComponents/BattleResults'
 import React, {Component} from 'react'
 
@@ -14,7 +14,9 @@ export default class extends React.Component{
         return(
             <div>
                 <Header />
-                <BattleCommanders />
+                <BattleCommanders 
+                        attacker = {this.props.battle.attackingCommander} 
+                        defender = {this.props.battle.defendingCommander}/>
                 <BattleSystem />
                 <BattleResults />
 

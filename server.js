@@ -195,7 +195,8 @@ app.prepare().then(() => {
         name: "Default Name",
         playerID: req.body.player,
         campaign: req.body.campaign,
-        currentPoints: 0
+        currentPoints: 0,
+        fleetSize: 200
       })
 
       await newCommander.save()
@@ -343,9 +344,11 @@ app.prepare().then(() => {
       })
     })
 
-    server.get("/battle/battleID", function(req, res, next){
+    server.get("/battle/:battleID", async function(req, res, next){
       const battleID = req.params.battleID
-      const battle = Battle.findById(battleID).catch(console.log("Could not find battle"))
+      console.log("battleID "+battleID)
+      const battle = await Battle.findById(battleID)
+      await console.log(battle)
 
       return app.render(req,res, '/battle', {battle: battle})
     })
@@ -353,6 +356,7 @@ app.prepare().then(() => {
     server.post("/addBattle", async function(req,res,next){
       console.log("Add battle method")
       const campaign = await Campaign.findById(req.body.campaign)
+      
       var attackingFaction
       var defendingFaction
       var attackingCommander
@@ -363,7 +367,7 @@ app.prepare().then(() => {
         defendingFaction = "Empire"
 
         await campaign.rebels.map(player => {
-          if(player.playerID == req.body.assaultingPlayer) assaultingCommander = player.commanderID
+          if(player.playerID == req.body.assaultingPlayer) attackingCommander = player.commanderID
         })
         await campaign.imperials.map(player => {
           if(player.playerID == req.body.defendingPlayer) defendingCommander = player.commanderID
@@ -377,7 +381,7 @@ app.prepare().then(() => {
           if(player.playerID == req.body.defendingPlayer) defendingCommander = player.commanderID
         })
         await campaign.imperials.map(player => {
-          if(player.playerID == req.body.assaultingPlayer) assaultingCommander = player.commanderID
+          if(player.playerID == req.body.assaultingPlayer) attackingCommander = player.commanderID
         })
 
       }
@@ -392,12 +396,13 @@ app.prepare().then(() => {
         System: req.body.system
       })
       await console.log("end of new battle")
+      await console.log(newBattle)
       await newBattle.save()
       await campaign.addBattle(newBattle._id)
       await console.log("end of add battle")
       await campaign.save()
 
-      res.redirect("/battle/" + newBattle._id)
+      await res.redirect("/battle/" + newBattle._id)
     })
 
     server.get("/user/:userID", async function(req, res, next){

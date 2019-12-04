@@ -23,7 +23,7 @@ export default class extends React.Component{
                     <input type="hidden" name="commanderID" value={this.props.commander._id}/>
                     <input type = "submit" value="Change Name"/>
                 </form>
-
+                <p>Current Fleet Size : {this.props.commander.fleetSize}</p>
                 <form action="/changeCommanderFleetSize" method="post">
                     <input type="number" name="newSize" min="1" max="250" />
                     <input type="hidden" name="commanderID" value={this.props.commander._id}/>
