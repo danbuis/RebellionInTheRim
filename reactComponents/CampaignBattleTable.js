@@ -1,4 +1,5 @@
 import axios from 'axios';
+import Link from 'next/link';
 
 class CampaignBattleTable extends React.Component {
     state={
@@ -7,7 +8,7 @@ class CampaignBattleTable extends React.Component {
 
     constructor(props){
         super(props)
-        this.populateState()
+        //this.populateState()
     }
 
     async populateState(){
@@ -24,14 +25,28 @@ class CampaignBattleTable extends React.Component {
         })
     }
 
+    getPlayerName(playerID){
+        var name = ""
+
+        this.props.players.map(player => {
+            if(player.playerID === playerID){
+                console.log(player.playerName)
+                name = player.playerName
+            }
+        })
+
+        return name
+    }
+
     render () {
         
-        const rows = this.state.battles.map((battle, index) => {
+        const rows = this.props.battles.map((battle, index) => {
             return (
                 <tr key={index}>
                     <td>{battle.attackingCommander}</td>
                     <td>{battle.defendingCommander}</td>
                     <td>{battle.System}</td>
+                    <td><Link href={"/battle/"+battle.id}><a>Details</a></Link></td>
                     <td>Placeholder</td>
                 </tr>
             )
@@ -46,6 +61,7 @@ class CampaignBattleTable extends React.Component {
                         <th>Attacker</th>
                         <th>Defender</th>
                         <th>System</th>
+                        <th>Details</th>
                         <th>Result</th>
                     </tr>
                 </thead>

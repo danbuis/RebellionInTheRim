@@ -17,24 +17,37 @@ class CampaignBattleForm extends React.Component {
         })
     }
 
+    getPlayerName(playerID){
+        var name = ""
+
+        this.props.players.map(player => {
+            if(player.playerID === playerID){
+                console.log(player.playerName)
+                name = player.playerName
+            }
+        })
+
+        return name
+    }
+
     populatePlayers(assaulting){
         
         var players = []
         if(assaulting == "assault" && this.state.assaultingFaction == "Rebel"){
             players = this.props.campaign.rebels.map(player => {
-                return <option>{player.playerID}</option>
+                return <option>{this.getPlayerName(player.playerID)}</option>
             })
         }else if (assaulting == "defend" && this.state.assaultingFaction == "Rebel"){
             players = this.props.campaign.imperials.map(player =>{
-                return <option>{player.playerID}</option>
+                return <option>{this.getPlayerName(player.playerID)}</option>
             })
         }else if (assaulting == "assault" && this.state.assaultingFaction == "Empire"){
             players = this.props.campaign.imperials.map(player =>{
-                return <option>{player.playerID}</option>
+                return <option>{this.getPlayerName(player.playerID)}</option>
             })
         }else{
             players = this.props.campaign.rebels.map(player => {
-                return <option>{player.playerID}</option>
+                return <option>{this.getPlayerName(player.playerID)}</option>
             })
         }
 

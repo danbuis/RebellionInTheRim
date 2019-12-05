@@ -2,11 +2,8 @@ import Header from '../reactComponents/Header'
 import Welcome from '../reactComponents/Welcome'
 import CurrentCampaigns from '../reactComponents/CurrentCampaigns'
 import NewCampaign from '../reactComponents/NewCampaign'
-import Link from 'next/link';
 import React, {Component} from 'react';
-import axios from 'axios';
 import EditProfile from '../reactComponents/EditProfile';
-import UserCampaigns from '../reactComponents/UserCampaigns'
 import UserInvites from '../reactComponents/UserInvites'
 
 export default class extends React.Component{

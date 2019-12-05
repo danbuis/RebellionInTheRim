@@ -8,8 +8,12 @@ import CampaignBattles from '../reactComponents/CampaignBattles'
 import React, {Component} from 'react'
 
 export default class extends React.Component{
-    static async getInitialProps(campaign){
-        return campaign.query;
+    static async getInitialProps(campaignData){
+        const campaign = campaignData.query.campaign
+        const battles = campaignData.query.battles
+
+        return{campaign, battles}
+
     }
 
     render(){
@@ -19,7 +23,7 @@ export default class extends React.Component{
                 <Header />
                 <CampaignHeader campaign = {this.props.campaign}/>
                 <CampaignInvites invites = {this.props.campaign.pendingInvites} campaign={this.props.campaign}/>
-                <CampaignBattles campaign = {this.props.campaign}/>
+                <CampaignBattles campaign = {this.props.campaign} battles={this.props.battles}/>
                 <CampaignSystems />
                 <CampaignMessages messages = {this.props.campaign.messages}/>
                 <CampaignPlayers faction = "Rebel" players = {this.props.campaign.rebels} campaignID = {this.props.campaign._id}/>
