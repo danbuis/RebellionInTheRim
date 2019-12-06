@@ -346,8 +346,11 @@ app.prepare().then(() => {
     })
 
     server.get("/battle/:battleID", async function(req, res, next){
+      console.log("in get battle server route")
       const battleID = req.params.battleID
-      const battle = await Battle.findById(battleID)
+      console.log(battleID)
+      const battle = await Battle.findById(battleID).catch(console.log("Failed to find battle"))
+      await console.log(battle)
 
       return app.render(req,res, '/battle', {battle: battle})
     })
@@ -393,7 +396,9 @@ app.prepare().then(() => {
         attackingFaction: attackingFaction,
         defendingFaction: defendingFaction,
         System: req.body.system,
-        round: campaign.round
+        round: campaign.round,
+        winner: "none",
+        loser: "none"
       })
 
       await newBattle.save()
@@ -401,6 +406,15 @@ app.prepare().then(() => {
       await campaign.save()
 
       await res.redirect("/battle/" + newBattle._id)
+    })
+
+    server.post("/battleResolve", async function(req, res, next){
+      const battle = await Battle.findById(req.body.battle)
+
+      await battle.resolveBattle(req.body.winner)
+      await battle.save()
+
+      await res.redirect("/battle/" + req.body.battle)
     })
 
     server.get("/user/:userID", async function(req, res, next){

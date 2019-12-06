@@ -37,6 +37,14 @@ class CampaignBattleTable extends React.Component {
         return name
     }
 
+    getWinner(battle){
+        console.log(battle)
+        if(battle.winner === "none") return "Pending"
+        else{
+            return this.getPlayerName(battle.winner)
+        }
+    }
+
     render () {
         
         const rows = this.props.battles.map((battle, index) => {
@@ -45,8 +53,8 @@ class CampaignBattleTable extends React.Component {
                     <td>{this.getPlayerName(battle.attackingCommander)}</td>
                     <td>{this.getPlayerName(battle.defendingCommander)}</td>
                     <td>{battle.System}</td>
-                    <td><Link href={"/battle/"+battle.id}><a>Details</a></Link></td>
-                    <td>Placeholder</td>
+                    <td><Link href={"/battle/"+battle._id}><a>Details</a></Link></td>
+                    <td>{this.getWinner(battle)}</td>
                 </tr>
             )
         })
@@ -71,7 +79,7 @@ class CampaignBattleTable extends React.Component {
                             <th>Defender</th>
                             <th>System</th>
                             <th>Details</th>
-                            <th>Result</th>
+                            <th>Winner</th>
                         </tr>
                     </thead>
                     <tbody>

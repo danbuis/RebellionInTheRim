@@ -9,12 +9,12 @@ var battleSchema = mongoose.Schema({
   defendingFaction: String,
   System: String,
   currentOwnership: String,
-  winner: {String, default:""},
-  loser: {String, default:""}
+  winner: String,
+  loser: String
 });
 
-battleSchema.methods.resolveBattle = function(winningFaction){
-  if(winningFaction === attackingFaction){
+battleSchema.methods.resolveBattle = function(winningCommander){
+  if(winningCommander === this.attackingCommander){
     this.winner = this.attackingCommander
     this.loser = this.defendingCommander
   }else{

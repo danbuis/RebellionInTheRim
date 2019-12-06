@@ -19,7 +19,7 @@ export default class extends React.Component{
                         attacker = {this.props.battle.attackingCommander} 
                         defender = {this.props.battle.defendingCommander}/>
                 <BattleSystem system = {this.props.battle.System}/>
-                <BattleResults />
+                <BattleResults battle = {this.props.battle}/>
                 <p><Link href={"/campaign/"+this.props.battle.campaign}><a>Back to Campaign</a></Link></p>
 
 
