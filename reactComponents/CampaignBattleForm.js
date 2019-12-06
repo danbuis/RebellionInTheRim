@@ -11,7 +11,6 @@ class CampaignBattleForm extends React.Component {
     }
 
     updateAssaulting(event){
-        console.log(event.target.value)
         this.setState({
             assaultingFaction:event.target.value
         })
@@ -22,11 +21,9 @@ class CampaignBattleForm extends React.Component {
 
         this.props.players.map(player => {
             if(player.playerID === playerID){
-                console.log(player.playerName)
                 name = player.playerName
             }
         })
-
         return name
     }
 
@@ -34,20 +31,20 @@ class CampaignBattleForm extends React.Component {
         
         var players = []
         if(assaulting == "assault" && this.state.assaultingFaction == "Rebel"){
-            players = this.props.campaign.rebels.map(player => {
-                return <option>{this.getPlayerName(player.playerID)}</option>
+            players = this.props.campaign.rebels.map((player, index) => {
+                return <option key={index}>{this.getPlayerName(player.playerID)}</option>
             })
         }else if (assaulting == "defend" && this.state.assaultingFaction == "Rebel"){
-            players = this.props.campaign.imperials.map(player =>{
-                return <option>{this.getPlayerName(player.playerID)}</option>
+            players = this.props.campaign.imperials.map((player, index) =>{
+                return <option key={index}>{this.getPlayerName(player.playerID)}</option>
             })
         }else if (assaulting == "assault" && this.state.assaultingFaction == "Empire"){
-            players = this.props.campaign.imperials.map(player =>{
-                return <option>{this.getPlayerName(player.playerID)}</option>
+            players = this.props.campaign.imperials.map((player, index) =>{
+                return <option key={index}>{this.getPlayerName(player.playerID)}</option>
             })
         }else{
-            players = this.props.campaign.rebels.map(player => {
-                return <option>{this.getPlayerName(player.playerID)}</option>
+            players = this.props.campaign.rebels.map((player, index) => {
+                return <option key={index}>{this.getPlayerName(player.playerID)}</option>
             })
         }
 
@@ -56,8 +53,8 @@ class CampaignBattleForm extends React.Component {
     }
 
     populateSystems(){
-        const systemsOptions = Systems.map(system => {
-            return <option>{system.SystemName}</option>
+        const systemsOptions = Systems.map((system, index) => {
+            return <option key={index}>{system.SystemName}</option>
         })
 
         return systemsOptions
@@ -74,8 +71,8 @@ class CampaignBattleForm extends React.Component {
                 
                 <label>Assaulting Faction</label>
                 <select name="assaultingFaction" onChange={this.updateAssaulting}>
-                    <option value="Rebel">Rebel</option>
-                    <option value="Empire">Empire</option>
+                    <option value="Rebel" key="Rebel">Rebel</option>
+                    <option value="Empire" key="Empire">Empire</option>
                 </select>
 
                 <label>Assaulting Player</label>

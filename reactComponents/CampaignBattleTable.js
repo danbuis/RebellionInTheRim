@@ -30,7 +30,6 @@ class CampaignBattleTable extends React.Component {
 
         this.props.players.map(player => {
             if(player.commanderID === commanderID){
-                console.log(player.playerName)
                 name = player.playerName
             }
         })

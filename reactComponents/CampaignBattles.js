@@ -16,7 +16,6 @@ class CampaignBattles extends React.Component {
         const playerArray = this.props.campaign.rebels.concat(this.props.campaign.imperials)
 
         const getPlayerData = async player =>{
-            console.log(player)
             const user = await axios.get('/user/'+player.playerID)
             const userdata = await user.data
             return await {playerID: player.playerID, playerName:userdata.username, commanderID: player.commanderID}
