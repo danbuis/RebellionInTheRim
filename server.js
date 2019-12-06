@@ -363,7 +363,31 @@ app.prepare().then(() => {
       var attackingCommander
       var defendingCommander
 
-      const getUserName = async userID =>{
+      const getUsername = async player => {
+        const user = await User.findById(player.playerID).catch("Failed to find a user in getUserName")
+        await console.log(user)
+        return await user.username
+      }
+
+      //combine campaign player lists
+      const playerList = await campaign.rebels.concat(campaign.imperials)
+      const userList = await Promise.all(playerList.map(player =>getUsername(player)))
+      console.log(playerList)
+      for(var i=0; i<=playerList.length;i++){
+        console.log("inside loop")
+        console.log(playerList[i])
+        console.log(userList[i])
+        if(await userList[i] == req.body.assaultingPlayer){
+          console.log("found the attacker")
+          attackingCommander = playerList[i].commanderID
+        }
+        else if(await userList[i] == req.body.defendingPlayer){
+          console.log("found the defender")
+          defendingCommander = playerList[i].commanderID
+        }
+      }
+
+      /*const getUserName = async userID =>{
         console.log("getting username")
         console.log(userID)
         const user = await User.findById(userID).catch("Failed to find a user in getUserName")
@@ -393,8 +417,14 @@ app.prepare().then(() => {
           if(getUserName(player.playerID) == req.body.assaultingPlayer) attackingCommander = player.commanderID
         })
 
+      }*/
+      if(req.body.assaultingFaction == "Rebel"){
+        attackingFaction = "Rebel"
+        defendingFaction = "Empire"
+      }else{
+        attackingFaction = "Empire"
+        defendingFaction = "Rebel"
       }
-
       
       console.log("end of if else")
 
