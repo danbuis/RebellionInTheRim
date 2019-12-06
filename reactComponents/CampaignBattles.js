@@ -19,7 +19,7 @@ class CampaignBattles extends React.Component {
             console.log(player)
             const user = await axios.get('/user/'+player.playerID)
             const userdata = await user.data
-            return await {playerID: player.playerID, playerName:userdata.username}
+            return await {playerID: player.playerID, playerName:userdata.username, commanderID: player.commanderID}
         }
 
         const players = await Promise.all(playerArray.map(player => getPlayerData(player)))
@@ -36,7 +36,7 @@ class CampaignBattles extends React.Component {
             var battle = this.props.battles[i]
             if(group === "current" && battle.round == this.props.campaign.round){
                 battles.push(battle)
-            }else if(group === "previous"){
+            }else if(group === "previous" && battle.round != this.props.campaign.round){
                 battles.push(battle)
             }
         }

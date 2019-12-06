@@ -347,15 +347,12 @@ app.prepare().then(() => {
 
     server.get("/battle/:battleID", async function(req, res, next){
       const battleID = req.params.battleID
-      console.log("battleID "+battleID)
       const battle = await Battle.findById(battleID)
-      await console.log(battle)
 
       return app.render(req,res, '/battle', {battle: battle})
     })
 
     server.post("/addBattle", async function(req,res,next){
-      console.log("Add battle method")
       const campaign = await Campaign.findById(req.body.campaign)
       
       var attackingFaction
@@ -365,59 +362,22 @@ app.prepare().then(() => {
 
       const getUsername = async player => {
         const user = await User.findById(player.playerID).catch("Failed to find a user in getUserName")
-        await console.log(user)
         return await user.username
       }
 
       //combine campaign player lists
       const playerList = await campaign.rebels.concat(campaign.imperials)
       const userList = await Promise.all(playerList.map(player =>getUsername(player)))
-      console.log(playerList)
+
       for(var i=0; i<=playerList.length;i++){
-        console.log("inside loop")
-        console.log(playerList[i])
-        console.log(userList[i])
         if(await userList[i] == req.body.assaultingPlayer){
-          console.log("found the attacker")
           attackingCommander = playerList[i].commanderID
         }
         else if(await userList[i] == req.body.defendingPlayer){
-          console.log("found the defender")
           defendingCommander = playerList[i].commanderID
         }
       }
 
-      /*const getUserName = async userID =>{
-        console.log("getting username")
-        console.log(userID)
-        const user = await User.findById(userID).catch("Failed to find a user in getUserName")
-        await console.log(user)
-        return await user.username
-      }
-
-      if(req.body.assaultingFaction == "Rebel"){
-        attackingFaction = "Rebel"
-        defendingFaction = "Empire"
-
-        await campaign.rebels.map(player => {
-          if(getUserName(player.playerID) == req.body.assaultingPlayer) attackingCommander = player.commanderID
-        })
-        await campaign.imperials.map(player => {
-          if(getUserName(player.playerID) == req.body.defendingPlayer) defendingCommander = player.commanderID
-        })
-
-      }else{
-        attackingFaction = "Empire"
-        defendingFaction = "Rebel"
-
-        await campaign.rebels.map(player => {
-          if(getUserName(player.playerID) == req.body.defendingPlayer) defendingCommander = player.commanderID
-        })
-        await campaign.imperials.map(player => {
-          if(getUserName(player.playerID) == req.body.assaultingPlayer) attackingCommander = player.commanderID
-        })
-
-      }*/
       if(req.body.assaultingFaction == "Rebel"){
         attackingFaction = "Rebel"
         defendingFaction = "Empire"
@@ -425,8 +385,6 @@ app.prepare().then(() => {
         attackingFaction = "Empire"
         defendingFaction = "Rebel"
       }
-      
-      console.log("end of if else")
 
       var newBattle =  await new Battle({
         campaign: campaign.name,
@@ -437,11 +395,9 @@ app.prepare().then(() => {
         System: req.body.system,
         round: campaign.round
       })
-      await console.log("end of new battle")
-      await console.log(newBattle)
+
       await newBattle.save()
       await campaign.addBattle(newBattle._id)
-      await console.log("end of add battle")
       await campaign.save()
 
       await res.redirect("/battle/" + newBattle._id)

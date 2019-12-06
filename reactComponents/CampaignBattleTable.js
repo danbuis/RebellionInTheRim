@@ -25,11 +25,11 @@ class CampaignBattleTable extends React.Component {
         })
     }
 
-    getPlayerName(playerID){
+    getPlayerName(commanderID){
         var name = ""
 
         this.props.players.map(player => {
-            if(player.playerID === playerID){
+            if(player.commanderID === commanderID){
                 console.log(player.playerName)
                 name = player.playerName
             }
@@ -43,8 +43,8 @@ class CampaignBattleTable extends React.Component {
         const rows = this.props.battles.map((battle, index) => {
             return (
                 <tr key={index}>
-                    <td>{battle.attackingCommander}</td>
-                    <td>{battle.defendingCommander}</td>
+                    <td>{this.getPlayerName(battle.attackingCommander)}</td>
+                    <td>{this.getPlayerName(battle.defendingCommander)}</td>
                     <td>{battle.System}</td>
                     <td><Link href={"/battle/"+battle.id}><a>Details</a></Link></td>
                     <td>Placeholder</td>
@@ -52,26 +52,37 @@ class CampaignBattleTable extends React.Component {
             )
         })
 
-        return <div>
-            <h2>{this.props.title}</h2>
-            
-            <table border="1">
-                <thead>
-                    <tr>
-                        <th>Attacker</th>
-                        <th>Defender</th>
-                        <th>System</th>
-                        <th>Details</th>
-                        <th>Result</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {rows}
-                </tbody>
-            </table>
-                     
+        const header =  <h2>{this.props.title}</h2>
 
-        </div>;
+        if(this.props.battles.length == 0){
+            
+            return <div>
+                {header}
+                <p>No battles to show</p>
+            </div> 
+            
+        }else{
+            return <div>
+                {header}
+                
+                <table border="1">
+                    <thead>
+                        <tr>
+                            <th>Attacker</th>
+                            <th>Defender</th>
+                            <th>System</th>
+                            <th>Details</th>
+                            <th>Result</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {rows}
+                    </tbody>
+                </table>
+                        
+
+            </div>;
+        }
     }
 }
 
