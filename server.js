@@ -481,6 +481,7 @@ app.prepare().then(() => {
       const full = await campaign.isFull()
       if(full){
         await campaign.changeRound(campaign.round + 1)
+        await campaign.changeAct()
       }
 
       //save the changes

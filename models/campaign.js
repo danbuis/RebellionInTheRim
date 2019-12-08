@@ -11,7 +11,9 @@ var campaignSchema = mongoose.Schema({
   imperials: [{playerID:String, commanderID:String}],
   systems: [{name:String, facility:String}],
   battles: [String],
-  round: {type: Number, default:0}
+  round: {type: Number, default:0},
+  score:{rebel:[Number], imperial:[Number]},
+  act:{type: Number, default:0}
 });
 
   campaignSchema.methods.newSystemOwner = function(battle){
@@ -51,6 +53,20 @@ var campaignSchema = mongoose.Schema({
 
   campaignSchema.methods.changeRound = function(newRound){
     this.round = newRound
+
+    var scoreThreshold
+    if(this.numberPlayers = 6) scoreThreshold=5
+    else scoreThreshold=4
+
+    if(this.score.rebels[this.act-1] >= scoreThreshold || this.score.imperials[this.act-1] >= scoreThreshold){
+      this.nextAct()
+    }
+  }
+
+  campaignSchema.methods.nextAct = function(){
+    this.act = this.act+1
+    this.score.rebels.push(0)
+    this.score.imperials.push(0)
   }
 
   campaignSchema.methods.isFull = function(){
