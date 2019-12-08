@@ -14,6 +14,26 @@ var campaignSchema = mongoose.Schema({
   round: {type: Number, default:0}
 });
 
+  campaignSchema.methods.newSystemOwner = function(battle){
+    //check if the system already has an owner
+    var index = -1
+    for(var i =0; i<this.systems.length; i++){
+      if (this.systems[i].name == battle.System){
+        index = i
+      }
+    }
+    //if so, remove it
+    if(index >=0){
+      this.systems.splice(i,1)
+    }
+    //and update system with a new owner
+    if(battle.winner == battle.attackingCommander){
+      this.systems.push({name: battle.System, facility: battle.attackingFaction + "Presence"})
+    }else{
+      this.systems.push({name: battle.System, facility: battle.defendingFaction + "Presence"})
+    }
+  }
+
   campaignSchema.methods.addPlayer = function(user, faction) {
     console.log("addPlayer "+faction)
     if(faction =="rebel"){

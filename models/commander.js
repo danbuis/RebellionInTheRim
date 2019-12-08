@@ -7,7 +7,8 @@ var commanderSchema = mongoose.Schema({
   campaign: String,
   currentPoints: Number,
   fleetSize: Number, 
-  faction: String
+  faction: String,
+  messages: [String]
 });
 
 commanderSchema.methods.changeName = function(newName){
@@ -16,6 +17,10 @@ commanderSchema.methods.changeName = function(newName){
 
 commanderSchema.methods.changeFleetSize = function(newSize){
   this.fleetSize = newSize
+}
+
+commanderSchema.methods.gainExperience = function(gainXP){
+  this.currentPoints = this.currentPoints + gainXP
 }
 
 commanderSchema.methods.addSkill = function(ID){

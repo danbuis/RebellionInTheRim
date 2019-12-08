@@ -410,10 +410,44 @@ app.prepare().then(() => {
 
     server.post("/battleResolve", async function(req, res, next){
       const battle = await Battle.findById(req.body.battle)
+      const campaign = await Campaign.findById(req.body.campaign)
 
+      //update battle status
       await battle.resolveBattle(req.body.winner)
       await battle.save()
 
+      //update System ownership
+      await campaign.newSystemOwner(battle)
+
+      //check if it is time to update the campaign round
+      var allResolved = false      
+      const battleList = await Battle.find({campaign: req.body.campaign})
+      for(var i=0; i<=battleList.length;i++){
+        if(await battleList[i].winner == battleList[i].attackingCommander
+              || battleList[i].winner == battleList[i].defendingCommander){
+          allResolved = true
+        }      
+      }
+      if(await allResolved){
+        await campaign.changeRound(campaign.round+1)
+      }
+
+      //give commanders experience
+      const winningCommander = await Commander.findById(battle.winner)
+      const losingCommander = await Commander.findById(battle.loser)
+      await winningCommander.gainExperience(1)
+      await losingCommander.gainExperience(2)
+
+      const fleetDif = await winningCommander.fleetSize - losingCommander.fleetSize
+      if(await fleetDif >= 25 ){
+        if(await winningCommander.fleetSize > losingCommander.fleetSize){
+          await winningCommander.gainExperience(Math.floor(fleetDif/25))
+        }else await losingCommander.gainExperience(Math.floor(fleetDif/25))
+      }
+
+      await winningCommander.save()
+      await losingCommander.save()
+      await campaign.save()
       await res.redirect("/battle/" + req.body.battle)
     })
 
