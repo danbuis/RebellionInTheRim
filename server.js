@@ -348,9 +348,8 @@ app.prepare().then(() => {
     server.get("/battle/:battleID", async function(req, res, next){
       console.log("in get battle server route")
       const battleID = req.params.battleID
-      console.log(battleID)
       const battle = await Battle.findById(battleID).catch(console.log("Failed to find battle"))
-      await console.log(battle)
+
 
       return app.render(req,res, '/battle', {battle: battle})
     })
@@ -410,7 +409,7 @@ app.prepare().then(() => {
 
     server.post("/battleResolve", async function(req, res, next){
       const battle = await Battle.findById(req.body.battle)
-      const campaign = await Campaign.findById(req.body.campaign)
+      const campaign = await Campaign.findOne({name:req.body.campaign})
 
       //update battle status
       await battle.resolveBattle(req.body.winner)
@@ -420,14 +419,19 @@ app.prepare().then(() => {
       await campaign.newSystemOwner(battle)
 
       //check if it is time to update the campaign round
-      var allResolved = false      
+      var resolved = 0
+      var allResolved = false
       const battleList = await Battle.find({campaign: req.body.campaign})
-      for(var i=0; i<=battleList.length;i++){
+      for(var i=0; i<battleList.length;i++){
         if(await battleList[i].winner == battleList[i].attackingCommander
               || battleList[i].winner == battleList[i].defendingCommander){
-          allResolved = true
+          resolved = resolved+1
         }      
       }
+      await console.log(resolved)
+      if(resolved == await battleList.length){allResolved = true}
+
+      console.log("RESOLVED :"+allResolved)
       if(await allResolved){
         await campaign.changeRound(campaign.round+1)
       }
@@ -480,8 +484,8 @@ app.prepare().then(() => {
       await campaign.addMessage("invite", userData.username+" has joined this campaign", "auto")
       const full = await campaign.isFull()
       if(full){
-        await campaign.changeRound(campaign.round + 1)
-        await campaign.changeAct()
+        await campaign.changeRound(1)
+        await campaign.nextAct()
       }
 
       //save the changes

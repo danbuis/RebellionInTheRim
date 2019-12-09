@@ -24,7 +24,7 @@ export default class extends React.Component{
                 <CampaignHeader campaign = {this.props.campaign}/>
                 <CampaignInvites invites = {this.props.campaign.pendingInvites} campaign={this.props.campaign}/>
                 <CampaignBattles campaign = {this.props.campaign} battles={this.props.battles}/>
-                <CampaignSystems />
+                <CampaignSystems campaign = {this.props.campaign}/>
                 <CampaignMessages messages = {this.props.campaign.messages}/>
                 <CampaignPlayers faction = "Rebel" players = {this.props.campaign.rebels} campaignID = {this.props.campaign._id}/>
                 <CampaignPlayers faction = "Imperial" players = {this.props.campaign.imperials} campaignID = {this.props.campaign._id}/>

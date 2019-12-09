@@ -13,6 +13,19 @@ class CampaignSystems extends React.Component {
         )
     }
 
+    getOwnership(systemName){
+        var index = -1
+        for(var i = 0;i < this.props.campaign.systems.length; i++){
+            if(this.props.campaign.systems[i].name == systemName){
+                index = i
+            }
+        }
+
+        if(index != -1){console.log(this.props.campaign.systems[index])
+            return this.props.campaign.systems[index].facility
+        } else return "None"
+    }
+
     populateTable(){
         if(Systems.length===0 ){
             return (<p> Error, no systems found!!!  Its all broken!!!</p>)
@@ -23,7 +36,7 @@ class CampaignSystems extends React.Component {
                         <td>{system.SystemName}</td>
                         <td>{this.listItems(system.Area)}</td>
                         <td>{this.listItems(system.StrategicEffect)}</td>
-                        <td>none</td>
+                        <td>{this.getOwnership(system.SystemName)}</td>
                         <td>{system.Points}</td>
                     </tr>
                     )

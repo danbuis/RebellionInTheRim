@@ -38,7 +38,6 @@ class CampaignBattleTable extends React.Component {
     }
 
     getWinner(battle){
-        console.log(battle)
         if(battle.winner === "none") return "Pending"
         else{
             return this.getPlayerName(battle.winner)

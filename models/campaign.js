@@ -30,9 +30,9 @@ var campaignSchema = mongoose.Schema({
     }
     //and update system with a new owner
     if(battle.winner == battle.attackingCommander){
-      this.systems.push({name: battle.System, facility: battle.attackingFaction + "Presence"})
+      this.systems.push({name: battle.System, facility: battle.attackingFaction + " Presence"})
     }else{
-      this.systems.push({name: battle.System, facility: battle.defendingFaction + "Presence"})
+      this.systems.push({name: battle.System, facility: battle.defendingFaction + " Presence"})
     }
   }
 
@@ -52,21 +52,28 @@ var campaignSchema = mongoose.Schema({
   }
 
   campaignSchema.methods.changeRound = function(newRound){
+    console.log("inside changeRound "+newRound)
     this.round = newRound
 
     var scoreThreshold
     if(this.numberPlayers = 6) scoreThreshold=5
     else scoreThreshold=4
 
-    if(this.score.rebels[this.act-1] >= scoreThreshold || this.score.imperials[this.act-1] >= scoreThreshold){
+    console.log("scoreThreshold "+scoreThreshold)
+    //console.log("scoreRebel "+this.score.rebel +" : "+this.score.rebel[this.act-1])
+    //console.log("scoreEmpire "+this.score.empire +" : "+this.score.empire[this.act-1])
+
+    if(newRound!=1 && (this.score.rebel[this.act-1] >= scoreThreshold || this.score.imperial[this.act-1] >= scoreThreshold)){
       this.nextAct()
     }
+
+
   }
 
   campaignSchema.methods.nextAct = function(){
     this.act = this.act+1
-    this.score.rebels.push(0)
-    this.score.imperials.push(0)
+    this.score.rebel.push(0)
+    this.score.imperial.push(0)
   }
 
   campaignSchema.methods.isFull = function(){
