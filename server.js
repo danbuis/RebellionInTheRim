@@ -408,6 +408,8 @@ app.prepare().then(() => {
     })
 
     server.post("/battleResolve", async function(req, res, next){
+      console.log("body")
+      console.log(req.body)
       const battle = await Battle.findById(req.body.battle)
       const campaign = await Campaign.findOne({name:req.body.campaign})
 

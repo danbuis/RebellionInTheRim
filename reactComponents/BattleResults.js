@@ -49,11 +49,11 @@ class BattleResults extends React.Component {
             <input type="hidden" name="campaign" value={this.props.battle.campaign}/>
             <input type="hidden" name="battle" value={this.props.battle._id} />}
             <label>
-                <input type="radio" name="winner" value={this.state.attackingCommanderName} />
+                <input type="radio" name="winner" value={this.props.battle.attackingCommander} />
                 {this.state.attackingCommanderName}
             </label>
             <label>
-                <input type="radio" name="winner" value={this.state.defendingCommanderName} />
+                <input type="radio" name="winner" value={this.props.battle.defendingCommander} />
                 {this.state.defendingCommanderName}
             </label>
             <input type="submit" value="Declare Winner" />
