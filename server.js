@@ -72,7 +72,7 @@ app.prepare().then(() => {
     server.post("/signup", function(req, res, next){
         var username = req.body.username;
         var password = req.body.password;
-        var lowercaseUser = username.toLowerCase().replace(/[\s]/gi,"&nbsp;")
+        var lowercaseUser = username.toLowerCase()
       
         User.findOne({ username: lowercaseUser }, function(err, user) {
       
@@ -96,11 +96,9 @@ app.prepare().then(() => {
       );
 
     server.post("/initCampaign", async function(req, res, next){
-        var preprocessedCampaignName = req.body.name;
+        var campaignName = req.body.name;
         var playerCount = req.body.players;
         var faction = req.body.faction;
-
-        var campaignName = preprocessedCampaignName.replace(/[\s]/gi,"&nbsp;")
 
         const campaign = await Campaign.find({name:campaignName})
         if(campaign.length>0){
@@ -221,7 +219,7 @@ app.prepare().then(() => {
     server.post("/changeCommanderName", async function(req, res, next){
       const commander = await Commander.findById(req.body.commanderID)
       const newName=req.body.newName
-      const cleanName = newName.toLowerCase().trim().replace(/[\s]/gi,"&nbsp;");
+      const cleanName = newName.toLowerCase().trim();
 
       if(cleanName === "none"){
         res.redirect("/error/2")

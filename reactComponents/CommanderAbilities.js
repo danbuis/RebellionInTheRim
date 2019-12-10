@@ -12,6 +12,18 @@ class CommanderAbilities extends React.Component {
         return "None"
     }
 
+    disableSkill(id){
+        for (vari=0; i<Abilities.length; i++){
+            if(Abilities[i].ID === id){
+                if(this.props.commander.currentPoints >= Abilities[i].Cost){
+                    return false
+                }else return true
+            }
+        }
+
+        return true
+    }
+
     addSkill(ability){
         if (ability.Base === "Yes"){
             return(
@@ -19,7 +31,7 @@ class CommanderAbilities extends React.Component {
                     <input type="hidden" name="commanderID" value={this.props.commander._id} />
                     <input type="hidden" name="abilityID" value={ability.ID} />
                     <input type="hidden" name="abilityTitle" value={ability.Title} />
-                    <input type="submit" value="Add Skill" />
+                    <input disabled={this.disableSkill(ability.ID)}type="submit" value="Add Skill" />
                 </form>
             )
         }
