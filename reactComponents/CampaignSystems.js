@@ -21,8 +21,9 @@ class CampaignSystems extends React.Component {
             }
         }
 
-        if(index != -1){console.log(this.props.campaign.systems[index])
-            return this.props.campaign.systems[index].facility
+        if(index != -1){
+            const system = this.props.campaign.systems[index]
+            return system.faction + " "+system.facility
         } else return "None"
     }
 

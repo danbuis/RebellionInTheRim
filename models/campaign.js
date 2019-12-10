@@ -9,7 +9,7 @@ var campaignSchema = mongoose.Schema({
   messages: [{messageType:String, text:String, source:String}],
   rebels: [{playerID:String, commanderID:String}],
   imperials: [{playerID:String, commanderID:String}],
-  systems: [{name:String, facility:String}],
+  systems: [{name:String, facility:String, faction:String}],
   battles: [String],
   round: {type: Number, default:0},
   score:{rebel:[Number], imperial:[Number]},
@@ -28,11 +28,18 @@ var campaignSchema = mongoose.Schema({
     if(index >=0){
       this.systems.splice(i,1)
     }
+
+    //get winning faction
+    var winningFaction
+    if(battle.attackingCommander == battle.winner){
+      winningFaction = attackingFaction
+    }else winningFaction = defendingFaction
+
     //and update system with a new owner
     if(battle.winner == battle.attackingCommander){
-      this.systems.push({name: battle.System, facility: battle.attackingFaction + " Presence"})
+      this.systems.push({name: battle.System, facility:"Presence", faction:winningFaction})
     }else{
-      this.systems.push({name: battle.System, facility: battle.defendingFaction + " Presence"})
+      this.systems.push({name: battle.System, facility:"Presence", faction:winningFaction})
     }
   }
 
