@@ -440,7 +440,7 @@ app.prepare().then(() => {
 
       const fleetDif = await winningCommander.fleetSize - losingCommander.fleetSize
       if(await fleetDif >= 25 ){
-        if(await winningCommander.fleetSize > losingCommander.fleetSize){
+        if(await winningCommander.fleetSize < losingCommander.fleetSize){
           await winningCommander.gainExperience(Math.floor(fleetDif/25))
         }else await losingCommander.gainExperience(Math.floor(fleetDif/25))
       }

@@ -21,17 +21,14 @@ commanderSchema.methods.changeFleetSize = function(newSize){
 }
 
 commanderSchema.methods.gainExperience = function(gainXP){
+  console.log("commander "+this.name)
+  console.log("gaining "+gainXP)
+  console.log("total "+this.currentPoints)
   this.currentPoints = this.currentPoints + gainXP
+  console.log("total "+this.currentPoints)
 }
 
 commanderSchema.methods.addSkill = function(ID){
-  var index = this.abilities.indexOf(ID)
-  if(index < 0){
-    this.abilities.push(ID)
-  }
-}
-
-commanderSchema.methods.addInitialSkill = function(ID){
   var index = this.abilities.indexOf(ID)
   if(index < 0){
     this.abilities.push(ID)

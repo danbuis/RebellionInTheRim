@@ -32,8 +32,8 @@ var campaignSchema = mongoose.Schema({
     //get winning faction
     var winningFaction
     if(battle.attackingCommander == battle.winner){
-      winningFaction = attackingFaction
-    }else winningFaction = defendingFaction
+      winningFaction = battle.attackingFaction
+    }else winningFaction = battle.defendingFaction
 
     //and update system with a new owner
     if(battle.winner == battle.attackingCommander){
