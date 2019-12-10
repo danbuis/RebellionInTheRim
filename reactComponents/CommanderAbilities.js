@@ -15,7 +15,7 @@ class CommanderAbilities extends React.Component {
     disableSkill(id){
         for (var i=0; i<Abilities.length; i++){
             if(Abilities[i].ID === id){
-                if(this.props.commander.currentPoints >= Abilities[i].Cost){
+                if(this.props.commander.currentPoints >= Abilities[i].Cost || !this.props.initialSkill){
                     return false
                 }else return true
             }

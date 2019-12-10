@@ -8,7 +8,8 @@ var commanderSchema = mongoose.Schema({
   currentPoints: Number,
   fleetSize: Number, 
   faction: String,
-  messages: [String]
+  messages: [String],
+  initialSkill: {type:Boolean, default:false}
 });
 
 commanderSchema.methods.changeName = function(newName){
@@ -27,6 +28,14 @@ commanderSchema.methods.addSkill = function(ID){
   var index = this.abilities.indexOf(ID)
   if(index < 0){
     this.abilities.push(ID)
+  }
+}
+
+commanderSchema.methods.addInitialSkill = function(ID){
+  var index = this.abilities.indexOf(ID)
+  if(index < 0){
+    this.abilities.push(ID)
+    this.initialSkill=true
   }
 }
 
