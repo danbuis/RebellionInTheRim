@@ -46,7 +46,7 @@ class CampaignBattles extends React.Component {
      
     render () {
         return <div>        
-            <CampaignBattleForm campaign={this.props.campaign} players={this.state.playerData}/>
+            <CampaignBattleForm campaign={this.props.campaign} players={this.state.playerData} currentBattles = {this.filterBattles("current")}/>
             <CampaignBattleTable title="Current Battles" battles={this.filterBattles("current")} players={this.state.playerData}/>
             <CampaignBattleTable title="Previous Battles" battles ={this.filterBattles("previous")} players={this.state.playerData}/>
         </div>;

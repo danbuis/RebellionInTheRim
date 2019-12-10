@@ -28,6 +28,17 @@ class CampaignBattleForm extends React.Component {
     }
 
     populatePlayers(assaulting){
+        var unAssignedPlayers = this.props.campaign.rebels.concat(this.props.campaign.imperials)
+        for(var i=0; i<this.props.currentBattles.length; i++){
+            var index=-1
+            for(var j=0; j<unAssignedPlayers.length; j++){
+                if(unAssignedPlayers[j].commanderID == this.props.currentBattles[i].attackingCommander
+                || unAssignedPlayers[j].commanderID == this.props.currentBattles[i].defendingCommander){
+                    index = j
+                }
+            unAssignedPlayers.splice(index,1)
+            }
+        }
         
         var players = []
         if(assaulting == "assault" && this.state.assaultingFaction == "Rebel"){
