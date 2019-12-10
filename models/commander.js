@@ -36,6 +36,13 @@ commanderSchema.methods.addSkill = function(ID){
   }
 }
 
+commanderSchema.methods.removeSkill = function(ID){
+  var index = this.abilites.indexOf(ID)
+  if(index !== -1){
+    this.abilities.splice(index, 1)
+  }
+}
+
 commanderSchema.methods.upgradeSkill = function(currentID, newID){
   var index = this.abilities.indexOf(currentID)
   if(index !== -1){

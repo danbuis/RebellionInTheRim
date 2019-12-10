@@ -253,6 +253,18 @@ app.prepare().then(() => {
       await res.redirect("/commander/"+commanderID)
     })
 
+    server.post("/removeSkill", async function(req, res, next){
+      const commanderID = req.body.commanderID
+      const commander = await Commander.findById(commanderID)
+
+      const campaign = await Campaign.findById(commander.campaign)
+      await campaign.addMessage("commander", " has dropped the "+req.body.abilityTitle+" ability", commander._id) 
+      await campaign.save()
+
+      await commander.removeSkill(req.body.abilityID)
+      await commander.save()
+    })
+
     server.post("/upgradeSkill", async function(req, res, next){
       const commanderID = req.body.commanderID
       const currentSkillID = req.body.currentSkillID

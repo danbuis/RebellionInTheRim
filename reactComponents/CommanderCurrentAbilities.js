@@ -54,6 +54,16 @@ class CommanderAbilities extends React.Component {
         }
     }
 
+    remove(ability){
+        return(
+            <form action={"/removeSkill"} method="post">
+                    <input type="hidden" name="commanderID" value = {this.props.commander._id} />
+                    <input type="hidden" name="currentSkillID" value = {ability.ID} />
+                    <input type="submit" value="Remove Skill" />
+                </form>
+        )
+    }
+
     populateTable(){
         if(this.props.commander.abilities.length===0 ){
             return (<p>No current commander abilities</p>)
@@ -68,6 +78,7 @@ class CommanderAbilities extends React.Component {
                         <td>{ability.Cost}</td>
                         <td>{this.findItemByID(ability.Next).Title}</td>
                         <td>{this.upgrade(ability)}</td>
+                        <td>{this.remove(ability)}</td>
                     </tr>
                     )
                 })
@@ -80,6 +91,7 @@ class CommanderAbilities extends React.Component {
                             <th>Cost</th>
                             <th>Upgrades to...</th>
                             <th>Upgrade?</th>
+                            <th>Remove?</th>
                         </tr>
                     </thead>
                     <tbody>{rows}</tbody>

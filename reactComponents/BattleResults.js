@@ -47,7 +47,7 @@ class BattleResults extends React.Component {
             <h2>Who won?</h2>
             <form action="/battleResolve" method="post">
             <input type="hidden" name="campaign" value={this.props.battle.campaign}/>
-            <input type="hidden" name="battle" value={this.props.battle._id} />}
+            <input type="hidden" name="battle" value={this.props.battle._id} />
             <label>
                 <input type="radio" name="winner" value={this.props.battle.attackingCommander} />
                 {this.state.attackingCommanderName}

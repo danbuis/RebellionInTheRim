@@ -60,7 +60,7 @@ class CampaignBattleForm extends React.Component {
         }
 
         return players
-    
+        
     }
 
     populateSystems(){
