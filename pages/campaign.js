@@ -5,6 +5,7 @@ import CampaignSystems from '../reactComponents/CampaignSystems'
 import CampaignPlayers from '../reactComponents/CampaignPlayers'
 import CampaignMessages from '../reactComponents/CampaignMessages'
 import CampaignBattles from '../reactComponents/CampaignBattles'
+import CampaignScore from '../reactComponents/CampaignScore'
 import React, {Component} from 'react'
 
 export default class extends React.Component{
@@ -22,6 +23,8 @@ export default class extends React.Component{
             <div>
                 <Header />
                 <CampaignHeader campaign = {this.props.campaign}/>
+                <CampaignScore score = {this.props.campaign.score.rebel} faction = {"Rebel"} />
+                <CampaignScore score = {this.props.campaign.score.imperial} faction = {"Imperial"} />
                 <CampaignInvites invites = {this.props.campaign.pendingInvites} campaign={this.props.campaign}/>
                 <CampaignBattles campaign = {this.props.campaign} battles={this.props.battles}/>
                 <CampaignSystems campaign = {this.props.campaign}/>

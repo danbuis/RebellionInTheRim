@@ -43,6 +43,17 @@ var campaignSchema = mongoose.Schema({
     }
   }
 
+  campaignSchema.methods.changeScore = function(faction, addedPoints){
+    currentAct = this.score.rebel.length
+    if(faction == "rebel"){
+      currentScore = this.score.rebel[currentAct-1]
+      this.score.rebel[currentAct-1] = currentScore + addedPoints
+    } else {
+      currentScore = this.score.imperial[currentAct-1]
+      this.score.imperial[currentAct-1] = currentScore + addedPoints
+    }
+  }
+
   campaignSchema.methods.addPlayer = function(user, faction) {
     console.log("addPlayer "+faction)
     if(faction =="rebel"){

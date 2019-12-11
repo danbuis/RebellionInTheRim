@@ -31,6 +31,7 @@ class CommanderAbilities extends React.Component {
                     <input type="hidden" name="commanderID" value={this.props.commander._id} />
                     <input type="hidden" name="abilityID" value={ability.ID} />
                     <input type="hidden" name="abilityTitle" value={ability.Title} />
+                    <input type="hidden" name="cost" value={ability.Cost} />
                     <input disabled={this.disableSkill(ability.ID)}type="submit" value="Add Skill" />
                 </form>
             )

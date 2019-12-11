@@ -28,25 +28,29 @@ commanderSchema.methods.gainExperience = function(gainXP){
   console.log("total "+this.currentPoints)
 }
 
-commanderSchema.methods.addSkill = function(ID){
+commanderSchema.methods.addSkill = function(ID, cost){
   var index = this.abilities.indexOf(ID)
   if(index < 0){
     this.abilities.push(ID)
+    if(this.initialSkill){
+      this.currentPoints = this.currentPoints - cost
+    }
     this.initialSkill=true
   }
 }
 
 commanderSchema.methods.removeSkill = function(ID){
-  var index = this.abilites.indexOf(ID)
+  var index = this.abilities.indexOf(ID)
   if(index !== -1){
     this.abilities.splice(index, 1)
   }
 }
 
-commanderSchema.methods.upgradeSkill = function(currentID, newID){
+commanderSchema.methods.upgradeSkill = function(currentID, newID, cost){
   var index = this.abilities.indexOf(currentID)
   if(index !== -1){
     this.abilities.splice(index, 1, newID)
+    this.currentPoints = this.currentPoints - cost
      } 
 }
 

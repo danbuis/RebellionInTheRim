@@ -248,7 +248,7 @@ app.prepare().then(() => {
       await campaign.addMessage("commander", " has gained the "+req.body.abilityTitle+" ability", commander._id) 
       await campaign.save()
 
-      await commander.addSkill(req.body.abilityID)
+      await commander.addSkill(req.body.abilityID, req.body.cost)
       await commander.save()
       await res.redirect("/commander/"+commanderID)
     })
@@ -263,6 +263,7 @@ app.prepare().then(() => {
 
       await commander.removeSkill(req.body.abilityID)
       await commander.save()
+      await res.redirect("/commander/"+commanderID)
     })
 
     server.post("/upgradeSkill", async function(req, res, next){
@@ -271,7 +272,7 @@ app.prepare().then(() => {
       const newSkillID = req.body.newSkillID
 
       const commander = await Commander.findById(commanderID)
-      await commander.upgradeSkill(currentSkillID, newSkillID)
+      await commander.upgradeSkill(currentSkillID, newSkillID, req.body.cost)
       await commander.save()
 
       const campaign = await Campaign.findById(commander.campaign)
@@ -427,6 +428,11 @@ app.prepare().then(() => {
 
       //update System ownership
       await campaign.newSystemOwner(battle)
+
+      //give points to winning team
+      if(await battle.winner == battle.attackingCommander){
+        await campaign.changeScore(battle.attackingFaction, 1)
+      }else await campaign.changeScore(battle.defendingFaction, 1)
 
       //check if it is time to update the campaign round
       var resolved = 0

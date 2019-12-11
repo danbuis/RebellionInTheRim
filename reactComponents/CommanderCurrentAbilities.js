@@ -48,6 +48,7 @@ class CommanderAbilities extends React.Component {
                     <input type="hidden" name="currentSkillID" value = {ability.ID} />
                     <input type="hidden" name="newSkillID" value = {ability.Next} />
                     <input type="hidden" name="newSkillTitle" value = {ability.Title} />
+                    <input type="hidden" name="cost" value={ability.Cost} />
                     <input type="submit" disabled = {this.disableSkill(ability.ID)}value="Upgrade Skill" />
                 </form>
             )
@@ -58,7 +59,7 @@ class CommanderAbilities extends React.Component {
         return(
             <form action={"/removeSkill"} method="post">
                     <input type="hidden" name="commanderID" value = {this.props.commander._id} />
-                    <input type="hidden" name="currentSkillID" value = {ability.ID} />
+                    <input type="hidden" name="abilityID" value = {ability.ID} />
                     <input type="submit" value="Remove Skill" />
                 </form>
         )
