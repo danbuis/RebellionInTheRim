@@ -12,7 +12,8 @@ var campaignSchema = mongoose.Schema({
   systems: [{name:String, facility:String, faction:String}],
   battles: [String],
   round: {type: Number, default:0},
-  score:{rebel:[Number], imperial:[Number]},
+  scoreRebel: [Number],
+  scoreImperial: [Number],
   act:{type: Number, default:0}
 });
 
@@ -44,13 +45,13 @@ var campaignSchema = mongoose.Schema({
   }
 
   campaignSchema.methods.changeScore = function(faction, addedPoints){
-    currentAct = this.score.rebel.length
-    if(faction == "rebel"){
-      currentScore = this.score.rebel[currentAct-1]
-      this.score.rebel[currentAct-1] = currentScore + addedPoints
+    const currentAct = this.scoreRebel.length
+    if(faction == "Rebel"){
+      const currentScore = this.scoreRebel[currentAct-1]
+      this.scoreRebel.set(currentAct - 1 , currentScore + addedPoints)
     } else {
-      currentScore = this.score.imperial[currentAct-1]
-      this.score.imperial[currentAct-1] = currentScore + addedPoints
+      const currentScore = this.scoreImperial[currentAct-1]
+      this.scoreImperial[currentAct-1] = currentScore + addedPoints
     }
   }
 
@@ -81,7 +82,7 @@ var campaignSchema = mongoose.Schema({
     //console.log("scoreRebel "+this.score.rebel +" : "+this.score.rebel[this.act-1])
     //console.log("scoreEmpire "+this.score.empire +" : "+this.score.empire[this.act-1])
 
-    if(newRound!=1 && (this.score.rebel[this.act-1] >= scoreThreshold || this.score.imperial[this.act-1] >= scoreThreshold)){
+    if(newRound!=1 && (this.scoreRebel[this.act-1] >= scoreThreshold || this.scoreImperial[this.act-1] >= scoreThreshold)){
       this.nextAct()
     }
 
@@ -90,8 +91,8 @@ var campaignSchema = mongoose.Schema({
 
   campaignSchema.methods.nextAct = function(){
     this.act = this.act+1
-    this.score.rebel.push(0)
-    this.score.imperial.push(0)
+    this.scoreRebel.push(0)
+    this.scoreImperial.push(0)
   }
 
   campaignSchema.methods.isFull = function(){

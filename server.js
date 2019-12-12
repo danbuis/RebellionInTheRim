@@ -91,7 +91,7 @@ app.prepare().then(() => {
         });
       }, passport.authenticate("login"), 
         function(req,res){
-          res.redirect("/profile/"+lowercaseUser);
+          res.redirect("/profile/"+req.user.username);
         }
       );
 
@@ -444,6 +444,7 @@ app.prepare().then(() => {
           resolved = resolved+1
         }      
       }
+
       if(resolved == await battleList.length){allResolved = true}
 
       if(await allResolved){
@@ -466,6 +467,7 @@ app.prepare().then(() => {
       await winningCommander.save()
       await losingCommander.save()
       await campaign.save()
+  
       await res.redirect("/battle/" + req.body.battle)
     })
 
