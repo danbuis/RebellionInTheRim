@@ -17,6 +17,7 @@ export default class extends React.Component{
             <div>
                 <Header />
                 <h2>{this.props.commander.name}</h2>
+                <p>Playing for the {this.props.commander.faction}s</p>
                 <p>Campaign : <Link href={"/campaign/"+this.props.campaign.name}><a>{this.props.campaign.name}</a></Link></p>
                 <form action="/changeCommanderName" method="post">
                     <input type="text" name="newName" default="New Name" />

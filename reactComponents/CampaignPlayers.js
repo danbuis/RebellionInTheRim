@@ -42,6 +42,7 @@ class CampaignPlayers extends React.Component {
             <form action="/newCommander" method="post">
                 <input type="hidden" name="player" value={player} />
                 <input type="hidden" name="campaign" value={this.props.campaignID} />
+                <input type="hidden" name="faction" value={this.props.faction} />
                 <input type="submit" value="Create Commander" />
             </form>
         )

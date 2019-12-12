@@ -94,7 +94,7 @@ class SignUpBlock extends React.Component {
                 <li>No special characters other than the following : _ ' "</li>
                 <li>No leading or trailing spaces</li>
             </ul>
-            <p>Usernames and passwords are case sensitive</p>
+            <p>Usernames are not case sensitive, but passwords are case sensitive</p>
             <form action="/signup" method="post">
                 <label>Username</label>
                 <input type="text" name="username" default="Username" required onChange={this.updateUsername}/>

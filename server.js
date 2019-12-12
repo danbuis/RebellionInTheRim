@@ -193,6 +193,7 @@ app.prepare().then(() => {
         name: "Default Name",
         playerID: req.body.player,
         campaign: req.body.campaign,
+        faction: req.body.faction,
         currentPoints: 0,
         fleetSize: 200
       })
