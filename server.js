@@ -438,7 +438,8 @@ app.prepare().then(() => {
       //check if it is time to update the campaign round
       var resolved = 0
       var allResolved = false
-      const battleList = await Battle.find({campaign: req.body.campaign})
+      const battleList = await Battle.find({campaign: req.body.campaign, round: campaign.round})
+      console.log(battleList.length)
       for(var i=0; i<battleList.length;i++){
         if(await battleList[i].winner == battleList[i].attackingCommander
               || battleList[i].winner == battleList[i].defendingCommander){
@@ -446,7 +447,7 @@ app.prepare().then(() => {
         }      
       }
 
-      if(resolved == await battleList.length){allResolved = true}
+      if(await resolved == campaign.rebels.length){allResolved = true}
 
       if(await allResolved){
         await campaign.changeRound(campaign.round+1)

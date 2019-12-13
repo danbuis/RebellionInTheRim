@@ -51,7 +51,7 @@ var campaignSchema = mongoose.Schema({
       this.scoreRebel.set(currentAct - 1 , currentScore + addedPoints)
     } else {
       const currentScore = this.scoreImperial[currentAct-1]
-      this.scoreImperial[currentAct-1] = currentScore + addedPoints
+      this.scoreImperial.set(currentAct-1, currentScore + addedPoints)
     }
   }
 

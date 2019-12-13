@@ -53,6 +53,7 @@ class CampaignBattleTable extends React.Component {
                     <td>{this.getPlayerName(battle.defendingCommander)}</td>
                     <td>{battle.System}</td>
                     <td><Link href={"/battle/"+battle._id}><a>Details</a></Link></td>
+                    <td>{battle.round}</td>
                     <td>{this.getWinner(battle)}</td>
                 </tr>
             )
@@ -78,6 +79,7 @@ class CampaignBattleTable extends React.Component {
                             <th>Defender</th>
                             <th>System</th>
                             <th>Details</th>
+                            <th>Round</th>
                             <th>Winner</th>
                         </tr>
                     </thead>
