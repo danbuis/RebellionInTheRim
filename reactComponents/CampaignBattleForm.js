@@ -50,19 +50,16 @@ class CampaignBattleForm extends React.Component {
         }else{
             players = this.props.campaign.rebels.slice()
         }
-
-        
+      
         var found = true
         while (found){
             found = false
             for(var i=0; i<this.props.currentBattles.length; i++){
                 for(var j=0; j<players.length; j++){
                     if(this.props.currentBattles[i].attackingCommander == players[j].commanderID){
-                        console.log("Attacking repeat found")
                         players.splice(j,1)
                         found=true
                     }else if(this.props.currentBattles[i].defendingCommander == players[j].commanderID){
-                        console.log("Defending repeat found")
                         players.splice(j,1)
                         found=true
                     }
@@ -70,7 +67,6 @@ class CampaignBattleForm extends React.Component {
             }
         }
         
-
         const playerList = players.map((player, index) => {
             return <option key={index}>{this.getPlayerName(player.playerID)}</option>
         })
@@ -80,7 +76,22 @@ class CampaignBattleForm extends React.Component {
     }
 
     populateSystems(){
-        const systemsOptions = Systems.map((system, index) => {
+        var systemsAvailable = Systems.slice()
+
+        var found = true
+        while (found){
+            found = false
+            for(var i=0; i<this.props.currentBattles.length; i++){
+                for(var j=0; j<systemsAvailable.length; j++){
+                    if(this.props.currentBattles[i].System == systemsAvailable[j].SystemName){
+                        systemsAvailable.splice(j,1)
+                        found=true
+                    }
+                }
+            }
+        }
+
+        const systemsOptions = systemsAvailable.map((system, index) => {
             return <option key={index}>{system.SystemName}</option>
         })
 
