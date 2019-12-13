@@ -42,24 +42,40 @@ class CampaignBattleForm extends React.Component {
         
         var players = []
         if(assaulting == "assault" && this.state.assaultingFaction == "Rebel"){
-            players = this.props.campaign.rebels.map((player, index) => {
-                return <option key={index}>{this.getPlayerName(player.playerID)}</option>
-            })
+            players = this.props.campaign.rebels.slice()
         }else if (assaulting == "defend" && this.state.assaultingFaction == "Rebel"){
-            players = this.props.campaign.imperials.map((player, index) =>{
-                return <option key={index}>{this.getPlayerName(player.playerID)}</option>
-            })
+            players = this.props.campaign.imperials.slice()
         }else if (assaulting == "assault" && this.state.assaultingFaction == "Empire"){
-            players = this.props.campaign.imperials.map((player, index) =>{
-                return <option key={index}>{this.getPlayerName(player.playerID)}</option>
-            })
+            players = this.props.campaign.imperials.slice()
         }else{
-            players = this.props.campaign.rebels.map((player, index) => {
-                return <option key={index}>{this.getPlayerName(player.playerID)}</option>
-            })
+            players = this.props.campaign.rebels.slice()
         }
 
-        return players
+        
+        var found = true
+        while (found){
+            found = false
+            for(var i=0; i<this.props.currentBattles.length; i++){
+                for(var j=0; j<players.length; j++){
+                    if(this.props.currentBattles[i].attackingCommander == players[j].commanderID){
+                        console.log("Attacking repeat found")
+                        players.splice(j,1)
+                        found=true
+                    }else if(this.props.currentBattles[i].defendingCommander == players[j].commanderID){
+                        console.log("Defending repeat found")
+                        players.splice(j,1)
+                        found=true
+                    }
+                }
+            }
+        }
+        
+
+        const playerList = players.map((player, index) => {
+            return <option key={index}>{this.getPlayerName(player.playerID)}</option>
+        })
+
+        return playerList
         
     }
 
