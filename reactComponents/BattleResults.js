@@ -4,12 +4,37 @@ class BattleResults extends React.Component {
 
     state={
         attackingCommanderName: "",
-        defendingCommanderName:""
+        defendingCommanderName: "",
+        winner: "",
+        defender: 0,
+        attacker: 0
     }
     
     constructor(props){
         super(props)
         this.populateState()
+
+        this.updateAttacker = this.updateAttacker.bind(this)
+        this.updateDefender = this.updateDefender.bind(this)
+        this.updateWinner = this.updateWinner.bind(this)
+    }
+
+    async updateDefender(event){
+        await this.setState({
+            defenderDestroyed: event.target.value
+        })
+    }
+
+    async updateAttacker(event){
+        await this.setState({
+            attackerDestroyed: event.target.value
+        })
+    }
+
+    async updateWinner(event){
+        await this.setState({
+            winner: event.target.value
+        })
     }
 
     async populateState(){
@@ -35,6 +60,21 @@ class BattleResults extends React.Component {
         } else return this.state.defendingCommanderName
     }
 
+    checkWinner(){
+        if(this.state.winner == this.props.battle.attackingCommander){
+            if(this.state.attackerDestroyed > this.state.defenderDestroyed){
+                return false
+            }else return true
+        }else if(this.state.winner == this.props.battle.defendingCommander){
+            if(this.state.defenderDestroyed >= this.state.attackerDestroyed){
+                return false
+            }else return true
+        }
+
+        //I don't see any way that this return statement would be executed, but just in case...
+        return true
+    }
+
     render () {
         if(this.props.battle.winner !== "none"){
             return <div>
@@ -48,15 +88,24 @@ class BattleResults extends React.Component {
             <form action="/battleResolve" method="post">
             <input type="hidden" name="campaign" value={this.props.battle.campaign}/>
             <input type="hidden" name="battle" value={this.props.battle._id} />
+
+            <label>{this.state.attackingCommander} points destroyed/earned</label>
+            <input type="number" name="attackerDestroyed" min="0" max="800" default="0" onChange={this.updateAttacker}/>
+
+            <label>{this.state.defendingCommander} points destroyed/earned</label>
+            <input type="number" name="defenderDestroyed" min="0" max="800" default="0" onChange={this.updateDefender}/>
+
+            <label>Winner</label>
             <label>
-                <input type="radio" name="winner" value={this.props.battle.attackingCommander} />
+                <input type="radio" name="winner" value={this.props.battle.attackingCommander} onChange={this.updateWinner}/>
                 {this.state.attackingCommanderName}
             </label>
+
             <label>
-                <input type="radio" name="winner" value={this.props.battle.defendingCommander} />
+                <input type="radio" name="winner" value={this.props.battle.defendingCommander} onChange={this.updateWinner}/>
                 {this.state.defendingCommanderName}
             </label>
-            <input type="submit" value="Declare Winner" />
+            <input type="submit" value="Declare Winner" disabled={this.checkWinner()}/>
             </form>
         </div>
         }

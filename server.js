@@ -217,7 +217,7 @@ app.prepare().then(() => {
       return res.redirect("/commander/"+newCommander._id)
     })
 
-    server.post("/changeCommanderName", async function(req, res, next){
+    /*server.post("/changeCommanderName", async function(req, res, next){
       const commander = await Commander.findById(req.body.commanderID)
       const newName=req.body.newName
       const cleanName = newName.toLowerCase().trim();
@@ -239,6 +239,21 @@ app.prepare().then(() => {
       await commander.save()
       await res.redirect("/commander/"+req.body.commanderID)
       
+    })*/
+
+    server.post("/commander/edit", async function(req, res, next){
+      const commander = await Commander.findById(req.body.commanderID)
+      const newName=req.body.newName
+      const cleanName = newName.toLowerCase().trim();
+
+      if(cleanName === "none"){
+        res.redirect("/error/2")
+      }else{
+        await commander.changeName(req.body.newName)
+        await commander.changeFleetSize(req.body.newSize)
+        await commander.save()
+        await res.redirect("/commander/"+req.body.commanderID)
+      }
     })
 
     server.post("/addSkill", async function(req, res, next){
