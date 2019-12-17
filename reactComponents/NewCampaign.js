@@ -68,7 +68,7 @@ class NewCampaign extends React.Component{
                 <li>No leading or trailing spaces</li>
             </ul> 
 
-            <form action="/initCampaign" method="post">
+            <form action="/campaign/initCampaign" method="post">
                 <label>Campaign Name</label>
                 <input type="text" name="name" required onChange={this.updateCampaignName}/>
 

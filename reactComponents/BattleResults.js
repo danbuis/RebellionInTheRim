@@ -43,9 +43,8 @@ class BattleResults extends React.Component {
 
     async populateState(){
         const getName = async commanderID =>{
-            const commanderData = await axios.get("/commanderData/"+commanderID)
+            const commanderData = await axios.get("/commander/data/"+commanderID)
             const commander = await commanderData.data
-            console.log(commander)
             return await commander.name
         }
 
@@ -89,7 +88,7 @@ class BattleResults extends React.Component {
         }else{
             return <div>
             <h2>Who won?</h2>
-            <form action="/battleResolve" method="post">
+            <form action="/battle/resolve" method="post">
             <input type="hidden" name="campaign" value={this.props.battle.campaign}/>
             <input type="hidden" name="battle" value={this.props.battle._id} />
 

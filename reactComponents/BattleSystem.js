@@ -8,7 +8,6 @@ class BattleSystem extends React.Component {
     populateState(){
         for(var i=0; i<Systems.length; i++){
             if(Systems[i].SystemName === this.props.system){
-                console.log("inside if")
                 return Systems[i].StrategicEffect
             }
         }
@@ -21,8 +20,7 @@ class BattleSystem extends React.Component {
         return effects
     }
 
-    render () {
-        
+    render () {    
         return <div>
             <h2>Contested System</h2>
             <h3>{this.props.system}</h3>
@@ -32,11 +30,7 @@ class BattleSystem extends React.Component {
             
             
         </div>
-    }
-
-        
+    }    
 }
  
-
-
 export default BattleSystem;

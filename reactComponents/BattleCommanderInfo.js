@@ -16,7 +16,7 @@ class BattleCommanderInfo extends React.Component {
 
     async populateState(){
         console.log("populating state")
-        const commanderData = await axios.get("/commanderData/"+this.props.commander)
+        const commanderData = await axios.get("/commander/data/"+this.props.commander)
         const commander = await commanderData.data
 
         var abilityTitles = commander.abilities.map(abilityIndex =>{

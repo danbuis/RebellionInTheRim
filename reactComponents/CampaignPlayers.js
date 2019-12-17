@@ -16,14 +16,14 @@ class CampaignPlayers extends React.Component {
     async populateState(playerArray){
 
         const getUsername = async player =>{
-          const user = await axios.get('/user/'+player.playerID);
+          const user = await axios.get('/user/data/'+player.playerID);
           const username = await user.data.username
           return await username
         }
 
         const getCommanderName = async player =>{
             if(player.commanderID === "none") return "none"
-            const commander = await axios.get('/commanderData/'+player.commanderID)
+            const commander = await axios.get('/commander/data/'+player.commanderID)
             const commanderName = await commander.data.name
             return await commanderName
         }
@@ -39,7 +39,7 @@ class CampaignPlayers extends React.Component {
     commanderLabel(label, player, index){
         if (label ==="none") return (
             //+this.props.campaignID+"/"+player
-            <form action="/newCommander" method="post">
+            <form action="/commander/newCommander" method="post">
                 <input type="hidden" name="player" value={player} />
                 <input type="hidden" name="campaign" value={this.props.campaignID} />
                 <input type="hidden" name="faction" value={this.props.faction} />

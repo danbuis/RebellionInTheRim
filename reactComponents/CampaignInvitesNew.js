@@ -51,7 +51,7 @@ class CampaignInvitesNew extends React.Component {
       }else{
               return <div>
             <h3>Invite players</h3>
-            <form action="/invitePlayer" method="post">
+            <form action="/campaign/invitePlayer" method="post">
                 <label>Player name</label>
                 <input type="text" name="user" required/>
                 <label>Faction</label>
@@ -62,8 +62,6 @@ class CampaignInvitesNew extends React.Component {
                 <input type="hidden" name="campaign" value={this.props.campaign._id}/>
                 <input type="submit" value="Invite" />
             </form>
-            
-
         </div>;
     }
   }

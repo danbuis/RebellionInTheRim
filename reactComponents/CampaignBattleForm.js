@@ -6,7 +6,6 @@ class CampaignBattleForm extends React.Component {
         this.state={
             assaultingFaction: "Rebel"
         }
-
         this.updateAssaulting = this.updateAssaulting.bind(this)
     }
 
@@ -71,8 +70,7 @@ class CampaignBattleForm extends React.Component {
             return <option key={index}>{this.getPlayerName(player.playerID)}</option>
         })
 
-        return playerList
-        
+        return playerList 
     }
 
     populateSystems(){
@@ -90,7 +88,6 @@ class CampaignBattleForm extends React.Component {
                 }
             }
         }
-
         const systemsOptions = systemsAvailable.map((system, index) => {
             return <option key={index}>{system.SystemName}</option>
         })
@@ -103,7 +100,7 @@ class CampaignBattleForm extends React.Component {
         return <div>
             <h3>Create New Battle</h3>
             
-            <form action="/addBattle" method="post">
+            <form action="/battle/addBattle" method="post">
 
                 <input type="hidden" name="campaign" value={this.props.campaign._id}/>
                 

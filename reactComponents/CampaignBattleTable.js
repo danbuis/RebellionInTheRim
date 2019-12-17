@@ -14,7 +14,7 @@ class CampaignBattleTable extends React.Component {
     async populateState(){
     
         const getBattleData = async battleID =>{
-            const battleData = await axios.get('/battleData/'+battleID)
+            const battleData = await axios.get('/battle/data/'+battleID)
             return await battleData.data
         }
 
@@ -87,8 +87,6 @@ class CampaignBattleTable extends React.Component {
                         {rows}
                     </tbody>
                 </table>
-                        
-
             </div>;
         }
     }

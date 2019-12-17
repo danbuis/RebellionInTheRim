@@ -17,7 +17,7 @@ class CampaignMessageList extends React.Component {
         const getSource = async message => {
             idList.push(message.source)
             if (message.messageType == "commander" && message.source != "auto"){
-                const commander = await axios.get('/commanderData/'+message.source)
+                const commander = await axios.get('/commander/data/'+message.source)
                 const commanderData = await commander.data
                 
                 return await commanderData.name
