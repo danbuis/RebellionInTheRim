@@ -7,7 +7,8 @@ class BattleResults extends React.Component {
         defendingCommanderName: "",
         winner: "",
         defender: 0,
-        attacker: 0
+        attacker: 0,
+        validWinnder:false
     }
     
     constructor(props){
@@ -21,19 +22,22 @@ class BattleResults extends React.Component {
 
     async updateDefender(event){
         await this.setState({
-            defenderDestroyed: event.target.value
+            defenderDestroyed: event.target.value,
+            validWinner:this.checkWinner()
         })
     }
 
     async updateAttacker(event){
         await this.setState({
-            attackerDestroyed: event.target.value
+            attackerDestroyed: event.target.value,
+            validWinner:this.checkWinner()
         })
     }
 
     async updateWinner(event){
         await this.setState({
-            winner: event.target.value
+            winner: event.target.value,
+            validWinner:this.checkWinner()            
         })
     }
 
@@ -89,10 +93,10 @@ class BattleResults extends React.Component {
             <input type="hidden" name="campaign" value={this.props.battle.campaign}/>
             <input type="hidden" name="battle" value={this.props.battle._id} />
 
-            <label>{this.state.attackingCommander} points destroyed/earned</label>
+            <label>{this.state.attackingCommanderName} points destroyed/earned</label>
             <input type="number" name="attackerDestroyed" min="0" max="800" default="0" onChange={this.updateAttacker}/>
 
-            <label>{this.state.defendingCommander} points destroyed/earned</label>
+            <label>{this.state.defendingCommanderName} points destroyed/earned</label>
             <input type="number" name="defenderDestroyed" min="0" max="800" default="0" onChange={this.updateDefender}/>
 
             <label>Winner</label>
@@ -105,7 +109,7 @@ class BattleResults extends React.Component {
                 <input type="radio" name="winner" value={this.props.battle.defendingCommander} onChange={this.updateWinner}/>
                 {this.state.defendingCommanderName}
             </label>
-            <input type="submit" value="Declare Winner" disabled={this.checkWinner()}/>
+            <input type="submit" value="Declare Winner" disabled={this.state.validWinner}/>
             </form>
         </div>
         }

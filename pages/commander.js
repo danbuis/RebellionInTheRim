@@ -18,6 +18,7 @@ export default class extends React.Component{
                 <Header />
                 <h2>{this.props.commander.name}</h2>
                 <p>Playing for the {this.props.commander.faction}s</p>
+                <p>Fleet Size : {this.props.commander.fleetSize}</p>
                 <p>Campaign : <Link href={"/campaign/"+this.props.campaign.name}><a>{this.props.campaign.name}</a></Link></p>
                 
                 <CommanderEdit commander={this.props.commander}/>

@@ -71,7 +71,6 @@ class SignUpBlock extends React.Component {
 
 
     listErrors(){
-        console.log("in list errors" + this.state.errors)
        const errors =  this.state.errors.map(error =>{
             return <p>{error}</p>
         })
