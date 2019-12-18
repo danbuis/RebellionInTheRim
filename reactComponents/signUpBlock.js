@@ -71,8 +71,8 @@ class SignUpBlock extends React.Component {
 
 
     listErrors(){
-       const errors =  this.state.errors.map(error =>{
-            return <p>{error}</p>
+       const errors =  this.state.errors.map((error, index) =>{
+            return <p key={index}>{error}</p>
         })
 
         if(this.state.errors.length > 0){

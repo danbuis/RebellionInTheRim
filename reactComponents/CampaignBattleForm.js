@@ -17,7 +17,6 @@ class CampaignBattleForm extends React.Component {
 
     getPlayerName(playerID){
         var name = ""
-
         this.props.players.map(player => {
             if(player.playerID === playerID){
                 name = player.playerName
@@ -67,6 +66,7 @@ class CampaignBattleForm extends React.Component {
         }
         
         const playerList = players.map((player, index) => {
+            console.log("mapping a player "+player)
             return <option key={index}>{this.getPlayerName(player.playerID)}</option>
         })
 
@@ -100,7 +100,7 @@ class CampaignBattleForm extends React.Component {
         return <div>
             <h3>Create New Battle</h3>
             
-            <form action="/battle/addBattle" method="post">
+            <form action="/battle/newBattle" method="post">
 
                 <input type="hidden" name="campaign" value={this.props.campaign._id}/>
                 

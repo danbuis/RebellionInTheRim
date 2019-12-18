@@ -1,9 +1,11 @@
 const express = require('express')
 const router = express.Router()
+const app = require('./init')
 
 var Campaign = require ('./models/campaign')
 var Commander = require('./models/commander')
 var Battle = require('./models/battle')
+var User = require ('./models/user')
 
 router.post("/newBattle", async function(req,res,next){
     const campaign = await Campaign.findById(req.body.campaign)

@@ -1,8 +1,10 @@
 const express = require('express')
 const router = express.Router()
+const app = require('./init')
 
 var Campaign = require ('./models/campaign')
 var Battle = require('./models/battle')
+var User = require ('./models/user')
 
 router.post("/newCampaign", async function(req, res, next){
   var campaignName = req.body.name;
@@ -132,7 +134,7 @@ router.post("/declineInvite", async function(req, res, next){
   //save the changes
   await campaign.save()
 
-  await res.redirect("/profile/"+userData.username)
+  await res.redirect("/user/profile/"+userData.username)
 })
 
 router.get("/data/:campaignID", async function(req,res,next){

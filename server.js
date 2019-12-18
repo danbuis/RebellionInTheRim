@@ -1,5 +1,5 @@
 const express = require('express');
-const next = require('next');
+//const next = require('next');
 const mongoose = require('mongoose');
 const bodyParser = require ('body-parser');
 const passport = require ('passport');
@@ -8,10 +8,8 @@ const session = require("express-session");
 const cookieParser = require("cookie-parser");
 const morgan = require("morgan");
 var User = require ('./models/user')
-var Campaign = require ('./models/campaign')
-var Commander = require('./models/commander')
-var Battle = require('./models/battle')
 const setUpPassport = require("./setuppassport");
+const app = require('./init')
 
 var commanderRoutes = require('./commanderRoutes')
 var campaignRoutes = require('./campaignRoutes')
@@ -19,13 +17,9 @@ var battleRoutes = require('./battleRoutes')
 var userRoutes = require('./userRoutes')
 
 const port = parseInt(process.env.PORT, 10) || 3000;
-const dev = process.env.NODE_ENV !== 'production';
-const app = next({ dev });
+//const dev = process.env.NODE_ENV !== 'production';
+//const app = next({ dev });
 const handle = app.getRequestHandler();
-
-
-//old mongo atlad connection string
-//mongodb+srv://danbuis88:VGXSydm9KdVDvvG@cluster0-ptart.mongodb.net/test?retryWrites=true&w=majority
 
 //connect to MongoDB
 mongoose.connect("mongodb://heroku_tv8w8h8x:4q96fd2jubps28bjf7upeqf8un@ds153766.mlab.com:53766/heroku_tv8w8h8x", {useNewUrlParser: true }, function(err){
@@ -74,7 +68,7 @@ app.prepare().then(() => {
     server.post("/login", passport.authenticate("login"), 
       function(req,res){
         
-         res.redirect("/profile/"+req.user.username);
+         res.redirect("/user/profile/"+req.user.username);
       });
    
     server.post("/signup", function(req, res, next){
@@ -99,7 +93,7 @@ app.prepare().then(() => {
         });
       }, passport.authenticate("login"), 
         function(req,res){
-          res.redirect("/profile/"+req.user.username);
+          res.redirect("/user/profile/"+req.user.username);
         }
       );
 

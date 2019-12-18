@@ -1,8 +1,10 @@
 const express = require('express')
 const router = express.Router()
+const app = require('./init')
 
 var Campaign = require ('./models/campaign')
 var Commander = require('./models/commander')
+var User = require ('./models/user')
 
 /*Route for creating a new commander */
 router.post("/newCommander", async function(req, res, next){
@@ -92,7 +94,7 @@ router.post("/newCommander", async function(req, res, next){
     await res.redirect("/commander/"+commanderID)
   })
 
-  server.get("/:commanderID", async function(req,res, next){
+  router.get("/:commanderID", async function(req,res, next){
     console.log("next server method")
     const commanderID = req.params.commanderID
 

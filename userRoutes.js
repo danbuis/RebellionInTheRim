@@ -1,10 +1,11 @@
 const express = require('express')
 const router = express.Router()
+const app = require('./init')
 
+var User = require ('./models/user')
 var Campaign = require ('./models/campaign')
 
-
-server.get("/profile/:name", function(req, res, next){
+router.get("/profile/:name", function(req, res, next){
   const username = req.params.name
   User.findOne({username: username}, async function(err, user){
     if(user){
@@ -22,7 +23,7 @@ server.get("/profile/:name", function(req, res, next){
   })
 })
 
-server.get("/data/:userID", async function(req, res, next){
+router.get("/data/:userID", async function(req, res, next){
   const userID = req.params.userID
 
   const user = await User.findById(userID)
