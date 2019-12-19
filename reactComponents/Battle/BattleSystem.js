@@ -1,4 +1,4 @@
-import Systems from '../systems.js'
+import Systems from '../../systems.js'
 
 class BattleSystem extends React.Component {
     state = {

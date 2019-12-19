@@ -1,7 +1,7 @@
 import Header from '../reactComponents/Header'
-import CommanderAbilities from '../reactComponents/CommanderAbilities'
-import CommanderCurrentAbilities from '../reactComponents/CommanderCurrentAbilities'
-import CommanderEdit from '../reactComponents/CommanderEdit'
+import CommanderAbilities from '../reactComponents/Commander/CommanderAbilities'
+import CommanderCurrentAbilities from '../reactComponents/Commander/CommanderCurrentAbilities'
+import CommanderEdit from '../reactComponents/Commander/CommanderEdit'
 import Link from 'next/link';
 
 export default class extends React.Component{

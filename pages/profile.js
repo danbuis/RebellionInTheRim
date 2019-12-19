@@ -1,10 +1,10 @@
 import Header from '../reactComponents/Header'
 import Welcome from '../reactComponents/Welcome'
-import CurrentCampaigns from '../reactComponents/CurrentCampaigns'
-import NewCampaign from '../reactComponents/NewCampaign'
+import CurrentCampaigns from '../reactComponents/User/CurrentCampaigns'
+import NewCampaign from '../reactComponents/User/CampaignNew'
 import React, {Component} from 'react';
-import EditProfile from '../reactComponents/EditProfile';
-import UserInvites from '../reactComponents/UserInvites'
+import EditProfile from '../reactComponents/User/EditProfile';
+import UserInvites from '../reactComponents/User/UserInvites'
 
 export default class extends React.Component{
     static async getInitialProps(userData){

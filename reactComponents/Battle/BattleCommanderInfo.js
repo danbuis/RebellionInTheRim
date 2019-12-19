@@ -1,5 +1,5 @@
 import axios from 'axios';
-import Abilities from '../commanderAbilities.js'
+import Abilities from '../../commanderAbilities.js'
 
 class BattleCommanderInfo extends React.Component {
     state = {

@@ -1,4 +1,4 @@
-import Abilities from '../commanderAbilities.js'
+import Abilities from '../../commanderAbilities.js'
 
 
 class CommanderAbilities extends React.Component {

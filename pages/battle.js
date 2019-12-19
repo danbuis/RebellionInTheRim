@@ -1,7 +1,7 @@
 import Header from '../reactComponents/Header'
-import BattleCommanders from '../reactComponents/BattleCommanders'
-import BattleSystem from '../reactComponents/BattleSystem'
-import BattleResults from '../reactComponents/BattleResults'
+import BattleCommanders from '../reactComponents/Battle/BattleCommanders'
+import BattleSystem from '../reactComponents/Battle/BattleSystem'
+import BattleResults from '../reactComponents/Battle/BattleResults'
 import Link from 'next/link';
 import React, {Component} from 'react'
 

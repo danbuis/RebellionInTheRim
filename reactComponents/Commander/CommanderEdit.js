@@ -1,4 +1,4 @@
-import stringTests from '../stringTests.js'
+import stringTests from '../../stringTests.js'
 
 class CommanderEdit extends React.Component {
     constructor(props){

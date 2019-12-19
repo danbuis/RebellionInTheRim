@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
-import stringTests from '../stringTests.js'
+import stringTests from '../../stringTests.js'
 
 class NewCampaign extends React.Component{
     static async getInitialProps(user){

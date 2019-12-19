@@ -1,4 +1,4 @@
-import Systems from '../systems.js'
+import Systems from '../../systems.js'
 
 class CampaignBattleForm extends React.Component {
     constructor(props){
