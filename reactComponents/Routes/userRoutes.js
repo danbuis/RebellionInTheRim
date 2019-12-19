@@ -10,12 +10,27 @@ router.get("/profile/:name", function(req, res, next){
   User.findOne({username: username}, async function(err, user){
     if(user){
       //if user, populate the other required props
-      const rebels = await Campaign.find({"rebels.playerID":user._id})
-      const imperials = await Campaign.find({"imperials.playerID":user._id})
-      const campaigns = await rebels.concat(imperials)
-
-      const invites = await Campaign.find({"pendingInvites.userID":user._id})
-      return app.render(req, res, '/profile', {user:user, campaigns:campaigns, invites:invites})
+      Campaign.find({"rebels.playerID":user._id}, function(err, rebels){
+        if(rebels){
+          Campaign.find({"imperials.playerID":user._id}, function(err, imperials){
+            if(imperials){
+              const campaigns = rebels.concat(imperials)
+              Campaign.find({"pendingInvites.userID":user._id}, function(err, invites){
+                if(invites){
+                  return app.render(req, res, '/profile', {user:user, campaigns:campaigns, invites:invites})
+                }else if(err){
+                  return res.redirect("/error/10");
+                }
+              })
+            }else if(err){
+              return res.redirect("/error/10");
+            }
+          })
+        }else if (err){
+          return res.redirect("/error/10");
+        }
+      })
+     
     }
     if(err){
       console.log("no user found by that name")
@@ -26,8 +41,13 @@ router.get("/profile/:name", function(req, res, next){
 router.get("/data/:userID", async function(req, res, next){
   const userID = req.params.userID
 
-  const user = await User.findById(userID)
-  res.json(user)
+  User.findById(userID, function(err, user){
+    if(user){
+      res.json(user)
+    }else if(err){
+      return res.redirect("/error/10");
+    }
+  })
 })
 
 module.exports = router

@@ -128,6 +128,9 @@ app.prepare().then(() => {
         case '9' :
           errorMessage = "You must include a faction when inviting a player"
           break
+        case '10' :
+          errorMessage = "Database error.  Please try again later."
+          break
       }
 
       return app.render(req,res, '/error', {errorMessage: errorMessage})
