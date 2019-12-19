@@ -11,10 +11,10 @@ var User = require ('./models/user')
 const setUpPassport = require("./setuppassport");
 const app = require('./init')
 
-var commanderRoutes = require('./commanderRoutes')
-var campaignRoutes = require('./campaignRoutes')
-var battleRoutes = require('./battleRoutes')
-var userRoutes = require('./userRoutes')
+var commanderRoutes = require('./Routes/commanderRoutes')
+var campaignRoutes = require('./Routes/campaignRoutes')
+var battleRoutes = require('./Routes/battleRoutes')
+var userRoutes = require('./Routes/userRoutes')
 
 const port = parseInt(process.env.PORT, 10) || 3000;
 //const dev = process.env.NODE_ENV !== 'production';

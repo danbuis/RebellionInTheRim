@@ -1,10 +1,10 @@
 const express = require('express')
 const router = express.Router()
-const app = require('./init')
+const app = require('../../init')
 
-var Campaign = require ('./models/campaign')
-var Commander = require('./models/commander')
-var User = require ('./models/user')
+var Campaign = require ('../../models/campaign')
+var Commander = require('../../models/commander')
+var User = require ('../../models/user')
 
 /*Route for creating a new commander */
 router.post("/newCommander", async function(req, res, next){

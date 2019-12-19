@@ -1,10 +1,10 @@
 const express = require('express')
 const router = express.Router()
-const app = require('./init')
+const app = require('../../init')
 
-var Campaign = require ('./models/campaign')
-var Battle = require('./models/battle')
-var User = require ('./models/user')
+var Campaign = require ('../../models/campaign')
+var Battle = require('../../models/battle')
+var User = require ('../../models/user')
 
 router.post("/newCampaign", async function(req, res, next){
   var campaignName = req.body.name;
