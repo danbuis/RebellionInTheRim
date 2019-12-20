@@ -1,5 +1,5 @@
-import CampaignMessageList from '../reactComponents/CampaignMessageList'
-import CampaignAddMessage from '../reactComponents/CampaignAddMessage'
+import CampaignMessageList from './CampaignMessageList'
+import CampaignAddMessage from './CampaignAddMessage'
 
 class CampaignMessages extends React.Component {
     render () {

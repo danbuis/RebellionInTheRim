@@ -1,9 +1,9 @@
 const express = require('express')
 const router = express.Router()
-const app = require('../../init')
+const app = require('../init')
 
-var User = require ('../../models/user')
-var Campaign = require ('../../models/campaign')
+var User = require ('../models/user')
+var Campaign = require ('../models/campaign')
 
 router.get("/profile/:name", function(req, res, next){
   const username = req.params.name

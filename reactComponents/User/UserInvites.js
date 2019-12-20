@@ -1,5 +1,5 @@
 import React from 'react';
-import CampaignInviteRespond from './CampaignInviteRespond'
+import CampaignInviteRespond from '../Campaign/CampaignInviteRespond'
 
 
 class UserInvites extends React.Component {

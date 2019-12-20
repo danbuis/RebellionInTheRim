@@ -5,7 +5,7 @@ import CampaignSystems from '../reactComponents/Campaign/CampaignSystems'
 import CampaignPlayers from '../reactComponents/Campaign/CampaignPlayers'
 import CampaignMessages from '../reactComponents/Campaign/CampaignMessages'
 import CampaignBattles from '../reactComponents/Campaign/CampaignBattles'
-import CampaignScore from '../reactComponents/CampaignScore'
+import CampaignScore from '../reactComponents/Campaign/CampaignScore'
 import React, {Component} from 'react'
 
 export default class extends React.Component{

@@ -1,5 +1,5 @@
-import CampaignBattleForm from '../reactComponents/CampaignBattleForm'
-import CampaignBattleTable from '../reactComponents/CampaignBattleTable'
+import CampaignBattleForm from './CampaignBattleForm'
+import CampaignBattleTable from './CampaignBattleTable'
 import axios from 'axios';
 
 class CampaignBattles extends React.Component {

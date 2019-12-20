@@ -1,7 +1,7 @@
 import Header from '../reactComponents/Header'
 import Welcome from '../reactComponents/Welcome'
 import CurrentCampaigns from '../reactComponents/User/CurrentCampaigns'
-import NewCampaign from '../reactComponents/User/CampaignNew'
+import NewCampaign from '../reactComponents/Campaign/CampaignNew'
 import React, {Component} from 'react';
 import EditProfile from '../reactComponents/User/EditProfile';
 import UserInvites from '../reactComponents/User/UserInvites'

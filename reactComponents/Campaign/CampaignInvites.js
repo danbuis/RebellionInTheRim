@@ -1,4 +1,4 @@
-import CampaignInvitesNew from '../reactComponents/CampaignInvitesNew'
+import CampaignInvitesNew from './CampaignInvitesNew'
 import axios from 'axios';
 
 class CampaignInvites extends React.Component {
