@@ -8,6 +8,7 @@ var battleSchema = mongoose.Schema({
   attackingFaction: String,
   defendingFaction: String,
   System: String,
+  systemBonus: Number,
   currentOwnership: String,
   winner: String,
   loser: String

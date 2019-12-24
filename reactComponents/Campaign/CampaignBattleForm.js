@@ -4,14 +4,35 @@ class CampaignBattleForm extends React.Component {
     constructor(props){
         super(props)
         this.state={
-            assaultingFaction: "Rebel"
+            assaultingFaction: "Rebel",
+            bonus: 0
         }
         this.updateAssaulting = this.updateAssaulting.bind(this)
+        this.updateBonus = this.updateBonus.bind(this)
     }
 
     updateAssaulting(event){
         this.setState({
             assaultingFaction:event.target.value
+        })
+    }
+
+    updateBonus(event){
+        const systemName = event.target.value
+        var bonus = 0
+        var index = -1
+        for(var i = 0; i < Systems.length; i++){
+            if(Systems[i].SystemName == systemName){
+                index = i
+            }
+        }
+
+        if(index >= 0){
+            bonus = Systems[index].Points
+        }
+
+        this.setState({
+            bonus: bonus
         })
     }
 
@@ -103,7 +124,8 @@ class CampaignBattleForm extends React.Component {
             <form action="/battle/newBattle" method="post">
 
                 <input type="hidden" name="campaign" value={this.props.campaign._id}/>
-                
+                <input type="hidden" name="bonus" value={this.state.bonus} />
+
                 <label>Assaulting Faction</label>
                 <select name="assaultingFaction" onChange={this.updateAssaulting}>
                     <option value="Rebel" key="Rebel">Rebel</option>
@@ -121,7 +143,7 @@ class CampaignBattleForm extends React.Component {
                 </select>
 
                 <label>Contested System</label>
-                <select name="system">
+                <select name="system" onChange={this.updateBonus}>
                     {this.populateSystems()}
                 </select>
 

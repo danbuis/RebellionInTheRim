@@ -151,6 +151,37 @@ router.post("/declineInvite", async function(req, res, next){
   }) 
 })
 
+router.post("/newBase", async function(req, res, next){
+  const faction = req.body.faction
+  const campaignID = req.body.campaign
+  const systemName = req.body.system
+
+  Campaign.findById(campaignID, async function (err, campaign){
+    if(campaign){
+      await campaign.upgradeToBase(systemName, faction)
+      await campaign.save()
+      await res.redirect("/campaign/"+campaign.name)
+    }else if (err){
+      return res.redirect("/error/10");
+    }
+  })
+})
+
+router.post("/removeBase", async function(req, res, next){
+  const campaignID = req.body.campaign
+  const systemName = req.body.system
+
+  Campaign.findById(campaignID, async function (err, campaign){
+    if(campaign){
+      await campaign.removeBase(systemName)
+      await campaign.save()
+      await res.redirect("/campaign/"+campaign.name)
+    }else if (err){
+      return res.redirect("/error/10");
+    }
+  })
+})
+
 router.get("/data/:campaignID", async function(req,res,next){
   const campaignID = req.params.campaignID
   Campaign.findById(campaignID, async function (err, campaign){

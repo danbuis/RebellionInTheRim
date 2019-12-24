@@ -17,11 +17,26 @@ var campaignSchema = mongoose.Schema({
   act:{type: Number, default:0}
 });
 
-  campaignSchema.methods.newSystemOwner = function(battle){
-    //check if the system already has an owner
+  campaignSchema.methods.upgradeToBase = function(systemName, faction){
+    //check if the system already has a presence
     var index = -1
     for(var i =0; i<this.systems.length; i++){
-      if (this.systems[i].name == battle.System){
+      if (this.systems[i].name == systemName){
+        index = i
+      }
+    }
+    //if so, simply update the facility
+    if(index >= 0){
+      this.systems[i].facility="Base"
+    }else{
+      this.systems.push({name: systemName, facility:"Base", faction:faction})
+    }
+  }
+
+  campaignSchema.methods.removeBase = function(systemName){
+    var index = -1
+    for(var i =0; i<this.systems.length; i++){
+      if (this.systems[i].name == systemName){
         index = i
       }
     }
@@ -29,12 +44,38 @@ var campaignSchema = mongoose.Schema({
     if(index >=0){
       this.systems.splice(i,1)
     }
+  }
+
+  campaignSchema.methods.newSystemOwner = function(battle){
 
     //get winning faction
     var winningFaction
     if(battle.attackingCommander == battle.winner){
       winningFaction = battle.attackingFaction
     }else winningFaction = battle.defendingFaction
+
+    //check if the system already has an owner
+    var index = -1
+    for(var i =0; i<this.systems.length; i++){
+      if (this.systems[i].name == battle.System){
+        index = i
+      }
+    }
+    //if so...
+    if(index >=0){
+      const system = this.sytems[i]
+      if(system.facility == "Base"){
+        //if defender won
+        if(winningFaction = battle.defendingFaction){
+          //then return, no ownership change, don't want to downgrade base to a presence
+          return
+        }else{
+          //assign bonus points to winningFaction for defeating a base
+          this.changeScore(winningFaction, battle.systemBonus)
+        }
+      }
+      this.systems.splice(i,1)
+    }
 
     //and update system with a new owner
     if(battle.winner == battle.attackingCommander){

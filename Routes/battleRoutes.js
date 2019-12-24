@@ -53,6 +53,7 @@ router.post("/newBattle", async function(req,res,next){
       attackingFaction: attackingFaction,
       defendingFaction: defendingFaction,
       System: req.body.system,
+      systemBonus: req.body.bonus,
       round: campaign.round,
       winner: "none",
       loser: "none"
@@ -71,13 +72,15 @@ router.post("/newBattle", async function(req,res,next){
   })
 
   router.post("/resolve", async function(req, res, next){
-    const battle = await Battle.findById(req.body.battle, async function(err, battle){
+    Battle.findById(req.body.battle, async function(err, battle){
       if(battle){
         Campaign.findOne({name:req.body.campaign}, async function(err, campaign){
           if(campaign){
             //update battle status
             await battle.resolveBattle(req.body.winner)
             await battle.save()
+
+            //check if system had a base
 
             //update System ownership
             await campaign.newSystemOwner(battle)
