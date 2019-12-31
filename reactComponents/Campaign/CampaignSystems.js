@@ -23,18 +23,21 @@ class CampaignSystems extends React.Component {
 
         if(index != -1){
             const system = this.props.campaign.systems[index]
-            return system.faction + " "+system.facility
+            if(system.faction == "Empire"){
+                return "Imperial "+ system.facility
+            }
+            return system.faction + " " + system.facility
         } else return "None"
     }
 
     getBaseButtons(systemName){
-        var system
+        var system = ""
         
         const buildRebelBase = <div>
             <form action="/campaign/newBase" method="post">
                 <input type="hidden" name="faction" value="Rebel" />
                 <input type="hidden" name="campaign" value={this.props.campaign._id} />
-                <input type="hidden" name="systen" value={systemName} />
+                <input type="hidden" name="system" value={systemName} />
                 <input type="submit" value="Build Rebel Base" />
             </form>
         </div>
@@ -69,17 +72,17 @@ class CampaignSystems extends React.Component {
 
         //if still round 0
         if(this.props.campaign.round == 0){
-            if(system.faction ==""){
+            if(system ==""){
                 return<div>
                     {buildRebelBase}
                     {buildImperialBase}
                 </div>
-            }else return {removeBase}
+            }else return <div>{removeBase}</div>
         }else{
             if(system.facility == "Presence"){
-                if(system.faction == "rebel"){
-                    return {buildRebelBase}
-                }else return {buildImperialBase}
+                if(system.faction == "Rebel"){
+                    return <div>{buildRebelBase}</div>
+                }else return <div>{buildImperialBase}</div>
             }
         }
     }

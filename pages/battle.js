@@ -7,6 +7,7 @@ import React, {Component} from 'react'
 
 export default class extends React.Component{
     static async getInitialProps(battle){
+        console.log(battle.query)
         return battle.query;
     }
 

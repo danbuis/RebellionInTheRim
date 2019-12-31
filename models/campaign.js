@@ -10,6 +10,8 @@ var campaignSchema = mongoose.Schema({
   rebels: [{playerID:String, commanderID:String}],
   imperials: [{playerID:String, commanderID:String}],
   systems: [{name:String, facility:String, faction:String}],
+  rebelBases: Number,
+  imperialBases: Number,
   battles: [String],
   round: {type: Number, default:0},
   scoreRebel: [Number],
@@ -25,12 +27,29 @@ var campaignSchema = mongoose.Schema({
         index = i
       }
     }
-    //if so, simply update the facility
     if(index >= 0){
-      this.systems[i].facility="Base"
+      this.systems[index].facility="Base"
     }else{
       this.systems.push({name: systemName, facility:"Base", faction:faction})
     }
+
+    this.tallyBases()
+  }
+
+  campaignSchema.methods.tallyBases = function(){
+    var rebel = 0
+    var imp = 0
+
+    this.systems.map(system => {
+      if(system.facility == "Base"){
+        if(system.faction == "Rebel"){
+          rebel ++
+        }else imp++
+      }
+    })
+
+    this.rebelBases = rebel
+    this.imperialBases = imp
   }
 
   campaignSchema.methods.removeBase = function(systemName){
@@ -42,8 +61,10 @@ var campaignSchema = mongoose.Schema({
     }
     //if so, remove it
     if(index >=0){
-      this.systems.splice(i,1)
+      this.systems.splice(index,1)
     }
+
+    this.tallyBases()
   }
 
   campaignSchema.methods.newSystemOwner = function(battle){
@@ -62,19 +83,22 @@ var campaignSchema = mongoose.Schema({
       }
     }
     //if so...
-    if(index >=0){
-      const system = this.sytems[i]
+    if(index >= 0){
+      const system = this.systems[index]
       if(system.facility == "Base"){
+        console.log("this is a base")
         //if defender won
-        if(winningFaction = battle.defendingFaction){
+        if(winningFaction == battle.defendingFaction){
           //then return, no ownership change, don't want to downgrade base to a presence
+          console.log("defender won, no change to ownership")
           return
         }else{
           //assign bonus points to winningFaction for defeating a base
+          console.log("winner earns "+battle.systemBonus+" bonus points")
           this.changeScore(winningFaction, battle.systemBonus)
         }
       }
-      this.systems.splice(i,1)
+      this.systems.splice(index,1)
     }
 
     //and update system with a new owner
@@ -83,6 +107,8 @@ var campaignSchema = mongoose.Schema({
     }else{
       this.systems.push({name: battle.System, facility:"Presence", faction:winningFaction})
     }
+
+    this.tallyBases()
   }
 
   campaignSchema.methods.changeScore = function(faction, addedPoints){

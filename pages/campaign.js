@@ -18,16 +18,17 @@ export default class extends React.Component{
     }
 
     switchComponents(){
-        if(this.props.campaign.round == 0){
+        const campaign = this.props.campaign
+        if(campaign.round == 0){
             return(
-                <CampaignInvites invites = {this.props.campaign.pendingInvites} campaign={this.props.campaign}/>
+                <CampaignInvites invites = {campaign.pendingInvites} campaign={campaign}/>
             )
         } else {
             return(
             <div>
-                <CampaignScore score = {this.props.campaign.scoreRebel} faction = {"Rebel"} />
-                <CampaignScore score = {this.props.campaign.scoreImperial} faction = {"Imperial"} />
-                <CampaignBattles campaign = {this.props.campaign} battles={this.props.battles}/>
+                <CampaignScore score = {campaign.scoreRebel} faction = {"Rebel"} />
+                <CampaignScore score = {campaign.scoreImperial} faction = {"Imperial"} />
+                <CampaignBattles campaign = {campaign} battles={this.props.battles}/>
             </div>
                 )
         }

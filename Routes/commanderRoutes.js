@@ -18,9 +18,11 @@ router.post("/newCommander", async function(req, res, next){
     })
 
     await newCommander.save()
+    console.log
     User.findById(req.body.player, async function(err, player){
       if(player){
-        Campaign.findById(req.body.campaign, async function(err, player){
+        console.log(req.body)
+        Campaign.findById(req.body.campaign, async function(err, campaign){
           if(campaign){
             await campaign.updateCommander(newCommander)
             await campaign.addMessage("commander", player.username + " has created a new commander", "auto")
@@ -154,7 +156,7 @@ router.post("/newCommander", async function(req, res, next){
 
     Commander.findById(commanderID, function(err, commander){
       if(commander){
-        res.json(commander)
+         res.json(commander)
       }else if(err){
         return res.redirect("/error/10");
       }

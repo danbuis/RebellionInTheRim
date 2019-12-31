@@ -8,7 +8,7 @@ var Battle = require('../models/battle')
 var User = require ('../models/user')
 
 router.post("/newBattle", async function(req,res,next){
-    Campaign.findById(req.body.campaign), function(err, campaign){
+    Campaign.findById(req.body.campaign, async function(err, campaign){
       if(campaign){
         var attackingFaction
         var defendingFaction
@@ -16,59 +16,54 @@ router.post("/newBattle", async function(req,res,next){
         var defendingCommander
 
         const getUsername = async player => {
-          User.findById(player.playerID, function(err, user){
-            if(user){
-              return await user.username
-            }else if(err){
-              return res.redirect("/error/10");
-            }
-          })
+          const user = await User.findById(player.playerID).catch("Failed to find a user in getUserName")
+          return await user.username
         } // end of getUsername
 
         //combine campaign player lists
-    const playerList = await campaign.rebels.concat(campaign.imperials)
-    const userList = await Promise.all(playerList.map(player =>getUsername(player)))
+        const playerList = await campaign.rebels.concat(campaign.imperials)
+        const userList = await Promise.all(playerList.map(player =>getUsername(player)))
+        
+        for(var i=0; i<=playerList.length;i++){
+            if(await userList[i] == req.body.assaultingPlayer){
+            attackingCommander = playerList[i].commanderID
+          }
+          else if(await userList[i] == req.body.defendingPlayer){
+            defendingCommander = playerList[i].commanderID
+            }
+          }
 
-    for(var i=0; i<=playerList.length;i++){
-      if(await userList[i] == req.body.assaultingPlayer){
-        attackingCommander = playerList[i].commanderID
-      }
-      else if(await userList[i] == req.body.defendingPlayer){
-        defendingCommander = playerList[i].commanderID
-      }
-    }
-
-    if(req.body.assaultingFaction == "Rebel"){
-      attackingFaction = "Rebel"
-      defendingFaction = "Empire"
-    }else{
-      attackingFaction = "Empire"
-      defendingFaction = "Rebel"
-    }
-
-    var newBattle =  await new Battle({
-      campaign: campaign.name,
-      attackingCommander: attackingCommander,
-      defendingCommander: defendingCommander,
-      attackingFaction: attackingFaction,
-      defendingFaction: defendingFaction,
-      System: req.body.system,
-      systemBonus: req.body.bonus,
-      round: campaign.round,
-      winner: "none",
-      loser: "none"
-    })
-
-    await newBattle.save()
-    await campaign.addBattle(newBattle._id)
-    await campaign.save()
-
-    await res.redirect("/battle/" + newBattle._id)
+        if(req.body.assaultingFaction == "Rebel"){
+          attackingFaction = "Rebel"
+          defendingFaction = "Empire"
+        }else{
+          attackingFaction = "Empire"
+          defendingFaction = "Rebel"
+        }
+    
+        var newBattle =  await new Battle({
+          campaign: campaign.name,
+          attackingCommander: attackingCommander,
+          defendingCommander: defendingCommander,
+          attackingFaction: attackingFaction,
+          defendingFaction: defendingFaction,
+          System: req.body.system,
+          systemBonus: req.body.bonus,
+          round: campaign.round,
+          winner: "none",
+          loser: "none"
+        })
+        
+        await newBattle.save()
+        await campaign.addBattle(newBattle._id)
+        await campaign.save()
+        
+        await res.redirect("/battle/" + newBattle._id)
 
       }else if (err){
         return res.redirect("/error/10");
       }
-    }  
+    })  
   })
 
   router.post("/resolve", async function(req, res, next){

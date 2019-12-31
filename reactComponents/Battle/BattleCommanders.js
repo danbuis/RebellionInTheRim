@@ -2,7 +2,6 @@ import BattleCommanderInfo from './BattleCommanderInfo'
 
 class BattleCommanders extends React.Component {
     render () {
-        
 
         return <div>
                     <h1>Battle Participants</h1>
