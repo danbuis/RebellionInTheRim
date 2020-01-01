@@ -8,7 +8,7 @@ class BattleResults extends React.Component {
         winner: "",
         defender: 0,
         attacker: 0,
-        validWinnder:false
+        validWinner:false
     }
     
     constructor(props){
@@ -36,8 +36,10 @@ class BattleResults extends React.Component {
 
     async updateWinner(event){
         await this.setState({
-            winner: event.target.value,
-            validWinner:this.checkWinner()            
+            winner: event.target.value,             
+        })
+        this.setState({
+            validWinner:this.checkWinner()  
         })
     }
 
@@ -75,7 +77,7 @@ class BattleResults extends React.Component {
         }
 
         //I don't see any way that this return statement would be executed, but just in case...
-        return true
+        return false
     }
 
     render () {
@@ -108,7 +110,7 @@ class BattleResults extends React.Component {
                 <input type="radio" name="winner" value={this.props.battle.defendingCommander} onChange={this.updateWinner}/>
                 {this.state.defendingCommanderName}
             </label>
-            <input type="submit" value="Declare Winner" disabled={this.state.validWinner}/>
+            <input type="submit" value="Declare Winner" disabled={!this.state.validWinner}/>
             </form>
         </div>
         }
