@@ -13,7 +13,7 @@ var campaignSchema = mongoose.Schema({
   rebelBases: Number,
   imperialBases: Number,
   battles: [String],
-  round: {type: Number, default:0},
+  round: {type: Number, default:-1},
   scoreRebel: [Number],
   scoreImperial: [Number],
   act:{type: Number, default:0}

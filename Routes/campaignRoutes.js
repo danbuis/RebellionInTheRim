@@ -114,8 +114,7 @@ router.post("/acceptInvite", async function(req, res, next){
 
           const full = await campaign.isFull()
           if(full){
-            await campaign.changeRound(1)
-            await campaign.nextAct()
+            await campaign.changeRound(0)
             }
           await campaign.save()
           await res.redirect("/campaign/"+campaign.name)
@@ -159,6 +158,11 @@ router.post("/newBase", async function(req, res, next){
   Campaign.findById(campaignID, async function (err, campaign){
     if(campaign){
       await campaign.upgradeToBase(systemName, faction)
+      if(await campaign.round == 0 && await campaign.rebelBases == 2 && await campaign.imperialBases == 2){
+        await campaign.changeRound(1)
+        await campaign.nextAct()
+      }
+      
       await campaign.save()
       await res.redirect("/campaign/"+campaign.name)
     }else if (err){

@@ -73,7 +73,11 @@ class CampaignSystems extends React.Component {
         //if still round 0
         if(this.props.campaign.round == 0){
             if(system ==""){
-                return<div>
+                if(this.props.campaign.rebelBases < 2 && this.props.campaign.imperialBases == 2){
+                    return <div>{buildRebelBase}</div>
+                }else if (this.props.campaign.imperialBases < 2 && this.props.campaign.rebelBases == 2){
+                    return <div>{buildImperialBase}</div>
+                }else return<div>
                     {buildRebelBase}
                     {buildImperialBase}
                 </div>

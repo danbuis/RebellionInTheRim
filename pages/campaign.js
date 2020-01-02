@@ -19,11 +19,11 @@ export default class extends React.Component{
 
     switchComponents(){
         const campaign = this.props.campaign
-        if(campaign.round == 0){
+        if(campaign.round == -1){
             return(
                 <CampaignInvites invites = {campaign.pendingInvites} campaign={campaign}/>
             )
-        } else {
+        } else if(campaign.round > 0){
             return(
             <div>
                 <CampaignScore score = {campaign.scoreRebel} faction = {"Rebel"} />
@@ -31,6 +31,14 @@ export default class extends React.Component{
                 <CampaignBattles campaign = {campaign} battles={this.props.battles}/>
             </div>
                 )
+        }else return
+    }
+
+    renderSystems(){
+        if(this.props.campaign.round != -1){
+            return(
+                <CampaignSystems campaign = {this.props.campaign}/>
+            )
         }
     }
 
@@ -44,7 +52,7 @@ export default class extends React.Component{
                 <CampaignMessages messages = {this.props.campaign.messages}/>
                 <CampaignPlayers faction = "Rebel" players = {this.props.campaign.rebels} campaignID = {this.props.campaign._id}/>
                 <CampaignPlayers faction = "Imperial" players = {this.props.campaign.imperials} campaignID = {this.props.campaign._id}/>
-                <CampaignSystems campaign = {this.props.campaign}/>
+                {this.renderSystems()}
             </div>
         )
     }
