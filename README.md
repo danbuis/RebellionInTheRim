@@ -1,7 +1,9 @@
 # RebellionInTheRim
 A manager for running an instance of the Rebellion in the Rim Campaign.
 
-To run on your machine:
+Can be found in the wild at https://ritr-manager.herokuapp.com/
+
+To run locally on your machine:
 
 -Make sure node and yarn are installed
 
